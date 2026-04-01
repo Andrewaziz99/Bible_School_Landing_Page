@@ -1,10 +1,8 @@
 import { Bible } from '@/lib/bible-types';
 import BibleReaderClient from '@/components/BibleReaderClient';
 import { Metadata } from 'next';
-
-// ✅ Static imports - best for Next.js, enables optimizations
-import bibleEnData from '@/public/data/bible-en.json';
-import bibleArData from '@/public/data/bible-ar.json';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 export const metadata: Metadata = {
   title: 'Bible Reader | Orthodox Christian Bible School',
@@ -13,11 +11,32 @@ export const metadata: Metadata = {
 
 export const revalidate = 86400; // ISR: revalidate every 24 hours
 
+function getBibleData() {
+  try {
+    // Read JSON files from public/data directory
+    const dataDir = join(process.cwd(), 'public', 'data');
+    
+    const enPath = join(dataDir, 'bible-en.json');
+    const arPath = join(dataDir, 'bible-ar.json');
+
+    const enContent = readFileSync(enPath, 'utf-8');
+    const arContent = readFileSync(arPath, 'utf-8');
+
+    const enData = JSON.parse(enContent) as Bible;
+    const arData = JSON.parse(arContent) as Bible;
+
+    return {
+      en: enData,
+      ar: arData,
+    };
+  } catch (error) {
+    console.error('Error reading Bible data files:', error);
+    throw new Error('Failed to load Bible data. Ensure bible-en.json and bible-ar.json exist in public/data/');
+  }
+}
+
 export default function BiblePage() {
-  const bibleData = {
-    en: bibleEnData as Bible,
-    ar: bibleArData as Bible,
-  };
+  const bibleData = getBibleData();
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
