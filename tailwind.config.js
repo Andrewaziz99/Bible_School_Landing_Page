@@ -13,7 +13,7 @@ module.exports = {
         cairo: ["var(--font-cairo)", "Cairo", "sans-serif"],
       },
       colors: {
-        // Your brand colors — matches Flutter ThemeData
+        // Light modern brand colors
         teal: {
           50:  "#f0fdfa",
           100: "#ccfbf1",

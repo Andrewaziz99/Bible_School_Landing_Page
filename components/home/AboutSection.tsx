@@ -3,12 +3,12 @@
 
 export default function AboutSection() {
   return (
-    <section id="about" className="section-padding bg-slate-900/30">
+    <section id="about" className="section-padding bg-slate-50/80">
       <div className="container-max">
 
         {/* Section header */}
         <div className="text-center mb-16">
-          <span className="text-teal-400 text-sm font-semibold uppercase tracking-widest mb-3 block">
+          <span className="text-teal-600 text-sm font-semibold uppercase tracking-widest mb-3 block">
             تعرّف علينا
           </span>
           <h2 className="section-heading heading-accent">من نحن / ماذا نقدم</h2>
@@ -19,15 +19,15 @@ export default function AboutSection() {
 
           {/* Left (RTL: right side) — text */}
           <div>
-            <h3 className="text-2xl font-bold text-white mb-4">من نحن</h3>
-            <p className="text-slate-400 leading-relaxed mb-6">
-              المركز الأرثوذكسي للدراسات الكتابية للأطفال هو مبادرة تعليمية كتابية
+            <h3 className="text-2xl font-bold text-slate-900 mb-4">من نحن</h3>
+            <p className="text-slate-600 leading-relaxed mb-6">
+              أرثوذكسي للدراسات الكتابية للأطفال هو مبادرة تعليمية كتابية
               تهدف إلى تقديم دراسة منظمة وعميقة ومناسبة للأطفال والنشء حتى المرحلة
               الثانوية داخل الكنيسة، من خلال مناهج متدرجة ومنصة رقمية حديثة.
             </p>
 
-            <h3 className="text-2xl font-bold text-white mb-4">ماذا نقدم</h3>
-            <p className="text-slate-400 leading-relaxed">
+            <h3 className="text-2xl font-bold text-slate-900 mb-4">ماذا نقدم</h3>
+            <p className="text-slate-600 leading-relaxed">
               نقدم مسارًا متكاملًا يشمل مناهج كتابية متعددة المراحل، وتطبيقًا يخدم
               الأطفال والخدام وإدارة الكنائس، مع أدوات للمتابعة والواجبات والامتحانات
               والتشجيع الروحي والتحفيز المستمر.
@@ -60,13 +60,13 @@ export default function AboutSection() {
             ].map((item) => (
               <div
                 key={item.title}
-                className="flex gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800/50
-                           hover:border-teal-800/50 transition-all duration-200"
+                className="flex gap-4 p-4 rounded-xl bg-white border border-slate-200
+                           hover:border-teal-300 transition-all duration-200 shadow-sm hover:shadow-teal-100"
               >
                 <div className="text-2xl mt-0.5 flex-shrink-0">{item.icon}</div>
                 <div>
-                  <h4 className="font-semibold text-white mb-1">{item.title}</h4>
-                  <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
+                  <h4 className="font-semibold text-slate-900 mb-1">{item.title}</h4>
+                  <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             ))}

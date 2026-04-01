@@ -28,24 +28,24 @@ export default function HeroSection() {
 
           {/* Badge/Pill */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full
-                          bg-teal-950/80 border border-teal-800/60 text-teal-300 text-sm mb-8
+                          bg-teal-50 border border-teal-300 text-teal-700 text-sm mb-8
                           animate-fade-in-up">
-            <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
-            المركز الأرثوذكسي للدراسات الكتابية
+            <span className="w-2 h-2 rounded-full bg-teal-600 animate-pulse" />
+            أرثوذكسي للدراسات الكتابية
           </div>
 
           {/* Main Heading */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight
-                         text-white mb-6 animate-fade-in-up-delay-1">
+                         text-slate-900 mb-6 animate-fade-in-up-delay-1">
             دراسة كتابية منهجية
             <br />
-            <span className="text-gold-light" style={{ color: "#F0C040" }}>
+            <span className="text-teal-600" style={{ color: "#0D9488" }}>
               للأجيال الجديدة
             </span>
           </h1>
 
           {/* Subtitle paragraph */}
-          <p className="text-lg md:text-xl text-slate-400 leading-relaxed max-w-2xl
+          <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl
                         mb-10 animate-fade-in-up-delay-2">
             نقدم محتوى كتابيًا أرثوذكسيًا قبطيًا من خلال مناهج منظمة للأطفال والنشء،
             عبر منصة رقمية تخدم الكنائس والخدام والمخدومين،
@@ -64,7 +64,7 @@ export default function HeroSection() {
           </div>
 
           {/* Stats row */}
-          <div className="flex flex-wrap gap-8 mt-16 pt-8 border-t border-slate-800/60
+          <div className="flex flex-wrap gap-8 mt-16 pt-8 border-t border-slate-300
                           animate-fade-in-up-delay-3">
             {[
               { value: "5",    label: "مناهج تعليمية" },
@@ -72,10 +72,10 @@ export default function HeroSection() {
               { value: "11+",  label: "سنة دراسة متدرجة" },
             ].map((stat) => (
               <div key={stat.label}>
-                <p className="text-3xl font-black" style={{ color: "#F0C040" }}>
+                <p className="text-3xl font-black text-teal-600">
                   {stat.value}
                 </p>
-                <p className="text-sm text-slate-400 mt-1">{stat.label}</p>
+                <p className="text-sm text-slate-600 mt-1">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -84,7 +84,7 @@ export default function HeroSection() {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 inset-x-0 flex justify-center animate-bounce">
-        <div className="flex flex-col items-center gap-1 text-slate-600">
+        <div className="flex flex-col items-center gap-1 text-slate-500">
           <span className="text-xs">اكتشف أكثر</span>
           <span className="text-lg">↓</span>
         </div>

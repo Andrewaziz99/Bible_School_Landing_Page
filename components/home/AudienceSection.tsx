@@ -33,9 +33,9 @@ const audiences = [
 // Color config — maps color name to Tailwind classes
 // Flutter analogy: like a switch/case for Theme colors
 const colorConfig: Record<string, { border: string; icon: string; badge: string }> = {
-  teal:   { border: "border-teal-700/50 hover:border-teal-500/70",   icon: "bg-teal-950 text-teal-300",   badge: "bg-teal-950/60 text-teal-300 border-teal-800/50" },
-  gold:   { border: "border-amber-700/50 hover:border-amber-500/70", icon: "bg-amber-950 text-amber-300", badge: "bg-amber-950/60 text-amber-300 border-amber-800/50" },
-  crimson:{ border: "border-red-800/50 hover:border-red-600/70",     icon: "bg-red-950 text-red-300",     badge: "bg-red-950/60 text-red-300 border-red-900/50" },
+  teal:   { border: "border-teal-200 hover:border-teal-300",   icon: "bg-teal-100 text-teal-700",   badge: "bg-teal-50 text-teal-700 border-teal-200" },
+  gold:   { border: "border-amber-200 hover:border-amber-300", icon: "bg-amber-100 text-amber-700", badge: "bg-amber-50 text-amber-700 border-amber-200" },
+  crimson:{ border: "border-red-200 hover:border-red-300",     icon: "bg-red-100 text-red-700",     badge: "bg-red-50 text-red-700 border-red-200" },
 };
 
 export default function AudienceSection() {
@@ -44,7 +44,7 @@ export default function AudienceSection() {
       <div className="container-max">
 
         <div className="text-center mb-16">
-          <span className="text-teal-400 text-sm font-semibold uppercase tracking-widest mb-3 block">
+          <span className="text-teal-600 text-sm font-semibold uppercase tracking-widest mb-3 block">
             الفئات المستهدفة
           </span>
           <h2 className="section-heading heading-accent">لمن نقدم هذه الخدمة؟</h2>
@@ -69,10 +69,10 @@ export default function AudienceSection() {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl font-bold text-white mb-3">{audience.title}</h3>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">{audience.title}</h3>
 
                 {/* Description */}
-                <p className="text-slate-400 text-sm leading-relaxed mb-5 flex-1">
+                <p className="text-slate-600 text-sm leading-relaxed mb-5 flex-1">
                   {audience.description}
                 </p>
 

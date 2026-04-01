@@ -16,7 +16,7 @@ const features = [
 
 export default function AppSection() {
   return (
-    <section id="app" className="section-padding">
+    <section id="app" className="section-padding bg-white/70">
       <div className="container-max">
 
         {/* Two column layout */}
@@ -24,16 +24,16 @@ export default function AppSection() {
 
           {/* Text side */}
           <div>
-            <span className="text-teal-400 text-sm font-semibold uppercase tracking-widest mb-3 block">
+            <span className="text-teal-600 text-sm font-semibold uppercase tracking-widest mb-3 block">
               المنصة الرقمية
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 leading-tight">
               منصة رقمية تخدم
               <br />
-              <span style={{ color: "#F0C040" }}>التعليم والمتابعة</span>
+              <span style={{ color: "#0D9488" }}>التعليم والمتابعة</span>
             </h2>
-            <p className="text-slate-400 leading-relaxed mb-8">
-              إلى جانب المناهج، يقدم المركز تطبيقًا رقميًا متكاملًا يساعد الكنائس
+            <p className="text-slate-600 leading-relaxed mb-8">
+              إلى جانب المناهج، يقدم تطبيقًا رقميًا متكاملًا يساعد الكنائس
               والخدام والمخدومين على متابعة الدراسة الأسبوعية، والواجبات، والامتحانات،
               والحضور، والنقاط التشجيعية، والتقدم داخل كل منهج.
             </p>
@@ -50,14 +50,14 @@ export default function AppSection() {
               <div
                 key={f.label}
                 className="flex items-center gap-3 p-4 rounded-xl
-                           bg-slate-900/60 border border-slate-800/50
-                           hover:border-teal-800/50 hover:bg-slate-800/40
+                           bg-slate-50 border border-slate-200
+                           hover:border-teal-300 hover:bg-teal-50
                            transition-all duration-200 group"
               >
                 <span className="text-2xl group-hover:scale-110 transition-transform">
                   {f.icon}
                 </span>
-                <span className="text-sm text-slate-300 font-medium">{f.label}</span>
+                <span className="text-sm text-slate-700 font-medium">{f.label}</span>
               </div>
             ))}
           </div>

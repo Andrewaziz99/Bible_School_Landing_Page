@@ -39,7 +39,7 @@ export default function BiblePage() {
   const bibleData = getBibleData();
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <main className="min-h-screen bg-gradient-to-br from-slate-50/90 via-white/85 to-slate-100/90">
       <BibleReaderClient bibleData={bibleData} />
     </main>
   );

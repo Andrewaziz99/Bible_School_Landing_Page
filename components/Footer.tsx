@@ -14,7 +14,7 @@ const quickLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-slate-800/60 bg-slate-950">
+    <footer className="border-t border-slate-200 bg-white/80">
       <div className="container-max px-4 md:px-8 py-14">
         <div className="grid md:grid-cols-3 gap-10 mb-10">
 
@@ -25,24 +25,24 @@ export default function Footer() {
                 <span className="text-white font-bold text-lg">م</span>
               </div>
               <div>
-                <p className="text-white font-bold text-sm">المركز الأرثوذكسي</p>
-                <p className="text-teal-400 text-xs">للدراسات الكتابية للأطفال</p>
+                <p className="text-slate-900 font-bold text-sm">أرثوذكسي</p>
+                <p className="text-teal-600 text-xs">للدراسات الكتابية للأطفال</p>
               </div>
             </div>
-            <p className="text-slate-500 text-sm leading-relaxed">
+            <p className="text-slate-600 text-sm leading-relaxed">
               رحلة متكاملة للدراسة الكتابية عبر مناهج متدرجة ومنصة رقمية حديثة.
             </p>
           </div>
 
           {/* Quick links */}
           <div>
-            <h4 className="text-white font-semibold mb-4">روابط سريعة</h4>
+            <h4 className="text-slate-900 font-semibold mb-4">روابط سريعة</h4>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-slate-400 hover:text-teal-400 text-sm transition-colors"
+                    className="text-slate-600 hover:text-teal-600 text-sm transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -53,8 +53,8 @@ export default function Footer() {
 
           {/* Contact info */}
           <div>
-            <h4 className="text-white font-semibold mb-4">تواصل معنا</h4>
-            <div className="space-y-3 text-sm text-slate-400">
+            <h4 className="text-slate-900 font-semibold mb-4">تواصل معنا</h4>
+            <div className="space-y-3 text-sm text-slate-600">
               {/* 📝 TODO: Replace with actual contact info */}
               <p>📧 example@email.com</p>
               <p>📱 01000000000</p>
@@ -80,7 +80,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-slate-800/60 pt-6 text-center text-slate-600 text-xs">
-          © {new Date().getFullYear()} المركز الأرثوذكسي للدراسات الكتابية للأطفال — جميع الحقوق محفوظة
+          © {new Date().getFullYear()} أرثوذكسي للدراسات الكتابية للأطفال — جميع الحقوق محفوظة
         </div>
       </div>
     </footer>

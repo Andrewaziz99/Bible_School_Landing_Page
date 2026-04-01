@@ -37,27 +37,27 @@ export default function Header() {
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-gradient-to-b from-slate-950/95 via-slate-900/90 to-slate-800/80 backdrop-blur-xl border-b border-teal-400/60 shadow-2xl"
-          : "bg-gradient-to-b from-slate-950/80 via-slate-900/60 to-transparent"
+          ? "bg-gradient-to-b from-white/90 via-white/85 to-slate-50/80 backdrop-blur-xl border-b border-teal-400/20 shadow-md"
+          : "bg-gradient-to-b from-white/70 via-white/50 to-transparent"
       }`}
       style={{
         boxShadow: isScrolled
-          ? '0 8px 32px 0 rgba(20,184,166,0.10), 0 2px 24px 0 rgba(20,184,166,0.10)'
-          : '0 2px 24px 0 rgba(20,184,166,0.08)',
-        borderBottom: isScrolled ? '0.5px solid #2dd4bf' : 'none',
+          ? '0 4px 16px 0 rgba(13,148,136,0.08), 0 2px 12px 0 rgba(13,148,136,0.06)'
+          : '0 2px 8px 0 rgba(13,148,136,0.04)',
+        borderBottom: isScrolled ? '0.5px solid #d1fae5' : 'none',
       }}
     >
       <div className="container-max flex items-center justify-between h-16 md:h-20 px-2 md:px-6 whitespace-nowrap overflow-x-auto">
         {/* Language Switcher */}
         <div className="absolute left-4 top-4 flex gap-2 z-40">
           <button
-            className={`px-3 py-1 rounded-lg text-sm font-bold ${locale === 'ar' ? 'bg-teal-600 text-white' : 'bg-slate-800 text-slate-300'}`}
+            className={`px-3 py-1 rounded-lg text-sm font-bold ${locale === 'ar' ? 'bg-teal-600 text-white' : 'bg-slate-200 text-slate-600'}`}
             onClick={() => setLocale('ar')}
           >
             العربية
           </button>
           <button
-            className={`px-3 py-1 rounded-lg text-sm font-bold ${locale === 'en' ? 'bg-teal-600 text-white' : 'bg-slate-800 text-slate-300'}`}
+            className={`px-3 py-1 rounded-lg text-sm font-bold ${locale === 'en' ? 'bg-teal-600 text-white' : 'bg-slate-200 text-slate-600'}`}
             onClick={() => setLocale('en')}
           >
             English
@@ -67,17 +67,17 @@ export default function Header() {
         {/* Logo + Name — Flutter: Row with Icon + Text */}
         <Link href="/" className="flex items-center gap-3 group min-w-0">
           {/* Smaller logo for better fit */}
-          <div className="w-12 h-12 md:w-16 md:h-16 p-1 md:p-2 rounded-2xl bg-white/10 backdrop-blur-md border-2 border-teal-400/60 flex items-center justify-center overflow-hidden shadow-xl shadow-teal-900/30 group-hover:scale-105 transition-transform duration-300 relative">
+          <div className="w-12 h-12 md:w-16 md:h-16 p-1 md:p-2 rounded-2xl bg-teal-50 backdrop-blur-md border-2 border-teal-300 flex items-center justify-center overflow-hidden shadow-md shadow-teal-200/50 group-hover:scale-105 transition-transform duration-300 relative">
             <img
               src="/assets/logo.png"
               alt="Logo"
               className="w-10 h-10 md:w-14 md:h-14 object-contain drop-shadow-lg"
-              style={{ filter: 'drop-shadow(0 2px 8px #14B8A6AA)' }}
+              style={{ filter: 'drop-shadow(0 2px 8px #0D9488AA)' }}
             />
           </div>
           <div className="hidden sm:block text-right min-w-0">
-            <p className="text-white font-bold text-lg md:text-xl tracking-wide leading-tight drop-shadow-md truncate" style={{fontFamily: 'var(--font-sultan-ruqah)'}}>المركز الأرثوذكسي</p>
-            <p className="text-gold text-sm md:text-lg leading-tight font-semibold drop-shadow-md truncate">للدراسات الكتابية للأطفال</p>
+            <p className="text-slate-900 font-bold text-lg md:text-xl tracking-wide leading-tight drop-shadow-sm truncate" style={{fontFamily: 'var(--font-sultan-ruqah)'}}>أرثوذكسي</p>
+            <p className="text-teal-600 text-sm md:text-lg leading-tight font-semibold drop-shadow-sm truncate">للدراسات الكتابية للأطفال</p>
           </div>
         </Link>
 
@@ -88,7 +88,7 @@ export default function Header() {
               <a
                 key={item.href}
                 href={item.href}
-                className="px-3 py-1 text-base font-bold text-slate-100 hover:text-gold rounded-lg hover:bg-teal-900/40 transition-all duration-200 shadow-sm hover:shadow-gold/30 tracking-wide border border-transparent hover:border-teal-400/40 focus:outline-none focus:ring-2 focus:ring-teal-400/40 whitespace-nowrap"
+                className="px-3 py-1 text-base font-bold text-slate-700 hover:text-teal-600 rounded-lg hover:bg-teal-50 transition-all duration-200 shadow-sm hover:shadow-teal-200/40 tracking-wide border border-transparent hover:border-teal-300 focus:outline-none focus:ring-2 focus:ring-teal-300 whitespace-nowrap"
                 onClick={e => {
                   e.preventDefault();
                   const el = document.querySelector(item.href);
@@ -101,7 +101,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-3 py-1 text-base font-bold text-slate-100 hover:text-gold rounded-lg hover:bg-teal-900/40 transition-all duration-200 shadow-sm hover:shadow-gold/30 tracking-wide border border-transparent hover:border-teal-400/40 focus:outline-none focus:ring-2 focus:ring-teal-400/40 whitespace-nowrap"
+                className="px-3 py-1 text-base font-bold text-slate-700 hover:text-teal-600 rounded-lg hover:bg-teal-50 transition-all duration-200 shadow-sm hover:shadow-teal-200/40 tracking-wide border border-transparent hover:border-teal-300 focus:outline-none focus:ring-2 focus:ring-teal-300 whitespace-nowrap"
               >
                 {item.label}
               </Link>
@@ -126,8 +126,8 @@ export default function Header() {
           {/* Hamburger button — only visible on mobile */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 rounded-lg text-slate-400 hover:text-white
-                       hover:bg-slate-800 transition-colors"
+            className="lg:hidden p-2 rounded-lg text-slate-600 hover:text-teal-600
+                       hover:bg-teal-50 transition-colors"
             aria-label="فتح القائمة"
           >
             {/* Simple hamburger icon using divs */}
@@ -142,7 +142,7 @@ export default function Header() {
 
       {/* Mobile Menu Drawer — Flutter: AnimatedContainer */}
       {isMenuOpen && (
-        <div className="lg:hidden bg-gradient-to-b from-slate-950/98 via-slate-900/95 to-slate-800/90 backdrop-blur-xl border-t border-teal-700/40 px-4 py-6 rounded-b-3xl shadow-2xl">
+        <div className="lg:hidden bg-gradient-to-b from-white/98 via-slate-50/95 to-slate-100/90 backdrop-blur-xl border-t border-teal-200 px-4 py-6 rounded-b-3xl shadow-lg">
           {navItems.map((item) => (
             item.href.startsWith("#") ? (
               <a
@@ -154,7 +154,7 @@ export default function Header() {
                   const el = document.querySelector(item.href);
                   if (el) el.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="block px-4 py-3 text-lg font-semibold text-slate-200 hover:text-gold hover:bg-slate-800/60 rounded-xl transition-colors duration-200 shadow-sm hover:shadow-gold/30"
+                className="block px-4 py-3 text-lg font-semibold text-slate-700 hover:text-teal-600 hover:bg-teal-50 rounded-xl transition-colors duration-200 shadow-sm hover:shadow-teal-200/30"
               >
                 {item.label}
               </a>
@@ -163,7 +163,7 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsMenuOpen(false)}
-                className="block px-4 py-3 text-lg font-semibold text-slate-200 hover:text-gold hover:bg-slate-800/60 rounded-xl transition-colors duration-200 shadow-sm hover:shadow-gold/30"
+                className="block px-4 py-3 text-lg font-semibold text-slate-700 hover:text-teal-600 hover:bg-teal-50 rounded-xl transition-colors duration-200 shadow-sm hover:shadow-teal-200/30"
               >
                 {item.label}
               </Link>
@@ -172,7 +172,7 @@ export default function Header() {
           <div className="mt-6 px-4">
             <a
               href="#contact-us"
-              className="btn-gold w-full justify-center text-lg py-3 shadow-md hover:shadow-gold/40"
+              className="btn-gold w-full justify-center text-lg py-3 shadow-md hover:shadow-teal-200/40"
               onClick={e => {
                 e.preventDefault();
                 setIsMenuOpen(false);

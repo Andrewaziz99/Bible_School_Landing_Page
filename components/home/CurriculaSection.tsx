@@ -44,11 +44,11 @@ const curricula = [
 
 export default function CurriculaSection() {
   return (
-    <section id="curricula" className="section-padding bg-slate-900/20">
+    <section id="curricula" className="section-padding bg-slate-50/80">
       <div className="container-max">
 
         <div className="text-center mb-16">
-          <span className="text-amber-400 text-sm font-semibold uppercase tracking-widest mb-3 block">
+          <span className="text-amber-600 text-sm font-semibold uppercase tracking-widest mb-3 block">
             المسار التعليمي
           </span>
           <h2 className="section-heading heading-accent">مناهجنا التعليمية</h2>
@@ -64,7 +64,7 @@ export default function CurriculaSection() {
               key={c.number}
               className="glass-card group relative overflow-hidden flex flex-col"
               style={{
-                background: `linear-gradient(180deg, rgba(2,8,23,0.92) 60%, rgba(2,8,23,0.85) 100%)`,
+                background: `linear-gradient(180deg, rgba(255,255,255,0.92) 60%, rgba(248,249,250,0.85) 100%)`,
               }}
             >
               {/* Badge background image with overlay */}
@@ -85,15 +85,15 @@ export default function CurriculaSection() {
                               from-transparent via-amber-500 to-transparent opacity-60 z-10" />
 
               {/* Large background number */}
-              <div className="absolute -top-4 -right-2 text-8xl font-black text-slate-800/60
-                              group-hover:text-teal-900/60 transition-colors duration-300 select-none z-10">
+              <div className="absolute -top-4 -right-2 text-8xl font-black text-slate-200/60
+                              group-hover:text-teal-100/60 transition-colors duration-300 select-none z-10">
                 {c.number}
               </div>
 
               <div className="relative z-20 flex flex-col flex-1">
                 {/* Age badge */}
-                <span className="text-xs px-2.5 py-1 rounded-full bg-teal-950/60
-                                  text-teal-300 border border-teal-800/50 self-start mb-4">
+                <span className="text-xs px-2.5 py-1 rounded-full bg-teal-50
+                                  text-teal-700 border border-teal-200 self-start mb-4">
                   {c.ageRange}
                 </span>
 

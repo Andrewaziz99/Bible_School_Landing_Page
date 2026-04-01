@@ -7,14 +7,14 @@ import Link from "next/link";
 // ── Section 7: Featured Videos ──────────────────────────────────────────────
 function VideosSection() {
   const videos = [
-    { title: "فيديو تعريفي بالمركز",      icon: "🎬", color: "text-teal-400" },
+    { title: "فيديو تعريفي بأرثوذكسي",      icon: "🎬", color: "text-teal-400" },
     { title: "فيديو شرح للتطبيق",         icon: "📱", color: "text-amber-400" },
     { title: "فيديو رسالة تشجيعية",       icon: "💛", color: "text-yellow-400" },
     { title: "فيديو عن الرؤية المستقبلية", icon: "🔭", color: "text-purple-400" },
   ];
 
   return (
-    <section className="section-padding bg-slate-900/20">
+    <section className="section-padding bg-slate-50/80">
       <div className="container-max">
         <div className="text-center mb-12">
           <h2 className="section-heading heading-accent">فيديوهات تعريفية وتشجيعية</h2>
@@ -28,10 +28,10 @@ function VideosSection() {
             <div
               key={v.title}
               className="glass-card text-center cursor-pointer group
-                         hover:border-teal-700/60 transition-all duration-300"
+                         hover:border-teal-300 transition-all duration-300"
             >
               {/* Fake video thumbnail placeholder */}
-              <div className="aspect-video bg-slate-800/60 rounded-xl mb-4 flex items-center
+              <div className="aspect-video bg-slate-100 rounded-xl mb-4 flex items-center
                               justify-center text-4xl group-hover:scale-105 transition-transform">
                 {/* 
                   📝 TODO: Replace this with an actual <iframe> or <video> tag.
@@ -74,7 +74,7 @@ function NewsSection() {
       color: "bg-amber-950/60 text-amber-300 border-amber-800/50",
     },
     {
-      category: "جديد المركز",
+      category: "جديد",
       title: "خطوات مستقبلية في التطوير",
       excerpt: "نواصل العمل على توسيع أثر الخدمة وتقديم أدوات تعليمية رقمية أكثر قوة وتنظيمًا.",
       date: "يناير ٢٠٢٥",
@@ -83,14 +83,14 @@ function NewsSection() {
   ];
 
   return (
-    <section id="news" className="section-padding">
+    <section id="news" className="section-padding bg-white/80">
       <div className="container-max">
         <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
           <div>
-            <span className="text-amber-400 text-sm font-semibold uppercase tracking-widest mb-3 block">
+            <span className="text-amber-600 text-sm font-semibold uppercase tracking-widest mb-3 block">
               آخر الأخبار
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
               الأخبار والتحديثات
             </h2>
           </div>
@@ -103,26 +103,26 @@ function NewsSection() {
           {news.map((item) => (
             <article
               key={item.title}
-              className="glass-card group cursor-pointer hover:border-slate-600/60 flex flex-col"
+              className="glass-card group cursor-pointer hover:border-slate-300 flex flex-col"
             >
               {/* Image placeholder */}
-              <div className="aspect-video bg-slate-800/60 rounded-xl mb-4
-                              group-hover:bg-slate-700/60 transition-colors" />
+              <div className="aspect-video bg-slate-100 rounded-xl mb-4
+                              group-hover:bg-slate-200 transition-colors" />
 
               {/* Category badge */}
               <span className={`text-xs px-3 py-1 rounded-full border self-start mb-3 ${item.color}`}>
                 {item.category}
               </span>
 
-              <h3 className="font-bold text-white mb-2 group-hover:text-teal-300
+              <h3 className="font-bold text-slate-900 mb-2 group-hover:text-teal-600
                              transition-colors leading-snug flex-1">
                 {item.title}
               </h3>
-              <p className="text-sm text-slate-500 leading-relaxed mb-4">{item.excerpt}</p>
+              <p className="text-sm text-slate-600 leading-relaxed mb-4">{item.excerpt}</p>
 
               <div className="flex items-center justify-between text-xs text-slate-600 mt-auto">
                 <span>{item.date}</span>
-                <span className="text-teal-500 group-hover:text-teal-400 transition-colors">
+                <span className="text-teal-600 group-hover:text-teal-700 transition-colors">
                   اقرأ المزيد ←
                 </span>
               </div>
@@ -137,14 +137,14 @@ function NewsSection() {
 // ── Section 9: Future Vision ─────────────────────────────────────────────────
 function VisionSection() {
   return (
-    <section id="vision" className="section-padding bg-slate-900/30">
+    <section id="vision" className="section-padding bg-slate-50/80">
       <div className="container-max">
         <div className="max-w-3xl mx-auto text-center">
-          <span className="text-teal-400 text-sm font-semibold uppercase tracking-widest mb-3 block">
+          <span className="text-teal-600 text-sm font-semibold uppercase tracking-widest mb-3 block">
             نظرة إلى الأمام
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">رؤيتنا للمستقبل</h2>
-          <p className="text-slate-400 leading-relaxed text-lg mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">رؤيتنا للمستقبل</h2>
+          <p className="text-slate-600 leading-relaxed text-lg mb-10">
             نسعى إلى بناء مسار كتابي متكامل وطويل المدى يخدم الأطفال والشباب داخل الكنيسة،
             مع تطوير مستمر للمناهج، وتوسيع نطاق الخدمة، وإضافة أدوات رقمية تساعد على التعلم
             والمتابعة والنمو الروحي بشكل أعمق وأكثر تأثيرًا.
@@ -159,10 +159,10 @@ function VisionSection() {
             ].map((p) => (
               <div
                 key={p.label}
-                className="p-5 rounded-xl border border-slate-700/50 bg-slate-900/40 text-center"
+                className="p-5 rounded-xl border border-slate-200 bg-white text-center"
               >
                 <div className="text-3xl mb-2">{p.icon}</div>
-                <p className="text-sm font-medium text-slate-300">{p.label}</p>
+                <p className="text-sm font-medium text-slate-700">{p.label}</p>
               </div>
             ))}
           </div>
@@ -179,23 +179,23 @@ function VisionSection() {
 // ── Section 10: Final CTA ─────────────────────────────────────────────────────
 function CTASection() {
   return (
-    <section id="contact-us" className="section-padding">
+    <section id="contact-us" className="section-padding bg-white/80">
       <div className="container-max">
         {/* Big CTA card */}
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br
-                        from-teal-900/50 to-slate-900/80 border border-teal-700/40 p-12 text-center">
+                        from-teal-50/80 to-slate-50/80 border border-teal-200 p-12 text-center">
           {/* Decorative blur */}
           <div className="absolute -top-10 -right-10 w-64 h-64 rounded-full
-                          bg-teal-600/10 blur-3xl pointer-events-none" />
+                          bg-teal-400/8 blur-3xl pointer-events-none" />
           <div className="absolute -bottom-10 -left-10 w-64 h-64 rounded-full
-                          bg-amber-600/8 blur-3xl pointer-events-none" />
+                          bg-amber-400/5 blur-3xl pointer-events-none" />
 
           <div className="relative z-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
               هل ترغب في التعرف أكثر أو بدء التواصل معنا؟
             </h2>
-            <p className="text-slate-400 text-lg max-w-xl mx-auto mb-10">
-              إذا كنت تمثل كنيسة، أو ترغب في معرفة المزيد عن المركز، يسعدنا تواصلك معنا.
+            <p className="text-slate-600 text-lg max-w-xl mx-auto mb-10">
+              إذا كنت تمثل كنيسة، أو ترغب في معرفة المزيد عن أرثوذكسي، يسعدنا تواصلك معنا.
             </p>
 
             <div className="flex flex-wrap gap-4 justify-center">

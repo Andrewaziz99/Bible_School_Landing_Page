@@ -2,16 +2,16 @@
   display: grid;
   grid-template-columns: 280px 1fr;
   min-height: calc(100vh - 80px);
-  background: linear-gradient(135deg, #0f172a 0%, #1a202c 100%);
-  color: #e2e8f0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  color: #1a202c;
   gap: 0;
 }
 
 /* ─── SIDEBAR STYLES ─────────────────────────────────────────── */
 
 .sidebar {
-  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-  border-right: 1px solid #334155;
+  background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+  border-right: 1px solid #e2e8f0;
   padding: 1.5rem 1rem;
   overflow-y: auto;
   display: flex;
@@ -51,7 +51,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #94a3b8;
+  color: #64748b;
   margin: 1rem 0 0.75rem 0;
 }
 
@@ -64,7 +64,7 @@
 .bookButton {
   background: transparent;
   border: 1px solid transparent;
-  color: #cbd5e1;
+  color: #475569;
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
   font-size: 0.875rem;
@@ -74,14 +74,14 @@
 }
 
 .bookButton:hover {
-  background: rgba(100, 116, 139, 0.3);
-  color: #e2e8f0;
+  background: rgba(13, 148, 136, 0.1);
+  color: #1a202c;
 }
 
 .bookButton.active {
-  background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(6, 182, 212, 0.2));
-  color: #0ea5e9;
-  border: 1px solid rgba(14, 165, 233, 0.4);
+  background: linear-gradient(135deg, rgba(13, 148, 136, 0.15), rgba(13, 148, 136, 0.1));
+  color: #0d9488;
+  border: 1px solid rgba(13, 148, 136, 0.3);
   font-weight: 600;
 }
 
@@ -96,15 +96,15 @@
   gap: 0.25rem;
   margin: 0.75rem 0 0.5rem 0;
   padding: 0.5rem;
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(248, 249, 250, 0.6);
   border-radius: 6px;
-  border-left: 2px solid rgba(14, 165, 233, 0.3);
+  border-left: 2px solid rgba(13, 148, 136, 0.3);
 }
 
 .chapterButton {
   background: transparent;
-  border: 1px solid #475569;
-  color: #cbd5e1;
+  border: 1px solid #cbd5e1;
+  color: #475569;
   padding: 0.4rem;
   border-radius: 4px;
   font-size: 0.75rem;
@@ -114,14 +114,14 @@
 }
 
 .chapterButton:hover {
-  border-color: #0ea5e9;
-  background: rgba(14, 165, 233, 0.1);
-  color: #0ea5e9;
+  border-color: #0d9488;
+  background: rgba(13, 148, 136, 0.1);
+  color: #0d9488;
 }
 
 .chapterButton.active {
-  background: #0ea5e9;
-  border-color: #0ea5e9;
+  background: #0d9488;
+  border-color: #0d9488;
   color: white;
   font-weight: 600;
 }
@@ -129,7 +129,7 @@
 .sidebarFooter {
   margin-top: auto;
   padding-top: 1rem;
-  border-top: 1px solid #334155;
+  border-top: 1px solid #e2e8f0;
 }
 
 .footerText {
@@ -150,13 +150,13 @@
   margin-bottom: 2rem;
   position: sticky;
   top: 0;
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.8) 100%);
+  background: linear-gradient(180deg, rgba(248, 249, 250, 0.95) 0%, rgba(248, 249, 250, 0.8) 100%);
   padding: 1rem 0;
   gap: 1rem;
   display: flex;
   flex-direction: column;
   backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.1);
   z-index: 10;
 }
 
@@ -168,9 +168,9 @@
 
 .searchInput {
   width: 100%;
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  border: 2px solid #334155;
-  color: #e2e8f0;
+  background: linear-gradient(135deg, #f1f5f9 0%, #ffffff 100%);
+  border: 2px solid #e2e8f0;
+  color: #1a202c;
   padding: 0.75rem 2.5rem 0.75rem 1rem;
   border-radius: 10px;
   font-size: 0.95rem;
@@ -178,14 +178,14 @@
 }
 
 .searchInput::placeholder {
-  color: #64748b;
+  color: #94a3b8;
 }
 
 .searchInput:focus {
   outline: none;
-  border-color: #0ea5e9;
-  background: linear-gradient(135deg, #1a2948 0%, #0d1419 100%);
-  box-shadow: 0 0 12px rgba(14, 165, 233, 0.3);
+  border-color: #0d9488;
+  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+  box-shadow: 0 0 12px rgba(13, 148, 136, 0.3);
 }
 
 .searchIcon {
@@ -208,12 +208,12 @@
 }
 
 .clearButton:hover {
-  color: #e2e8f0;
+  color: #475569;
 }
 
 .matchCounter {
   font-size: 0.875rem;
-  color: #0ea5e9;
+  color: #0d9488;
   font-weight: 600;
   padding: 0.5rem 0;
 }
@@ -221,22 +221,22 @@
 .chapterHeader {
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid rgba(14, 165, 233, 0.2);
+  border-bottom: 2px solid rgba(13, 148, 136, 0.2);
 }
 
 .chapterTitle {
   font-size: 2rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: #1a202c;
   margin: 0 0 0.5rem 0;
-  background: linear-gradient(135deg, #e2e8f0 0%, #0ea5e9 100%);
+  background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .verseCount {
-  color: #94a3b8;
+  color: #64748b;
   font-size: 0.95rem;
   margin: 0;
 }
@@ -244,15 +244,14 @@
 .searchResultsHeader {
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid rgba(6, 182, 212, 0.2);
+  border-bottom: 2px solid rgba(13, 148, 136, 0.2);
 }
 
 .searchTitle {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: #0d9488;
   margin: 0;
-  color: #06b6d4;
 }
 
 .versesList {
@@ -266,9 +265,9 @@
   align-items: center;
   justify-content: center;
   min-height: 300px;
-  background: rgba(30, 41, 59, 0.3);
+  background: rgba(248, 249, 250, 0.3);
   border-radius: 12px;
-  border: 2px dashed #475569;
+  border: 2px dashed #cbd5e1;
 }
 
 .emptyText {
@@ -281,8 +280,8 @@
 /* ─── VERSE CARD STYLES ─────────────────────────────────────── */
 
 .verseCard {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.4) 100%);
-  border: 1px solid #334155;
+  background: linear-gradient(135deg, rgba(248, 249, 250, 0.6) 0%, rgba(255, 255, 255, 0.4) 100%);
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
   padding: 1.25rem;
   transition: all 0.3s ease;
@@ -297,15 +296,15 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #0ea5e9, #06b6d4, transparent);
+  background: linear-gradient(90deg, #0d9488, #14b8a6, transparent);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
 .verseCard:hover {
-  border-color: #0ea5e9;
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.7) 100%);
-  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.15);
+  border-color: #0d9488;
+  background: linear-gradient(135deg, rgba(248, 249, 250, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+  box-shadow: 0 8px 24px rgba(13, 148, 136, 0.12);
 }
 
 .verseCard:hover::before {
@@ -321,7 +320,7 @@
 }
 
 .verseReference {
-  color: #0ea5e9;
+  color: #0d9488;
   font-size: 0.95rem;
   font-weight: 600;
   flex: 1;
@@ -343,7 +342,7 @@
 }
 
 .iconButton:hover {
-  background: rgba(14, 165, 233, 0.1);
+  background: rgba(13, 148, 136, 0.1);
   transform: scale(1.1);
 }
 
@@ -352,7 +351,7 @@
 }
 
 .verseText {
-  color: #cbd5e1;
+  color: #1a202c;
   font-size: 1rem;
   line-height: 1.7;
   margin: 0 0 0.75rem 0;
@@ -363,7 +362,7 @@
   position: absolute;
   bottom: 1rem;
   right: 1rem;
-  background: #0ea5e9;
+  background: #0d9488;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 6px;
@@ -385,11 +384,11 @@
 
 .matchBadge {
   font-size: 0.75rem;
-  background: rgba(14, 165, 233, 0.15);
-  color: #0ea5e9;
+  background: rgba(13, 148, 136, 0.15);
+  color: #0d9488;
   padding: 0.4rem 0.75rem;
   border-radius: 20px;
-  border: 1px solid rgba(14, 165, 233, 0.3);
+  border: 1px solid rgba(13, 148, 136, 0.3);
   display: inline-block;
   font-weight: 600;
 }
@@ -433,7 +432,7 @@
     right: 0;
     bottom: 0;
     border-right: none;
-    border-bottom: 1px solid #334155;
+    border-bottom: 1px solid #e2e8f0;
     max-height: none;
     z-index: 100;
   }
@@ -468,17 +467,17 @@
 
 .sidebar::-webkit-scrollbar-track,
 .content::-webkit-scrollbar-track {
-  background: rgba(30, 41, 59, 0.3);
+  background: rgba(248, 249, 250, 0.3);
   border-radius: 10px;
 }
 
 .sidebar::-webkit-scrollbar-thumb,
 .content::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #0ea5e9, #06b6d4);
+  background: linear-gradient(180deg, #0d9488, #14b8a6);
   border-radius: 10px;
 }
 
 .sidebar::-webkit-scrollbar-thumb:hover,
 .content::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #0284c7, #0891b2);
+  background: linear-gradient(180deg, #0f766e, #0d9488);
 }

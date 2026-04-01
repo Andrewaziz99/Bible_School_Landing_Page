@@ -59,7 +59,7 @@ export const bookNameMap: Record<number, { en: string; ar: string }> = {
 
   // New Testament - Acts & Paul's Letters
   44: { en: 'Acts', ar: 'أعمال الرسل' },
-  45: { en: 'Romans', ar: 'رومة' },
+  45: { en: 'Romans', ar: 'رومية' },
   46: { en: '1 Corinthians', ar: '1 كورنثوس' },
   47: { en: '2 Corinthians', ar: '2 كورنثوس' },
   48: { en: 'Galatians', ar: 'غلاطية' },
