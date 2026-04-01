@@ -1,4 +1,7 @@
 .next/
-package-lock.json
-package.json
 node_modules/
+*.log
+.env.local
+.env.*.local
+dist/
+out/

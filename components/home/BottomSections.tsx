@@ -215,6 +215,8 @@ function CTASection() {
 
 // ── Export all bottom sections as one component ─────────────────────────────
 // Flutter analogy: A Column widget containing multiple child sections
+export { NewsSection, VisionSection, CTASection };
+
 export default function BottomSections() {
   return (
     <>

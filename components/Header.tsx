@@ -11,12 +11,12 @@ import Link from "next/link"; // Flutter analogy: like Navigator.pushNamed()
 const navItems = [
   { label: "الرئيسية",           href: "/" },
   { label: "الكتاب المقدس",      href: "/bible" },
-  { label: "من نحن",             href: "#about" },
-  { label: "المناهج",            href: "#curricula" },
-  { label: "التطبيق",            href: "#app" },
-  { label: "الأخبار",            href: "#news" },
-  { label: "رؤيتنا للمستقبل",   href: "#vision" },
-  { label: "تواصل معنا",         href: "#contact-us" },
+  { label: "من نحن",             href: "/about" },
+  { label: "المناهج",            href: "/curricula" },
+  { label: "التطبيق",            href: "/app" },
+  { label: "الأخبار",            href: "/news" },
+  { label: "رؤيتنا للمستقبل",   href: "/vision" },
+  { label: "تواصل معنا",         href: "/contact-us" },
 ];
 
 export default function Header() {

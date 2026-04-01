@@ -1,11 +1,27 @@
-// app/bible/page.tsx
-// Simple Bible page placeholder
+import { Bible } from '@/lib/bible-types';
+import BibleReaderClient from '@/components/BibleReaderClient';
+import { Metadata } from 'next';
+
+// ✅ Static imports - best for Next.js, enables optimizations
+import bibleEnData from '@/public/data/bible-en.json';
+import bibleArData from '@/public/data/bible-ar.json';
+
+export const metadata: Metadata = {
+  title: 'Bible Reader | Orthodox Christian Bible School',
+  description: 'Search and read the Bible in English (NIV) and Arabic (AVD). Beautiful modern interface with verse search and highlighting.',
+};
+
+export const revalidate = 86400; // ISR: revalidate every 24 hours
 
 export default function BiblePage() {
+  const bibleData = {
+    en: bibleEnData as Bible,
+    ar: bibleArData as Bible,
+  };
+
   return (
-    <main style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-      <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>الكتاب المقدس</h1>
-      <p style={{ fontSize: '1.2rem', color: '#888' }}>صفحة الكتاب المقدس ستظهر هنا قريبًا.</p>
+    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <BibleReaderClient bibleData={bibleData} />
     </main>
   );
 }
