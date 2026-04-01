@@ -7,7 +7,7 @@ export default function ClientHtml({ cairoVar, children }: { cairoVar: string; c
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} className={cairoVar}>
       <head>
         {/* Meta tags, title, etc. can go here if needed */}
-        <title>الكز أرثوذكسي للدراسات الكتابية للأطفال</title>
+        <title>أرثوذكسي للدراسات الكتابية للأطفال</title>
         <meta name="description" content="مركز يقدم دراسة كتابية أرثوذكسية قبطية منهجية للأطفال والنشء من خلال مناهج متدرجة ومنصة رقمية متكاملة" />
         <meta name="keywords" content="مدرسة الكتاب, دراسة كتابية, أطفال, كنيسة قبطية, مناهج تعليمية" />
         <meta property="og:title" content=" أرثوذكسي للدراسات الكتابية للأطفال" />
