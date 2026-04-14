@@ -2,7 +2,7 @@
 
 import { Bible } from '@/lib/bible-types';
 import BibleReader from './BibleReader/BibleReader';
-import { useLang } from './LanguageProvider';
+import { useLang } from './providers/LanguageProvider';
 import { Suspense, useState, useEffect } from 'react';
 
 interface BibleReaderClientProps {

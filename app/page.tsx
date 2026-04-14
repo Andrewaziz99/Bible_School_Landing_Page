@@ -11,8 +11,8 @@
 // Server components run on the server and are great for SEO and performance.
 // Flutter analogy: Think of it as a StatelessWidget that renders on the server.
 
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/home/HeroSection";
 import AboutSection from "@/components/home/AboutSection";
 import AudienceSection from "@/components/home/AudienceSection";

@@ -30,7 +30,9 @@
     "loading": "Loading...",
     "search": "Search",
     "close": "Close",
-    "menu": "Menu"
+    "menu": "Menu",
+    "brandName": "Orthodox Center",
+    "tagline": "Biblical Studies for Children"
   },
 
   "hero": {
@@ -218,16 +220,13 @@
   },
 
   "footer": {
-    "brand": {
-      "name": "Orthodox Center",
-      "tagline": "For Biblical Studies for Children",
-      "description": "A comprehensive journey of biblical study through progressive curricula and a modern digital platform."
-    },
+    "description": "A comprehensive journey of biblical study through progressive curricula and a modern digital platform.",
     "quickLinks": "Quick Links",
-    "contactUs": "Contact Us",
-    "email": "example@email.com",
-    "phone": "01000000000",
-    "whatsapp": "WhatsApp: 01000000000",
+    "support": "Support & Help",
+    "contact": "Contact Us",
+    "allRightsReserved": "All Rights Reserved",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
     "copyright": "© {{year}} Orthodox Center for Biblical Studies for Children — All Rights Reserved"
   },
 

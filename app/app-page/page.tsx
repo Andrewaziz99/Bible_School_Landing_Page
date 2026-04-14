@@ -1,5 +1,5 @@
 
-import Header from "@/components/Header";
+import Header from "@/components/layout/Header";
 import AppSection from "@/components/home/AppSection";
 
 export default function AppPage() {

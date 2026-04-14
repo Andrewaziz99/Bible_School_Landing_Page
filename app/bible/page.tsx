@@ -1,5 +1,6 @@
-import { Bible } from '@/lib/bible-types';
+import Header from '@/components/layout/Header';
 import BibleReaderClient from '@/components/BibleReaderClient';
+import { Bible } from '@/lib/bible-types';
 import { Metadata } from 'next';
 import { readFileSync } from 'fs';
 import { join } from 'path';
@@ -39,8 +40,11 @@ export default function BiblePage() {
   const bibleData = getBibleData();
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50/90 via-white/85 to-slate-100/90">
-      <BibleReaderClient bibleData={bibleData} />
-    </main>
+    <>
+      <Header />
+      <main className="min-h-screen bg-gradient-to-br from-slate-50/90 via-white/85 to-slate-100/90">
+        <BibleReaderClient bibleData={bibleData} />
+      </main>
+    </>
   );
 }

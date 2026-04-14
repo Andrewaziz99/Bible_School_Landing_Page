@@ -1,6 +1,6 @@
 
 
-import Header from "@/components/Header";
+import Header from "@/components/layout/Header";
 import AboutSection from "@/components/home/AboutSection";
 
 export default function AboutPage() {
