@@ -79,7 +79,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-slate-800/60 pt-6 text-center text-slate-600 text-xs">
+        <div className="border-t border-slate-200 pt-6 text-center text-slate-600 text-xs">
           © {new Date().getFullYear()} أرثوذكسي للدراسات الكتابية للأطفال — جميع الحقوق محفوظة
         </div>
       </div>

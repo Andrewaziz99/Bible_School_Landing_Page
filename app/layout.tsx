@@ -1,18 +1,17 @@
-
 // app/layout.tsx
-// 📖 Flutter analogy: This is like MaterialApp() — it wraps everything.
-// Every page in your app gets this layout automatically.
+// Root layout — renders <html> and <body> as a server component
+// so that Next.js can manage <head> metadata properly.
 
 import type { Metadata } from "next";
 import { Cairo } from "next/font/google";
 import "./globals.css";
 import LanguageProvider from "../components/LanguageProvider";
+import HtmlDirectionSetter from "../components/HtmlDirectionSetter";
 
-// Load Cairo font (same as your Flutter app!)
-// Flutter: GoogleFonts.cairo() → Next.js: const cairo = Cairo({...})
+// Load Cairo font — optimized to only the weights we actually use
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  weight: ["400", "600", "700", "800"],
   variable: "--font-cairo",
   display: "swap",
 });
@@ -22,6 +21,9 @@ export const metadata: Metadata = {
   description:
     "مركز يقدم دراسة كتابية أرثوذكسية قبطية منهجية للأطفال والنشء من خلال مناهج متدرجة ومنصة رقمية متكاملة",
   keywords: ["مدرسة الكتاب", "دراسة كتابية", "أطفال", "كنيسة قبطية", "مناهج تعليمية"],
+  icons: {
+    icon: "/assets/favicon.ico",
+  },
   openGraph: {
     title: "أرثوذكسي للدراسات الكتابية للأطفال",
     description: "رحلة متكاملة للدراسة الكتابية عبر مناهج متدرجة ومنصة رقمية حديثة",
@@ -30,18 +32,19 @@ export const metadata: Metadata = {
   },
 };
 
-import ClientHtml from "../components/ClientHtml";
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <LanguageProvider>
-      <ClientHtml cairoVar={cairo.variable}>
-        {children}
-      </ClientHtml>
-    </LanguageProvider>
+    <html lang="ar" dir="rtl" className={cairo.variable}>
+      <body className="font-cairo antialiased">
+        <LanguageProvider>
+          <HtmlDirectionSetter />
+          {children}
+        </LanguageProvider>
+      </body>
+    </html>
   );
 }

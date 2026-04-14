@@ -1,35 +1,11 @@
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: transparent;
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* Utility for readable section backgrounds */
-.section-readable-bg {
-  background: transparent;
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 32px 0 rgba(0,0,0,0.18);
-  padding: 2rem 1rem;
-}
-html {
-  scroll-behavior: smooth;
-}
 /* app/globals.css */
-/* Flutter analogy: This is like your ThemeData — global design tokens */
+/* Global design tokens and base styles */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── Custom Fonts ── */
-
-/* ── Design Tokens (same palette as your Flutter app) ── */
+/* ── Design Tokens ── */
 :root {
   /* Primary: Teal */
   --color-primary:     #0D9488;
@@ -65,6 +41,10 @@ html {
 }
 
 /* ── Base Styles ── */
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -74,12 +54,6 @@ body {
   background-color: var(--color-bg-1);
   color: var(--color-text-primary);
   overflow-x: hidden;
-  background-image: url('/assets/Banner.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  background-blend-mode: lighten;
 }
 
 /* ── Arabic Typography Scale ── */
@@ -177,7 +151,7 @@ body {
   100% { background-position: 200% center; }
 }
 
-/* ── Bible Reader Animations ── */
+/* ── Bible Reader Highlight ── */
 @keyframes highlightPulse {
   0% {
     color: #fbbf24;

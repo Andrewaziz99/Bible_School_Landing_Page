@@ -98,7 +98,7 @@ export default function CurriculaSection() {
                 </span>
 
                 {/* Title */}
-                <h3 className="text-lg font-bold text-white mb-2 leading-snug">
+                <h3 className="text-lg font-bold text-slate-900 mb-2 leading-snug">
                   {c.title}
                 </h3>
 
