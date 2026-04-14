@@ -1,60 +1,64 @@
 // components/home/CurriculaSection.tsx
 // Section 5: نظرة سريعة على المناهج
 
+"use client";
+import { useTranslation } from "../../hooks/useTranslation";
 import Link from "next/link";
 import Image from "next/image";
 
-const curricula = [
-  {
-    number: "01",
-    title: "شخصيات الكتاب المقدس",
-    duration: "سنتان",
-    audience: "حضانة وأولى ابتدائي",
-    description: "مدخل مناسب لبناء معرفة أولية بشخصيات الكتاب المقدس وأحداثه الأساسية.",
-    ageRange: "٤ – ٦ سنوات",
-    badge: "/assets/badges/4ahed.png",
-  },
-  {
-    number: "02",
-    title: "مفاهيم كتابية للأطفال",
-    duration: "سنتان",
-    audience: "ثانية وثالثة ابتدائي",
-    description: "منهج يساعد الأطفال على فهم المفاهيم الكتابية الأساسية بطريقة مناسبة لأعمارهم.",
-    ageRange: "٧ – ٩ سنوات",
-    badge: "/assets/badges/amin.png",
-  },
-  {
-    number: "03",
-    title: "دراسة موسعة في الكتاب المقدس",
-    duration: "أربع سنوات",
-    audience: "من رابعة ابتدائي حتى أولى إعدادي",
-    description: "رحلة أعمق في دراسة الكتاب المقدس بشكل منظم ومتدرج.",
-    ageRange: "١٠ – ١٣ سنة",
-    badge: "/assets/badges/kof2.png",
-  },
-  {
-    number: "04",
-    title: "إعداد خدام مدرسة كتاب مقدس",
-    duration: "ثلاث سنوات",
-    audience: "من ثانية إعدادي حتى أولى ثانوي",
-    description: "منهج يهدف إلى إعداد جيل متدرج نحو الخدمة والفهم الأعمق والمسؤولية.",
-    ageRange: "١٤ – ١٦ سنة",
-    badge: "/assets/badges/mo3lm.png",
-  },
-];
-
 export default function CurriculaSection() {
+  const { t } = useTranslation();
+
+  const curricula = [
+    {
+      number: "01",
+      title: t('curricula.items.bibleCharacters.title'),
+      duration: t('curricula.items.bibleCharacters.duration'),
+      audience: t('curricula.items.bibleCharacters.audience'),
+      description: t('curricula.items.bibleCharacters.description'),
+      ageRange: t('curricula.items.bibleCharacters.ageRange'),
+      badge: "/assets/badges/4ahed.png",
+    },
+    {
+      number: "02",
+      title: t('curricula.items.biblicalConcepts.title'),
+      duration: t('curricula.items.biblicalConcepts.duration'),
+      audience: t('curricula.items.biblicalConcepts.audience'),
+      description: t('curricula.items.biblicalConcepts.description'),
+      ageRange: t('curricula.items.biblicalConcepts.ageRange'),
+      badge: "/assets/badges/amin.png",
+    },
+    {
+      number: "03",
+      title: t('curricula.items.extendedStudy.title'),
+      duration: t('curricula.items.extendedStudy.duration'),
+      audience: t('curricula.items.extendedStudy.audience'),
+      description: t('curricula.items.extendedStudy.description'),
+      ageRange: t('curricula.items.extendedStudy.ageRange'),
+      badge: "/assets/badges/kof2.png",
+    },
+    {
+      number: "04",
+      title: t('curricula.items.servantPrep.title'),
+      duration: t('curricula.items.servantPrep.duration'),
+      audience: t('curricula.items.servantPrep.audience'),
+      description: t('curricula.items.servantPrep.description'),
+      ageRange: t('curricula.items.servantPrep.ageRange'),
+      badge: "/assets/badges/mo3lm.png",
+    },
+  ];
+
   return (
     <section id="curricula" className="section-padding bg-slate-50/80">
       <div className="container-max">
 
         <div className="text-center mb-16">
           <span className="text-amber-600 text-sm font-semibold uppercase tracking-widest mb-3 block">
-            المسار التعليمي
+            {t('curricula.eyebrow')}
           </span>
-          <h2 className="section-heading heading-accent">مناهجنا التعليمية</h2>
+          <h2 className="section-heading heading-accent">{t('curricula.heading')}</h2>
           <p className="section-subheading mt-6">
-            مسار متدرج من المناهج الكتابية المصممة بعناية لتناسب المراحل العمرية المختلفة
+            {t('curricula.subheading')}
           </p>
         </div>
 
@@ -117,8 +121,8 @@ export default function CurriculaSection() {
                   className="text-teal-400 hover:text-teal-300 text-sm font-medium
                              flex items-center gap-1 group/link transition-colors"
                 >
-                  <span>اعرف أكثر</span>
-                  <span className="group-hover/link:-translate-x-1 transition-transform">←</span>
+                  <span>{t('common.knowMore')}</span>
+                  <span className="group-hover/link:-translate-x-1 rtl:group-hover/link:translate-x-1 transition-transform">{t('common.arabic') === 'العربية' ? '←' : '→'}</span>
                 </Link>
               </div>
             </div>
@@ -128,7 +132,7 @@ export default function CurriculaSection() {
         {/* CTA button below grid */}
         <div className="text-center mt-12">
           <Link href="/curricula" className="btn-gold">
-            شاهد جميع المناهج
+            {t('curricula.viewAll')}
           </Link>
         </div>
       </div>

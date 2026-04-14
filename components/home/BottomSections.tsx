@@ -1,47 +1,31 @@
-// components/home/BottomSections.tsx
-// Sections 7-10: Videos, News, Vision, CTA
-// These are grouped together since they're smaller sections.
-
+"use client";
+import { useTranslation } from "../../hooks/useTranslation";
 import Link from "next/link";
 
 // ── Section 7: Featured Videos ──────────────────────────────────────────────
 function VideosSection() {
-  const videos = [
-    { title: "فيديو تعريفي بأرثوذكسي",      icon: "🎬", color: "text-teal-400" },
-    { title: "فيديو شرح للتطبيق",         icon: "📱", color: "text-amber-400" },
-    { title: "فيديو رسالة تشجيعية",       icon: "💛", color: "text-yellow-400" },
-    { title: "فيديو عن الرؤية المستقبلية", icon: "🔭", color: "text-purple-400" },
-  ];
+  const { t } = useTranslation();
+  const videos = t('videos.items', { returnObjects: true }) as unknown as any[];
 
   return (
     <section className="section-padding bg-slate-50/80">
       <div className="container-max">
         <div className="text-center mb-12">
-          <h2 className="section-heading heading-accent">فيديوهات تعريفية وتشجيعية</h2>
+          <h2 className="section-heading heading-accent">{t('videos.heading')}</h2>
           <p className="section-subheading mt-6">
-            شاهد فيديوهات تعرفك أكثر على الخدمة، وتشرح فكرة التطبيق، وتقدم رسائل روحية
+            {t('videos.subheading')}
           </p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {videos.map((v) => (
+          {Array.isArray(videos) && videos.map((v) => (
             <div
-              key={v.title}
+              key={v.key}
               className="glass-card text-center cursor-pointer group
                          hover:border-teal-300 transition-all duration-300"
             >
-              {/* Fake video thumbnail placeholder */}
               <div className="aspect-video bg-slate-100 rounded-xl mb-4 flex items-center
                               justify-center text-4xl group-hover:scale-105 transition-transform">
-                {/* 
-                  📝 TODO: Replace this with an actual <iframe> or <video> tag.
-                  Example with YouTube:
-                  <iframe 
-                    src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
-                    className="w-full h-full rounded-xl"
-                    allowFullScreen
-                  />
-                */}
                 <span className="text-5xl">▶</span>
               </div>
               <p className={`text-sm font-medium ${v.color}`}>{v.title}</p>
@@ -55,32 +39,8 @@ function VideosSection() {
 
 // ── Section 8: News & Updates ────────────────────────────────────────────────
 function NewsSection() {
-  // 📝 TODO: In production, fetch these from your Firebase Firestore or API
-  // Flutter analogy: this is like a hard-coded list that you'd replace with
-  // a FutureBuilder() or StreamBuilder() later
-  const news = [
-    {
-      category: "تحديثات التطبيق",
-      title: "تحديثات جديدة في تجربة التطبيق",
-      excerpt: "نعمل على تطوير تجربة التطبيق باستمرار بما يدعم الدراسة والمتابعة والتنظيم بصورة أفضل.",
-      date: "مارس ٢٠٢٥",
-      color: "bg-teal-950/60 text-teal-300 border-teal-800/50",
-    },
-    {
-      category: "المناهج",
-      title: "إضافة جديدة إلى المحتوى التعليمي",
-      excerpt: "توسيع مستمر للمحتوى المقدم بما يخدم المراحل المختلفة للأطفال والنشء.",
-      date: "فبراير ٢٠٢٥",
-      color: "bg-amber-950/60 text-amber-300 border-amber-800/50",
-    },
-    {
-      category: "جديد",
-      title: "خطوات مستقبلية في التطوير",
-      excerpt: "نواصل العمل على توسيع أثر الخدمة وتقديم أدوات تعليمية رقمية أكثر قوة وتنظيمًا.",
-      date: "يناير ٢٠٢٥",
-      color: "bg-purple-950/60 text-purple-300 border-purple-800/50",
-    },
-  ];
+  const { t, locale } = useTranslation();
+  const news = t('news.items', { returnObjects: true }) as unknown as any[];
 
   return (
     <section id="news" className="section-padding bg-white/80">
@@ -88,28 +48,26 @@ function NewsSection() {
         <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
           <div>
             <span className="text-amber-600 text-sm font-semibold uppercase tracking-widest mb-3 block">
-              آخر الأخبار
+              {t('news.eyebrow')}
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
-              الأخبار والتحديثات
+              {t('news.heading')}
             </h2>
           </div>
           <Link href="/news" className="btn-ghost text-sm">
-            عرض جميع التحديثات
+            {t('news.viewAll')}
           </Link>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {news.map((item) => (
+          {Array.isArray(news) && news.map((item, index) => (
             <article
-              key={item.title}
+              key={index}
               className="glass-card group cursor-pointer hover:border-slate-300 flex flex-col"
             >
-              {/* Image placeholder */}
               <div className="aspect-video bg-slate-100 rounded-xl mb-4
                               group-hover:bg-slate-200 transition-colors" />
 
-              {/* Category badge */}
               <span className={`text-xs px-3 py-1 rounded-full border self-start mb-3 ${item.color}`}>
                 {item.category}
               </span>
@@ -123,7 +81,7 @@ function NewsSection() {
               <div className="flex items-center justify-between text-xs text-slate-600 mt-auto">
                 <span>{item.date}</span>
                 <span className="text-teal-600 group-hover:text-teal-700 transition-colors">
-                  اقرأ المزيد ←
+                  {t('news.readMore')} {locale === 'ar' ? '←' : '→'}
                 </span>
               </div>
             </article>
@@ -136,29 +94,26 @@ function NewsSection() {
 
 // ── Section 9: Future Vision ─────────────────────────────────────────────────
 function VisionSection() {
+  const { t } = useTranslation();
+  const pillars = t('vision.pillars', { returnObjects: true }) as unknown as any[];
+
   return (
     <section id="vision" className="section-padding bg-slate-50/80">
       <div className="container-max">
         <div className="max-w-3xl mx-auto text-center">
           <span className="text-teal-600 text-sm font-semibold uppercase tracking-widest mb-3 block">
-            نظرة إلى الأمام
+            {t('vision.eyebrow')}
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">رؤيتنا للمستقبل</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">{t('vision.heading')}</h2>
           <p className="text-slate-600 leading-relaxed text-lg mb-10">
-            نسعى إلى بناء مسار كتابي متكامل وطويل المدى يخدم الأطفال والشباب داخل الكنيسة،
-            مع تطوير مستمر للمناهج، وتوسيع نطاق الخدمة، وإضافة أدوات رقمية تساعد على التعلم
-            والمتابعة والنمو الروحي بشكل أعمق وأكثر تأثيرًا.
+            {t('vision.description')}
           </p>
 
           {/* Vision pillars */}
           <div className="grid sm:grid-cols-3 gap-4 mb-10">
-            {[
-              { icon: "📚", label: "تطوير المناهج الحالية" },
-              { icon: "🌐", label: "إضافة مناهج وبرامج جديدة" },
-              { icon: "🏛", label: "التوسع للألحان والقبطي والطقس" },
-            ].map((p) => (
+            {Array.isArray(pillars) && pillars.map((p, index) => (
               <div
-                key={p.label}
+                key={index}
                 className="p-5 rounded-xl border border-slate-200 bg-white text-center"
               >
                 <div className="text-3xl mb-2">{p.icon}</div>
@@ -168,7 +123,7 @@ function VisionSection() {
           </div>
 
           <Link href="/vision" className="btn-ghost">
-            اعرف أكثر عن رؤيتنا
+            {t('vision.cta')}
           </Link>
         </div>
       </div>
@@ -178,6 +133,8 @@ function VisionSection() {
 
 // ── Section 10: Final CTA ─────────────────────────────────────────────────────
 function CTASection() {
+  const { t } = useTranslation();
+
   return (
     <section id="contact-us" className="section-padding bg-white/80">
       <div className="container-max">
@@ -192,18 +149,18 @@ function CTASection() {
 
           <div className="relative z-10">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-              هل ترغب في التعرف أكثر أو بدء التواصل معنا؟
+              {t('cta.heading')}
             </h2>
             <p className="text-slate-600 text-lg max-w-xl mx-auto mb-10">
-              إذا كنت تمثل كنيسة، أو ترغب في معرفة المزيد عن أرثوذكسي، يسعدنا تواصلك معنا.
+              {t('cta.description')}
             </p>
 
             <div className="flex flex-wrap gap-4 justify-center">
               <Link href="/contact" className="btn-primary px-8 py-4 text-base">
-                تواصل معنا
+                {t('cta.primaryButton')}
               </Link>
               <Link href="/contact#demo" className="btn-gold px-8 py-4 text-base">
-                اطلب عرضًا تعريفيًا
+                {t('cta.secondaryButton')}
               </Link>
             </div>
           </div>
@@ -213,8 +170,6 @@ function CTASection() {
   );
 }
 
-// ── Export all bottom sections as one component ─────────────────────────────
-// Flutter analogy: A Column widget containing multiple child sections
 export { NewsSection, VisionSection, CTASection };
 
 export default function BottomSections() {

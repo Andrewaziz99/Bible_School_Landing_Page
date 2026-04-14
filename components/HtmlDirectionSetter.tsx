@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useLang } from "./LanguageProvider";
+import { useLang } from "./providers/LanguageProvider";
 
 /**
  * Small client component that dynamically updates the lang and dir

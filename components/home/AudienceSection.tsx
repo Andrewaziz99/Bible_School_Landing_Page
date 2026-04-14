@@ -1,34 +1,5 @@
-// components/home/AudienceSection.tsx
-// Section 4: من نخدم
-
-// 📖 Flutter analogy:
-// This array is like a List<Map> that you'd pass to a ListView.builder()
-const audiences = [
-  {
-    icon: "⛪",
-    title: "الكنائس",
-    color: "teal",
-    description:
-      "لوحة تحكم رئيسية لإدارة المناهج، ومتابعة النمو في جميع الفصول، وتنظيم الفعاليات على مستوى المدرسة كلها.",
-    features: ["إدارة الفصول والمناهج", "متابعة تقدم المخدومين", "تقارير شاملة"],
-  },
-  {
-    icon: "👨‍🏫",
-    title: "الخدام",
-    color: "gold",
-    description:
-      "تمكين الخدام عبر مناهج دراسية منظمة، وتصحيح تلقائي للاختبارات، ومتابعة منتظمة للحضور، وأدوات تواصل مباشرة.",
-    features: ["تسجيل الحضور والغياب", "تصحيح الواجبات والامتحانات", "التواصل مع الأسر"],
-  },
-  {
-    icon: "👧",
-    title: "المخدومون",
-    color: "crimson",
-    description:
-      "عالم تفاعلي مشوّق تنبض فيه الدروس الكتابية بالحياة من خلال القصص التفاعلية، والاختبارات، والمكافآت الرقمية.",
-    features: ["دروس أسبوعية منظمة", "نقاط وشارات تشجيعية", "ماراثونات كتابية"],
-  },
-];
+"use client";
+import { useTranslation } from "../../hooks/useTranslation";
 
 // Color config — maps color name to Tailwind classes
 // Flutter analogy: like a switch/case for Theme colors
@@ -39,17 +10,43 @@ const colorConfig: Record<string, { border: string; icon: string; badge: string 
 };
 
 export default function AudienceSection() {
+  const { t } = useTranslation();
+
+  const audiences = [
+    {
+      icon: "⛪",
+      title: t('audience.churches.title'),
+      color: "teal",
+      description: t('audience.churches.description'),
+      features: t('audience.churches.features', { returnObjects: true }) as unknown as string[],
+    },
+    {
+      icon: "👨‍🏫",
+      title: t('audience.servants.title'),
+      color: "gold",
+      description: t('audience.servants.description'),
+      features: t('audience.servants.features', { returnObjects: true }) as unknown as string[],
+    },
+    {
+      icon: "👧",
+      title: t('audience.children.title'),
+      color: "crimson",
+      description: t('audience.children.description'),
+      features: t('audience.children.features', { returnObjects: true }) as unknown as string[],
+    },
+  ];
+
   return (
     <section className="section-padding">
       <div className="container-max">
 
         <div className="text-center mb-16">
           <span className="text-teal-600 text-sm font-semibold uppercase tracking-widest mb-3 block">
-            الفئات المستهدفة
+            {t('audience.eyebrow')}
           </span>
-          <h2 className="section-heading heading-accent">لمن نقدم هذه الخدمة؟</h2>
+          <h2 className="section-heading heading-accent">{t('audience.heading')}</h2>
           <p className="section-subheading mt-6">
-            نخدم الكنائس والخدام والمخدومين من خلال تجارب مخصصة لكل فئة
+            {t('audience.subheading')}
           </p>
         </div>
 
@@ -78,7 +75,7 @@ export default function AudienceSection() {
 
                 {/* Feature chips — Flutter: Wrap with Chips */}
                 <div className="flex flex-wrap gap-2">
-                  {audience.features.map((feature) => (
+                  {Array.isArray(audience.features) && audience.features.map((feature) => (
                     <span
                       key={feature}
                       className={`text-xs px-3 py-1.5 rounded-full border ${colors.badge}`}

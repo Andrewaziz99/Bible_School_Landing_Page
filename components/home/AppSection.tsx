@@ -1,20 +1,21 @@
-// components/home/AppSection.tsx
-// Section 6: نظرة سريعة على التطبيق
-
+"use client";
+import { useTranslation } from "../../hooks/useTranslation";
 import Link from "next/link";
 
-const features = [
-  { icon: "📅", label: "دروس أسبوعية منظمة" },
-  { icon: "📝", label: "واجبات وامتحانات" },
-  { icon: "⭐", label: "نقاط وشارات تشجيعية" },
-  { icon: "🏆", label: "ماراثونات كتابية" },
-  { icon: "📊", label: "تقارير ومتابعة" },
-  { icon: "📖", label: "كتاب مقدس داخل التطبيق" },
-  { icon: "🔔", label: "تواصل وإشعارات" },
-  { icon: "🎁", label: "متجر للمكافآت بالنقاط" },
-];
-
 export default function AppSection() {
+  const { t } = useTranslation();
+
+  const features = [
+    { icon: "📅", label: t('app.features.weeklyLessons') },
+    { icon: "📝", label: t('app.features.assignments') },
+    { icon: "⭐", label: t('app.features.badges') },
+    { icon: "🏆", label: t('app.features.marathons') },
+    { icon: "📊", label: t('app.features.reports') },
+    { icon: "📖", label: t('app.features.bible') },
+    { icon: "🔔", label: t('app.features.notifications') },
+    { icon: "🎁", label: t('app.features.store') },
+  ];
+
   return (
     <section id="app" className="section-padding bg-white/70">
       <div className="container-max">
@@ -25,22 +26,20 @@ export default function AppSection() {
           {/* Text side */}
           <div>
             <span className="text-teal-600 text-sm font-semibold uppercase tracking-widest mb-3 block">
-              المنصة الرقمية
+              {t('app.eyebrow')}
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 leading-tight">
-              منصة رقمية تخدم
+              {t('app.heading')}
               <br />
-              <span style={{ color: "#0D9488" }}>التعليم والمتابعة</span>
+              <span style={{ color: "#0D9488" }}>{t('app.headingHighlight')}</span>
             </h2>
             <p className="text-slate-600 leading-relaxed mb-8">
-              إلى جانب المناهج، يقدم تطبيقًا رقميًا متكاملًا يساعد الكنائس
-              والخدام والمخدومين على متابعة الدراسة الأسبوعية، والواجبات، والامتحانات،
-              والحضور، والنقاط التشجيعية، والتقدم داخل كل منهج.
+              {t('app.description')}
             </p>
 
             <Link href="/app" className="btn-primary">
-              اكتشف التطبيق
-              <span className="text-teal-300">←</span>
+              {t('app.cta')}
+              <span className="text-teal-300 rtl:rotate-180 transition-transform">←</span>
             </Link>
           </div>
 

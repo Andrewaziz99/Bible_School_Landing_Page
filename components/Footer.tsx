@@ -1,18 +1,19 @@
-// components/Footer.tsx
-// Flutter analogy: A bottom widget that appears on every page
-
+"use client";
+import { useTranslation } from "../hooks/useTranslation";
 import Link from "next/link";
 
 const quickLinks = [
-  { label: "الرئيسية",       href: "/" },
-  { label: "من نحن",         href: "/about" },
-  { label: "المناهج",        href: "/curricula" },
-  { label: "التطبيق",        href: "/app" },
-  { label: "الأخبار",        href: "/news" },
-  { label: "تواصل معنا",    href: "/contact" },
+  { labelKey: "nav.home",       href: "/" },
+  { labelKey: "nav.about",      href: "/about" },
+  { labelKey: "nav.curricula",  href: "/curricula" },
+  { labelKey: "nav.app",        href: "/app" },
+  { labelKey: "nav.news",       href: "/news" },
+  { labelKey: "nav.contact",    href: "/contact" },
 ];
 
 export default function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="border-t border-slate-200 bg-white/80">
       <div className="container-max px-4 md:px-8 py-14">
@@ -22,21 +23,21 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-teal-600 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">م</span>
+                <span className="text-white font-bold text-lg">{t('footer.brand.name').charAt(0)}</span>
               </div>
               <div>
-                <p className="text-slate-900 font-bold text-sm">أرثوذكسي</p>
-                <p className="text-teal-600 text-xs">للدراسات الكتابية للأطفال</p>
+                <p className="text-slate-900 font-bold text-sm">{t('footer.brand.name')}</p>
+                <p className="text-teal-600 text-xs">{t('footer.brand.tagline')}</p>
               </div>
             </div>
             <p className="text-slate-600 text-sm leading-relaxed">
-              رحلة متكاملة للدراسة الكتابية عبر مناهج متدرجة ومنصة رقمية حديثة.
+              {t('footer.brand.description')}
             </p>
           </div>
 
           {/* Quick links */}
           <div>
-            <h4 className="text-slate-900 font-semibold mb-4">روابط سريعة</h4>
+            <h4 className="text-slate-900 font-semibold mb-4">{t('footer.quickLinks')}</h4>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.href}>
@@ -44,7 +45,7 @@ export default function Footer() {
                     href={link.href}
                     className="text-slate-600 hover:text-teal-600 text-sm transition-colors"
                   >
-                    {link.label}
+                    {t(link.labelKey)}
                   </Link>
                 </li>
               ))}
@@ -53,25 +54,24 @@ export default function Footer() {
 
           {/* Contact info */}
           <div>
-            <h4 className="text-slate-900 font-semibold mb-4">تواصل معنا</h4>
+            <h4 className="text-slate-900 font-semibold mb-4">{t('footer.contactUs')}</h4>
             <div className="space-y-3 text-sm text-slate-600">
-              {/* 📝 TODO: Replace with actual contact info */}
-              <p>📧 example@email.com</p>
-              <p>📱 01000000000</p>
-              <p>💬 واتساب: 01000000000</p>
+              <p>📧 {t('footer.email')}</p>
+              <p>📱 {t('footer.phone')}</p>
+              <p>💬 {t('footer.whatsapp')}</p>
             </div>
 
-            {/* Social media icons */}
+            {/* Social media icons — Placeholder for now as per design */}
             <div className="flex gap-3 mt-5">
-              {["فيسبوك", "يوتيوب"].map((social) => (
+              {["FB", "YT"].map((social) => (
                 <Link
                   key={social}
                   href="#"
                   className="w-9 h-9 rounded-lg bg-slate-800 hover:bg-teal-900
                              flex items-center justify-center text-slate-400
-                             hover:text-teal-300 transition-all duration-200 text-xs"
+                             hover:text-teal-300 transition-all duration-200 text-xs font-bold"
                 >
-                  {social[0]}
+                  {social}
                 </Link>
               ))}
             </div>
@@ -80,7 +80,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-slate-200 pt-6 text-center text-slate-600 text-xs">
-          © {new Date().getFullYear()} أرثوذكسي للدراسات الكتابية للأطفال — جميع الحقوق محفوظة
+          {t('footer.copyright', { year: new Date().getFullYear().toString() })}
         </div>
       </div>
     </footer>

@@ -1,7 +1,32 @@
-// components/home/AboutSection.tsx
-// Section 3: من نحن / ماذا نقدم
+"use client";
+import { useTranslation } from "../../hooks/useTranslation";
 
 export default function AboutSection() {
+  const { t } = useTranslation();
+
+  const features = [
+    {
+      icon: "📖",
+      title: t('about.features.curricula.title'),
+      desc: t('about.features.curricula.description'),
+    },
+    {
+      icon: "📱",
+      title: t('about.features.platform.title'),
+      desc: t('about.features.platform.description'),
+    },
+    {
+      icon: "⛪",
+      title: t('about.features.church.title'),
+      desc: t('about.features.church.description'),
+    },
+    {
+      icon: "✨",
+      title: t('about.features.motivation.title'),
+      desc: t('about.features.motivation.description'),
+    },
+  ];
+
   return (
     <section id="about" className="section-padding bg-slate-50/80">
       <div className="container-max">
@@ -9,9 +34,9 @@ export default function AboutSection() {
         {/* Section header */}
         <div className="text-center mb-16">
           <span className="text-teal-600 text-sm font-semibold uppercase tracking-widest mb-3 block">
-            تعرّف علينا
+            {t('about.eyebrow')}
           </span>
-          <h2 className="section-heading heading-accent">من نحن / ماذا نقدم</h2>
+          <h2 className="section-heading heading-accent">{t('about.heading')}</h2>
         </div>
 
         {/* Two-column layout — Flutter: Row with two Expanded widgets */}
@@ -19,45 +44,20 @@ export default function AboutSection() {
 
           {/* Left (RTL: right side) — text */}
           <div>
-            <h3 className="text-2xl font-bold text-slate-900 mb-4">من نحن</h3>
+            <h3 className="text-2xl font-bold text-slate-900 mb-4">{t('about.whoWeAre.title')}</h3>
             <p className="text-slate-600 leading-relaxed mb-6">
-              أرثوذكسي للدراسات الكتابية للأطفال هو مبادرة تعليمية كتابية
-              تهدف إلى تقديم دراسة منظمة وعميقة ومناسبة للأطفال والنشء حتى المرحلة
-              الثانوية داخل الكنيسة، من خلال مناهج متدرجة ومنصة رقمية حديثة.
+              {t('about.whoWeAre.description')}
             </p>
 
-            <h3 className="text-2xl font-bold text-slate-900 mb-4">ماذا نقدم</h3>
+            <h3 className="text-2xl font-bold text-slate-900 mb-4">{t('about.whatWeOffer.title')}</h3>
             <p className="text-slate-600 leading-relaxed">
-              نقدم مسارًا متكاملًا يشمل مناهج كتابية متعددة المراحل، وتطبيقًا يخدم
-              الأطفال والخدام وإدارة الكنائس، مع أدوات للمتابعة والواجبات والامتحانات
-              والتشجيع الروحي والتحفيز المستمر.
+              {t('about.whatWeOffer.description')}
             </p>
           </div>
 
           {/* Right (RTL: left side) — feature list */}
           <div className="space-y-4">
-            {[
-              {
-                icon: "📖",
-                title: "مناهج متدرجة",
-                desc: "5 مناهج مصممة لتناسب المراحل العمرية المختلفة من الحضانة حتى الثانوي",
-              },
-              {
-                icon: "📱",
-                title: "منصة رقمية متكاملة",
-                desc: "تطبيق يربط الكنائس والخدام والمخدومين في تجربة تعليمية واحدة",
-              },
-              {
-                icon: "⛪",
-                title: "خدمة الكنيسة",
-                desc: "أدوات عملية تساعد الكنائس والخدام على تقديم دراسة أكثر تنظيمًا",
-              },
-              {
-                icon: "✨",
-                title: "تحفيز وتشجيع",
-                desc: "نقاط وشارات وماراثونات تجعل الدراسة الكتابية تجربة ممتعة وتفاعلية",
-              },
-            ].map((item) => (
+            {features.map((item) => (
               <div
                 key={item.title}
                 className="flex gap-4 p-4 rounded-xl bg-white border border-slate-200

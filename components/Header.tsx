@@ -4,24 +4,26 @@
 //    and changes style when you scroll. "use client" means it runs in the browser.
 //    In Flutter terms: it has state (isScrolled, isMenuOpen).
 
+"use client";
+
 import { useState, useEffect } from "react";
-import { useLang } from "../components/LanguageProvider";
+import { useLang } from "../components/providers/LanguageProvider";
 import Link from "next/link"; // Flutter analogy: like Navigator.pushNamed()
 import Image from "next/image";
 
 const navItems = [
-  { label: "الرئيسية",           href: "/" },
-  { label: "الكتاب المقدس",      href: "/bible" },
-  { label: "من نحن",             href: "/about" },
-  { label: "المناهج",            href: "/curricula" },
-  { label: "التطبيق",            href: "/app" },
-  { label: "الأخبار",            href: "/news" },
-  { label: "رؤيتنا للمستقبل",   href: "/vision" },
-  { label: "تواصل معنا",         href: "/contact-us" },
+  { labelKey: "nav.home",      href: "/" },
+  { labelKey: "nav.bible",     href: "/bible" },
+  { labelKey: "nav.about",     href: "/about" },
+  { labelKey: "nav.curricula", href: "/curricula" },
+  { labelKey: "nav.app",       href: "/app" },
+  { labelKey: "nav.news",      href: "/news" },
+  { labelKey: "nav.vision",    href: "/vision" },
+  { labelKey: "nav.contact",   href: "/contact-us" },
 ];
 
 export default function Header() {
-  const { locale, setLocale } = useLang();
+  const { t, locale, setLocale } = useLang();
   // Flutter analogy: useState is like late bool _isScrolled = false;
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -55,13 +57,13 @@ export default function Header() {
             className={`px-3 py-1 rounded-lg text-sm font-bold ${locale === 'ar' ? 'bg-teal-600 text-white' : 'bg-slate-200 text-slate-600'}`}
             onClick={() => setLocale('ar')}
           >
-            العربية
+            {t('common.arabic')}
           </button>
           <button
             className={`px-3 py-1 rounded-lg text-sm font-bold ${locale === 'en' ? 'bg-teal-600 text-white' : 'bg-slate-200 text-slate-600'}`}
             onClick={() => setLocale('en')}
           >
-            English
+            {t('common.english')}
           </button>
         </div>
 
@@ -71,7 +73,7 @@ export default function Header() {
           <div className="w-12 h-12 md:w-16 md:h-16 p-1 md:p-2 rounded-2xl bg-teal-50 backdrop-blur-md border-2 border-teal-300 flex items-center justify-center overflow-hidden shadow-md shadow-teal-200/50 group-hover:scale-105 transition-transform duration-300 relative">
             <Image
               src="/assets/logo.png"
-              alt="أرثوذكسي Logo"
+              alt={`${t('footer.brand.name')} Logo`}
               width={64}
               height={64}
               priority
@@ -80,8 +82,8 @@ export default function Header() {
             />
           </div>
           <div className="hidden sm:block text-right min-w-0">
-            <p className="text-slate-900 font-bold text-lg md:text-xl tracking-wide leading-tight drop-shadow-sm truncate" style={{fontFamily: 'var(--font-sultan-ruqah)'}}>أرثوذكسي</p>
-            <p className="text-teal-600 text-sm md:text-lg leading-tight font-semibold drop-shadow-sm truncate">للدراسات الكتابية للأطفال</p>
+            <p className="text-slate-900 font-bold text-lg md:text-xl tracking-wide leading-tight drop-shadow-sm truncate" style={{fontFamily: 'var(--font-sultan-ruqah)'}}>{t('footer.brand.name')}</p>
+            <p className="text-teal-600 text-sm md:text-lg leading-tight font-semibold drop-shadow-sm truncate">{t('footer.brand.tagline')}</p>
           </div>
         </Link>
 
@@ -99,7 +101,7 @@ export default function Header() {
                   if (el) el.scrollIntoView({ behavior: "smooth" });
                 }}
               >
-                {item.label}
+                {t(item.labelKey)}
               </a>
             ) : (
               <Link
@@ -107,7 +109,7 @@ export default function Header() {
                 href={item.href}
                 className="px-3 py-1 text-base font-bold text-slate-700 hover:text-teal-600 rounded-lg hover:bg-teal-50 transition-all duration-200 shadow-sm hover:shadow-teal-200/40 tracking-wide border border-transparent hover:border-teal-300 focus:outline-none focus:ring-2 focus:ring-teal-300 whitespace-nowrap"
               >
-                {item.label}
+                {t(item.labelKey)}
               </Link>
             )
           ))}
@@ -124,7 +126,7 @@ export default function Header() {
               if (el) el.scrollIntoView({ behavior: "smooth" });
             }}
           >
-            تواصل معنا
+            {t('common.contactUs')}
           </a>
 
           {/* Hamburger button — only visible on mobile */}
@@ -132,7 +134,7 @@ export default function Header() {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="lg:hidden p-2 rounded-lg text-slate-600 hover:text-teal-600
                        hover:bg-teal-50 transition-colors"
-            aria-label="فتح القائمة"
+            aria-label={t('common.menu')}
           >
             {/* Simple hamburger icon using divs */}
             <div className="w-5 flex flex-col gap-1">
@@ -160,7 +162,7 @@ export default function Header() {
                 }}
                 className="block px-4 py-3 text-lg font-semibold text-slate-700 hover:text-teal-600 hover:bg-teal-50 rounded-xl transition-colors duration-200 shadow-sm hover:shadow-teal-200/30"
               >
-                {item.label}
+                {t(item.labelKey)}
               </a>
             ) : (
               <Link
@@ -169,7 +171,7 @@ export default function Header() {
                 onClick={() => setIsMenuOpen(false)}
                 className="block px-4 py-3 text-lg font-semibold text-slate-700 hover:text-teal-600 hover:bg-teal-50 rounded-xl transition-colors duration-200 shadow-sm hover:shadow-teal-200/30"
               >
-                {item.label}
+                {t(item.labelKey)}
               </Link>
             )
           ))}
@@ -184,7 +186,7 @@ export default function Header() {
                 if (el) el.scrollIntoView({ behavior: "smooth" });
               }}
             >
-              تواصل معنا
+              {t('common.contactUs')}
             </a>
           </div>
         </div>

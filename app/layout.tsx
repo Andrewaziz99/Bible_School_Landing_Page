@@ -5,7 +5,7 @@
 import type { Metadata } from "next";
 import { Cairo } from "next/font/google";
 import "./globals.css";
-import LanguageProvider from "../components/LanguageProvider";
+import LanguageProvider from "../components/providers/LanguageProvider";
 import HtmlDirectionSetter from "../components/HtmlDirectionSetter";
 
 // Load Cairo font — optimized to only the weights we actually use

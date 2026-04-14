@@ -1,10 +1,16 @@
-// components/home/HeroSection.tsx
-// 📖 Flutter analogy: A "dumb" widget (StatelessWidget) — no state, just displays content.
-// In React, a component with no `useState` is like a StatelessWidget.
-
+"use client";
+import { useTranslation } from "../../hooks/useTranslation";
 import Link from "next/link";
 
 export default function HeroSection() {
+  const { t } = useTranslation();
+
+  const stats = [
+    { value: t('hero.stats.curricula.value'), label: t('hero.stats.curricula.label') },
+    { value: t('hero.stats.audiences.value'), label: t('hero.stats.audiences.label') },
+    { value: t('hero.stats.years.value'),     label: t('hero.stats.years.label') },
+  ];
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
 
@@ -31,46 +37,40 @@ export default function HeroSection() {
                           bg-teal-50 border border-teal-300 text-teal-700 text-sm mb-8
                           animate-fade-in-up">
             <span className="w-2 h-2 rounded-full bg-teal-600 animate-pulse" />
-            أرثوذكسي للدراسات الكتابية
+            {t('hero.badge')}
           </div>
 
           {/* Main Heading */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight
                          text-slate-900 mb-6 animate-fade-in-up-delay-1">
-            دراسة كتابية منهجية
+            {t('hero.heading')}
             <br />
             <span className="text-teal-600" style={{ color: "#0D9488" }}>
-              للأجيال الجديدة
+              {t('hero.headingHighlight')}
             </span>
           </h1>
 
           {/* Subtitle paragraph */}
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl
                         mb-10 animate-fade-in-up-delay-2">
-            نقدم محتوى كتابيًا أرثوذكسيًا قبطيًا من خلال مناهج منظمة للأطفال والنشء،
-            عبر منصة رقمية تخدم الكنائس والخدام والمخدومين،
-            وتسعى إلى تأسيس دراسة منهجية راسخة للكتاب المقدس.
+            {t('hero.subtitle')}
           </p>
 
           {/* CTA Buttons — Flutter: Row of ElevatedButton */}
           <div className="flex flex-wrap gap-4 animate-fade-in-up-delay-3">
             <Link href="#curricula" className="btn-primary text-base px-8 py-4">
-              <span>اكتشف المناهج</span>
-              <span className="text-teal-300">←</span>
+              <span>{t('hero.cta.primary')}</span>
+              <span className="text-teal-300 rtl:rotate-180 transition-transform">←</span>
             </Link>
             <Link href="#app" className="btn-ghost text-base px-8 py-4">
-              تعرّف على التطبيق
+              {t('hero.cta.secondary')}
             </Link>
           </div>
 
           {/* Stats row */}
           <div className="flex flex-wrap gap-8 mt-16 pt-8 border-t border-slate-300
                           animate-fade-in-up-delay-3">
-            {[
-              { value: "5",    label: "مناهج تعليمية" },
-              { value: "4",    label: "فئات مستهدفة" },
-              { value: "11+",  label: "سنة دراسة متدرجة" },
-            ].map((stat) => (
+            {stats.map((stat) => (
               <div key={stat.label}>
                 <p className="text-3xl font-black text-teal-600">
                   {stat.value}
@@ -85,7 +85,7 @@ export default function HeroSection() {
       {/* Scroll indicator */}
       <div className="absolute bottom-8 inset-x-0 flex justify-center animate-bounce">
         <div className="flex flex-col items-center gap-1 text-slate-500">
-          <span className="text-xs">اكتشف أكثر</span>
+          <span className="text-xs">{t('hero.scrollIndicator')}</span>
           <span className="text-lg">↓</span>
         </div>
       </div>
