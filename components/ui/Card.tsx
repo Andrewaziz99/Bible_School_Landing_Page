@@ -6,7 +6,7 @@ interface CardProps {
   variant?: 'default' | 'glass' | 'feature' | 'elevated';
   padding?: 'none' | 'sm' | 'md' | 'lg';
   accentColor?: 'teal' | 'gold' | 'crimson' | 'none';
-  hoverable?: boolean;
+  hoverEffect?: 'none' | 'lift' | 'glow' | 'zoom';
   children: React.ReactNode;
   className?: string;
 }
@@ -15,13 +15,13 @@ export const Card = ({
   variant = 'default',
   padding = 'md',
   accentColor = 'none',
-  hoverable = false,
+  hoverEffect = 'none',
   children,
   className,
 }: CardProps) => {
   const variants = {
     default: 'bg-white border border-slate-200 shadow-sm',
-    glass: 'bg-white/60 backdrop-blur-xl border border-white/30 shadow-sm',
+    glass: 'bg-white/60 backdrop-blur-xl border border-white/40 shadow-sm',
     feature: 'bg-gradient-to-br from-white to-slate-50 border border-slate-200 shadow-sm',
     elevated: 'bg-white border border-slate-100 shadow-xl shadow-slate-200/50',
   };
@@ -40,14 +40,21 @@ export const Card = ({
     none: '',
   };
 
+  const hoverEffects = {
+    none: '',
+    lift: 'hover:-translate-y-2 hover:shadow-2xl hover:shadow-slate-200 hover:border-teal-500/30',
+    glow: 'hover:shadow-[0_0_30px_rgba(13,148,136,0.15)] hover:border-teal-500/50',
+    zoom: 'hover:scale-[1.02] hover:shadow-xl',
+  };
+
   return (
     <div
       className={cn(
-        'rounded-2xl transition-all duration-300',
+        'rounded-3xl transition-all duration-500 ease-out',
         variants[variant],
         paddings[padding],
         accents[accentColor],
-        hoverable && 'hover:-translate-y-1 hover:shadow-lg hover:border-slate-300',
+        hoverEffects[hoverEffect],
         className
       )}
     >

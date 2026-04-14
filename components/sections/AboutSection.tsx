@@ -1,74 +1,82 @@
+// components/sections/AboutSection.tsx
 "use client";
-import { useTranslation } from "../../hooks/useTranslation";
+
+import React from 'react';
+import { useLang } from '../providers/LanguageProvider';
+import { SectionHeader, Card } from '../ui';
+import { BookOpen, Smartphone, Church, Sparkles } from 'lucide-react';
 
 export default function AboutSection() {
-  const { t } = useTranslation();
+  const { t } = useLang();
 
   const features = [
     {
-      icon: "📖",
+      icon: <BookOpen className="w-6 h-6 text-teal-600" />,
       title: t('about.features.curricula.title'),
       desc: t('about.features.curricula.description'),
     },
     {
-      icon: "📱",
+      icon: <Smartphone className="w-6 h-6 text-amber-600" />,
       title: t('about.features.platform.title'),
       desc: t('about.features.platform.description'),
     },
     {
-      icon: "⛪",
+      icon: <Church className="w-6 h-6 text-purple-600" />,
       title: t('about.features.church.title'),
       desc: t('about.features.church.description'),
     },
     {
-      icon: "✨",
+      icon: <Sparkles className="w-6 h-6 text-rose-600" />,
       title: t('about.features.motivation.title'),
       desc: t('about.features.motivation.description'),
     },
   ];
 
   return (
-    <section id="about" className="section-padding bg-slate-50/80">
+    <section id="about" className="py-24 bg-white relative">
       <div className="container-max">
+        <SectionHeader 
+          eyebrow={t('about.eyebrow')}
+          heading={t('about.heading')}
+          centered
+          className="mb-20"
+        />
 
-        {/* Section header */}
-        <div className="text-center mb-16">
-          <span className="text-teal-600 text-sm font-semibold uppercase tracking-widest mb-3 block">
-            {t('about.eyebrow')}
-          </span>
-          <h2 className="section-heading heading-accent">{t('about.heading')}</h2>
-        </div>
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Main Content */}
+          <div className="space-y-12">
+            <div className="relative">
+              <div className="absolute -start-4 top-0 w-1 h-full bg-teal-500 rounded-full opacity-20" />
+              <h3 className="text-3xl font-black text-slate-900 mb-6">{t('about.whoWeAre.title')}</h3>
+              <p className="text-xl text-slate-600 leading-relaxed font-medium">
+                {t('about.whoWeAre.description')}
+              </p>
+            </div>
 
-        {/* Two-column layout — Flutter: Row with two Expanded widgets */}
-        <div className="grid md:grid-cols-2 gap-10 items-center">
-
-          {/* Left (RTL: right side) — text */}
-          <div>
-            <h3 className="text-2xl font-bold text-slate-900 mb-4">{t('about.whoWeAre.title')}</h3>
-            <p className="text-slate-600 leading-relaxed mb-6">
-              {t('about.whoWeAre.description')}
-            </p>
-
-            <h3 className="text-2xl font-bold text-slate-900 mb-4">{t('about.whatWeOffer.title')}</h3>
-            <p className="text-slate-600 leading-relaxed">
-              {t('about.whatWeOffer.description')}
-            </p>
+            <div className="relative">
+              <div className="absolute -start-4 top-0 w-1 h-full bg-amber-500 rounded-full opacity-20" />
+              <h3 className="text-3xl font-black text-slate-900 mb-6">{t('about.whatWeOffer.title')}</h3>
+              <p className="text-xl text-slate-600 leading-relaxed font-medium">
+                {t('about.whatWeOffer.description')}
+              </p>
+            </div>
           </div>
 
-          {/* Right (RTL: left side) — feature list */}
-          <div className="space-y-4">
-            {features.map((item) => (
-              <div
-                key={item.title}
-                className="flex gap-4 p-4 rounded-xl bg-white border border-slate-200
-                           hover:border-teal-300 transition-all duration-200 shadow-sm hover:shadow-teal-100"
+          {/* Feature Highlight Cards */}
+          <div className="grid sm:grid-cols-2 gap-6">
+            {features.map((item, idx) => (
+              <Card 
+                key={idx}
+                variant="default"
+                hoverEffect="lift"
+                className="p-8 border-slate-100 bg-slate-50/50 hover:bg-white"
               >
-                <div className="text-2xl mt-0.5 flex-shrink-0">{item.icon}</div>
-                <div>
-                  <h4 className="font-semibold text-slate-900 mb-1">{item.title}</h4>
-                  <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
+                <div className="mb-6 w-14 h-14 rounded-2xl bg-white shadow-sm border border-slate-100 flex items-center justify-center">
+                  {item.icon}
                 </div>
-              </div>
+                <h4 className="text-xl font-bold text-slate-900 mb-2">{item.title}</h4>
+                <p className="text-slate-600 text-sm leading-relaxed">{item.desc}</p>
+              </Card>
             ))}
           </div>
         </div>

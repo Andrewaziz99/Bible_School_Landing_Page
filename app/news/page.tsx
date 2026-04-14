@@ -1,6 +1,6 @@
 
 import Header from "@/components/layout/Header";
-import { NewsSection } from "@/components/home/BottomSections";
+import { NewsSection } from "@/components/sections/NewsSection";
 
 export default function NewsPage() {
   return (

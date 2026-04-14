@@ -6,7 +6,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils/cn";
 
 interface ButtonProps {
-  variant?: "primary" | "secondary" | "ghost" | "link";
+  variant?: "primary" | "secondary" | "ghost" | "link" | "outline" | "white";
   size?: "sm" | "md" | "lg";
   children: React.ReactNode;
   href?: string; // Renders as <Link> if provided
@@ -36,11 +36,15 @@ export const Button = ({
 }: ButtonProps) => {
   const variants = {
     primary:
-      "bg-teal-600 text-white hover:bg-teal-700 shadow-md shadow-teal-600/20 active:translate-y-0",
+      "bg-teal-600 text-white hover:bg-teal-700 shadow-md shadow-teal-600/20",
     secondary:
-      "bg-amber-600 text-white hover:bg-amber-700 shadow-md shadow-amber-600/20 active:translate-y-0",
+      "bg-amber-600 text-white hover:bg-amber-700 shadow-md shadow-amber-600/20",
     ghost:
       "bg-transparent border-2 border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300",
+    outline: 
+      "bg-transparent border-2 border-current hover:bg-white/10",
+    white: 
+      "bg-white text-slate-900 hover:bg-slate-100 shadow-xl shadow-slate-900/10 border-none",
     link: "bg-transparent text-teal-600 hover:underline p-0 h-auto",
   };
 
@@ -51,7 +55,7 @@ export const Button = ({
   };
 
   const baseStyles = cn(
-    "inline-flex items-center justify-center transition-all duration-200 transform hover:-translate-y-0.5 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:scale-100",
+    "inline-flex items-center justify-center transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:scale-100",
     fullWidth ? "w-full" : "w-auto",
     variants[variant],
     variant !== "link" && sizes[size],
@@ -61,11 +65,11 @@ export const Button = ({
   const content = (
     <>
       {icon && iconPosition === "start" && (
-        <span className={cn(children ? "me-2" : "")}>{icon}</span>
+        <span className={cn(children ? "me-2.5" : "")}>{icon}</span>
       )}
       {children}
       {icon && iconPosition === "end" && (
-        <span className={cn(children ? "ms-2" : "")}>{icon}</span>
+        <span className={cn(children ? "ms-2.5" : "")}>{icon}</span>
       )}
     </>
   );

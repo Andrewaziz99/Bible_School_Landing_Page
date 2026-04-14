@@ -1,9 +1,10 @@
-// components/ui/Breadcrumb.tsx
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
-import { useLang } from '../providers/LanguageProvider';
+import { useLang } from '@/components/providers/LanguageProvider';
 
 interface BreadcrumbProps {
   items: { label: string; href: string }[];

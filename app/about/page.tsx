@@ -1,7 +1,7 @@
 
 
 import Header from "@/components/layout/Header";
-import AboutSection from "@/components/home/AboutSection";
+import AboutSection from "@/components/sections/AboutSection";
 
 export default function AboutPage() {
   return (

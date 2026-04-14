@@ -1,66 +1,111 @@
+// components/sections/AppSection.tsx
 "use client";
-import { useTranslation } from "../../hooks/useTranslation";
-import Link from "next/link";
+
+import React from 'react';
+import { useLang } from '../providers/LanguageProvider';
+import { Button, Card, Badge } from '../ui';
+import { 
+  BookOpen, 
+  ClipboardCheck, 
+  Award, 
+  Trophy, 
+  BarChart3, 
+  Book, 
+  Bell, 
+  ShoppingBag,
+  ArrowRight,
+  ArrowLeft,
+  Smartphone
+} from 'lucide-react';
+import { appFeatures } from '@/lib/data/features';
+import { cn } from '@/lib/utils/cn';
 
 export default function AppSection() {
-  const { t } = useTranslation();
+  const { t, dir, locale } = useLang();
+  const ArrowIcon = dir === 'rtl' ? ArrowLeft : ArrowRight;
 
-  const features = [
-    { icon: "📅", label: t('app.features.weeklyLessons') },
-    { icon: "📝", label: t('app.features.assignments') },
-    { icon: "⭐", label: t('app.features.badges') },
-    { icon: "🏆", label: t('app.features.marathons') },
-    { icon: "📊", label: t('app.features.reports') },
-    { icon: "📖", label: t('app.features.bible') },
-    { icon: "🔔", label: t('app.features.notifications') },
-    { icon: "🎁", label: t('app.features.store') },
-  ];
+  const iconMap: Record<string, any> = {
+    BookOpen,
+    ClipboardCheck,
+    Award,
+    Trophy,
+    BarChart3,
+    Book,
+    Bell,
+    ShoppingBag
+  };
 
   return (
-    <section id="app" className="section-padding bg-white/70">
-      <div className="container-max">
+    <section id="app" className="py-24 bg-white relative overflow-hidden">
+      {/* Background Decorative Element */}
+      <div className="absolute top-1/2 end-[-10%] w-[40rem] h-[40rem] bg-amber-100/30 rounded-full blur-[120px] -translate-y-1/2 -z-10" />
 
-        {/* Two column layout */}
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-
-          {/* Text side */}
+      <div className="container-max relative z-10">
+        <div className="grid lg:grid-cols-2 gap-20 items-center">
+          {/* Content Side */}
           <div>
-            <span className="text-teal-600 text-sm font-semibold uppercase tracking-widest mb-3 block">
+            <Badge variant="secondary" className="mb-6 bg-teal-50 text-teal-700 border-teal-100 px-4 py-1.5 font-black uppercase tracking-widest text-[10px]">
               {t('app.eyebrow')}
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 leading-tight">
+            </Badge>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-8 leading-tight">
               {t('app.heading')}
               <br />
-              <span style={{ color: "#0D9488" }}>{t('app.headingHighlight')}</span>
+              <span className="text-teal-600">{t('app.headingHighlight')}</span>
             </h2>
-            <p className="text-slate-600 leading-relaxed mb-8">
+            <p className="text-xl text-slate-600 leading-relaxed mb-12 font-medium">
               {t('app.description')}
             </p>
 
-            <Link href="/app" className="btn-primary">
-              {t('app.cta')}
-              <span className="text-teal-300 rtl:rotate-180 transition-transform">←</span>
-            </Link>
-          </div>
-
-          {/* Features grid side */}
-          <div className="grid grid-cols-2 gap-3">
-            {features.map((f) => (
-              <div
-                key={f.label}
-                className="flex items-center gap-3 p-4 rounded-xl
-                           bg-slate-50 border border-slate-200
-                           hover:border-teal-300 hover:bg-teal-50
-                           transition-all duration-200 group"
+            <div className="flex flex-wrap gap-5">
+              <Button 
+                variant="primary" 
+                size="lg" 
+                href="/app-page"
+                icon={<ArrowIcon className="w-5 h-5" />}
+                iconPosition="end"
               >
-                <span className="text-2xl group-hover:scale-110 transition-transform">
-                  {f.icon}
-                </span>
-                <span className="text-sm text-slate-700 font-medium">{f.label}</span>
+                {t('app.cta')}
+              </Button>
+              <div className="flex -space-x-3 rtl:space-x-reverse">
+                 {[1,2,3,4].map(i => (
+                   <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-500 overflow-hidden shadow-sm">
+                      <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200" />
+                   </div>
+                 ))}
+                 <div className="flex items-center ps-5 text-sm font-bold text-slate-500 italic">
+                    +500 Users
+                 </div>
               </div>
-            ))}
+            </div>
           </div>
 
+          {/* Features Visual Side */}
+          <div className="relative">
+             {/* Feature Grid with perspective hint */}
+             <div className="grid grid-cols-2 gap-5 relative z-10">
+                {appFeatures.map((f, idx) => {
+                  const Icon = iconMap[f.icon] || Smartphone;
+                  return (
+                    <Card 
+                      key={f.id}
+                      variant="default"
+                      hoverEffect="lift"
+                      className="p-6 border-slate-200/60 bg-white/80 backdrop-blur-sm flex items-center gap-4 group"
+                    >
+                      <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-teal-600 group-hover:bg-teal-600 group-hover:text-white transition-all duration-300">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <span className="text-sm font-black text-slate-800 leading-tight">
+                        {f.label[locale]}
+                      </span>
+                    </Card>
+                  );
+                })}
+             </div>
+
+             {/* Background Decoration */}
+             <div className="absolute -inset-10 bg-gradient-to-br from-teal-500/5 to-amber-500/5 rounded-[3rem] -z-10 rotate-3 scale-110" />
+          </div>
         </div>
       </div>
     </section>

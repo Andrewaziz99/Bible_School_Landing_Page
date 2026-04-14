@@ -1,139 +1,114 @@
-// components/home/CurriculaSection.tsx
-// Section 5: نظرة سريعة على المناهج
-
+// components/sections/CurriculaSection.tsx
 "use client";
-import { useTranslation } from "../../hooks/useTranslation";
-import Link from "next/link";
-import Image from "next/image";
+
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useLang } from '../providers/LanguageProvider';
+import { SectionHeader, Card, Badge, Button } from '../ui';
+import { Clock, Users, ArrowRight, ArrowLeft } from 'lucide-react';
+import { curricula } from '@/lib/data/curricula';
+import { cn } from '@/lib/utils/cn';
 
 export default function CurriculaSection() {
-  const { t } = useTranslation();
-
-  const curricula = [
-    {
-      number: "01",
-      title: t('curricula.items.bibleCharacters.title'),
-      duration: t('curricula.items.bibleCharacters.duration'),
-      audience: t('curricula.items.bibleCharacters.audience'),
-      description: t('curricula.items.bibleCharacters.description'),
-      ageRange: t('curricula.items.bibleCharacters.ageRange'),
-      badge: "/assets/badges/4ahed.png",
-    },
-    {
-      number: "02",
-      title: t('curricula.items.biblicalConcepts.title'),
-      duration: t('curricula.items.biblicalConcepts.duration'),
-      audience: t('curricula.items.biblicalConcepts.audience'),
-      description: t('curricula.items.biblicalConcepts.description'),
-      ageRange: t('curricula.items.biblicalConcepts.ageRange'),
-      badge: "/assets/badges/amin.png",
-    },
-    {
-      number: "03",
-      title: t('curricula.items.extendedStudy.title'),
-      duration: t('curricula.items.extendedStudy.duration'),
-      audience: t('curricula.items.extendedStudy.audience'),
-      description: t('curricula.items.extendedStudy.description'),
-      ageRange: t('curricula.items.extendedStudy.ageRange'),
-      badge: "/assets/badges/kof2.png",
-    },
-    {
-      number: "04",
-      title: t('curricula.items.servantPrep.title'),
-      duration: t('curricula.items.servantPrep.duration'),
-      audience: t('curricula.items.servantPrep.audience'),
-      description: t('curricula.items.servantPrep.description'),
-      ageRange: t('curricula.items.servantPrep.ageRange'),
-      badge: "/assets/badges/mo3lm.png",
-    },
-  ];
+  const { t, dir, locale } = useLang();
+  const ArrowIcon = dir === 'rtl' ? ArrowLeft : ArrowRight;
 
   return (
-    <section id="curricula" className="section-padding bg-slate-50/80">
-      <div className="container-max">
+    <section id="curricula" className="py-24 bg-white relative overflow-hidden">
+      {/* Decorative background element */}
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-50/50 -skew-x-12 translate-x-1/4 pointer-events-none" />
 
-        <div className="text-center mb-16">
-          <span className="text-amber-600 text-sm font-semibold uppercase tracking-widest mb-3 block">
-            {t('curricula.eyebrow')}
-          </span>
-          <h2 className="section-heading heading-accent">{t('curricula.heading')}</h2>
-          <p className="section-subheading mt-6">
-            {t('curricula.subheading')}
-          </p>
+      <div className="container-max relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+          <SectionHeader 
+            eyebrow={t('curricula.eyebrow')}
+            heading={t('curricula.heading')}
+            description={t('curricula.subheading')}
+            className="mb-0 max-w-2xl"
+          />
+          <Button variant="outline" href="/curricula" icon={<ArrowIcon className="w-4 h-4" />} iconPosition="end">
+            {t('curricula.viewAll')}
+          </Button>
         </div>
 
         {/* Cards Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {curricula.map((c, index) => (
-            <div
-              key={c.number}
-              className="glass-card group relative overflow-hidden flex flex-col"
-              style={{
-                background: `linear-gradient(180deg, rgba(255,255,255,0.92) 60%, rgba(248,249,250,0.85) 100%)`,
-              }}
-            >
-              {/* Badge background image with overlay */}
-              <div className="absolute inset-0 z-0 pointer-events-none select-none opacity-10 filter drop-shadow(0 2px 8px #0008)" aria-hidden="true">
-                <Image
-                  src={c.badge}
-                  alt=""
-                  fill
-                  sizes="(max-width: 768px) 100vw, 25vw"
-                  className="object-contain object-[center_60%]"
-                />
-              </div>
-              {/* Top gradient line */}
-              <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r
-                              from-transparent via-amber-500 to-transparent opacity-60 z-10" />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {curricula.map((c, index) => {
+            // Determine badge image based on slug
+            const badgeSrc = `/assets/badges/${c.slug === 'bible-characters' ? '4ahed' : c.slug === 'biblical-concepts' ? 'amin' : c.slug === 'extended-study' ? 'kof2' : 'mo3lm'}.png`;
 
-              {/* Large background number */}
-              <div className="absolute -top-4 -right-2 text-8xl font-black text-slate-200/60
-                              group-hover:text-teal-100/60 transition-colors duration-300 select-none z-10">
-                {c.number}
-              </div>
+            return (
+              <Card 
+                key={c.slug}
+                variant="elevated"
+                hoverEffect="lift"
+                className="group relative overflow-hidden flex flex-col p-0 border-none bg-white shadow-lg h-full"
+              >
+                {/* Visual Header with Badge Background */}
+                <div className="relative h-48 bg-slate-900 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-teal-600/20 to-amber-600/20 z-10" />
+                  <div className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-500">
+                    <Image 
+                      src={badgeSrc} 
+                      alt={c.title[locale]} 
+                      fill 
+                      className="object-contain scale-150 blur-[2px] group-hover:blur-0 transition-all duration-700" 
+                    />
+                  </div>
+                  
+                  {/* Number Overlay */}
+                  <div className="absolute top-4 end-6 text-7xl font-black text-white/10 group-hover:text-white/20 transition-colors">
+                    {c.number}
+                  </div>
 
-              <div className="relative z-20 flex flex-col flex-1">
-                {/* Age badge */}
-                <span className="text-xs px-2.5 py-1 rounded-full bg-teal-50
-                                  text-teal-700 border border-teal-200 self-start mb-4">
-                  {c.ageRange}
-                </span>
-
-                {/* Title */}
-                <h3 className="text-lg font-bold text-slate-900 mb-2 leading-snug">
-                  {c.title}
-                </h3>
-
-                {/* Meta */}
-                <div className="flex flex-col gap-1 mb-4 text-xs text-slate-500">
-                  <span>⏱ {c.duration}</span>
-                  <span>👥 {c.audience}</span>
+                  {/* Level Badge */}
+                  <div className="absolute bottom-4 start-6 z-20">
+                     <Badge variant="primary" className="bg-white/10 backdrop-blur-md border-white/20 text-white shadow-none">
+                        {c.badge}
+                     </Badge>
+                  </div>
                 </div>
 
-                {/* Description */}
-                <p className="text-sm text-slate-400 leading-relaxed flex-1 mb-5">
-                  {c.description}
-                </p>
+                {/* Content */}
+                <div className="p-8 flex flex-col flex-1">
+                  <div className="inline-flex items-center gap-1.5 text-xs font-black text-teal-600 mb-4 uppercase tracking-[0.2em]">
+                     <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
+                     {c.ageRange[locale]}
+                  </div>
 
-                {/* "Know more" link */}
-                <Link
-                  href={`/curricula#curriculum-${index + 1}`}
-                  className="text-teal-400 hover:text-teal-300 text-sm font-medium
-                             flex items-center gap-1 group/link transition-colors"
-                >
-                  <span>{t('common.knowMore')}</span>
-                  <span className="group-hover/link:-translate-x-1 rtl:group-hover/link:translate-x-1 transition-transform">{t('common.arabic') === 'العربية' ? '←' : '→'}</span>
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
+                  <h3 className="text-xl font-black text-slate-900 mb-4 leading-tight group-hover:text-teal-600 transition-colors">
+                    {c.title[locale]}
+                  </h3>
 
-        {/* CTA button below grid */}
-        <div className="text-center mt-12">
-          <Link href="/curricula" className="btn-gold">
-            {t('curricula.viewAll')}
-          </Link>
+                  <div className="space-y-3 mb-6 flex-1">
+                    <div className="flex items-center gap-2.5 text-sm text-slate-500 font-bold">
+                       <Clock className="w-4 h-4 text-amber-500" />
+                       <span>{c.duration[locale]}</span>
+                    </div>
+                    <div className="flex items-center gap-2.5 text-sm text-slate-500 font-bold">
+                       <Users className="w-4 h-4 text-teal-500" />
+                       <span>{c.audience[locale]}</span>
+                    </div>
+                  </div>
+
+                  <p className="text-slate-500 text-sm leading-relaxed mb-8 line-clamp-3">
+                    {c.description[locale]}
+                  </p>
+
+                  <Link
+                    href={`/curricula#${c.slug}`}
+                    className="inline-flex items-center gap-2 text-sm font-black text-slate-900 group/link"
+                  >
+                    <span className="border-b-2 border-teal-500/30 group-hover/link:border-teal-500 transition-all">
+                      {t('common.knowMore')}
+                    </span>
+                    <ArrowIcon className="w-4 h-4 text-teal-500 group-hover/link:translate-x-1 rtl:group-hover/link:-translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>

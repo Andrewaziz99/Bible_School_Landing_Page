@@ -1,6 +1,6 @@
 
 import Header from "@/components/layout/Header";
-import BottomSections, { VisionSection } from "@/components/home/BottomSections";
+import { VisionSection } from "@/components/sections/VisionSection";
 
 export default function VisionPage() {
   return (

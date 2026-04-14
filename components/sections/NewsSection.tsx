@@ -1,0 +1,73 @@
+// components/sections/NewsSection.tsx
+"use client";
+
+import React from 'react';
+import Link from 'next/link';
+import { useLang } from '../providers/LanguageProvider';
+import { SectionHeader, Card, Badge, Button } from '../ui';
+import { ArrowLeft, ArrowRight, Calendar } from 'lucide-react';
+import { cn } from '@/lib/utils/cn';
+
+export const NewsSection = () => {
+  const { t, locale, dir } = useLang();
+  
+  // Placeholder data for now, pulling from i18n
+  const news = t('news.items', { returnObjects: true }) as unknown as any[];
+  const ArrowIcon = dir === 'rtl' ? ArrowLeft : ArrowRight;
+
+  return (
+    <section id="news" className="py-24 bg-white relative">
+      <div className="container-max">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+          <SectionHeader 
+            eyebrow={t('news.eyebrow')}
+            heading={t('news.heading')}
+            className="mb-0"
+          />
+          <Button variant="ghost" size="sm" href="/news" icon={<ArrowIcon className="w-4 h-4" />} iconPosition="end">
+            {t('news.viewAll')}
+          </Button>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {Array.isArray(news) && news.map((item, index) => (
+            <Card 
+              key={index} 
+              variant="elevated" 
+              className="group flex flex-col p-4"
+            >
+              <div className="aspect-[16/10] bg-slate-100 rounded-2xl mb-6 overflow-hidden relative">
+                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent" />
+                 {/* Placeholder for future images */}
+              </div>
+
+              <div className="flex items-center gap-3 mb-4">
+                 <Badge variant="secondary" className="bg-teal-50 text-teal-700 border-teal-100 uppercase tracking-tighter">
+                   {item.category}
+                 </Badge>
+                 <div className="flex items-center gap-1.5 text-xs font-bold text-slate-400">
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>{item.date}</span>
+                 </div>
+              </div>
+
+              <h3 className="text-xl font-black text-slate-900 mb-3 group-hover:text-teal-600 transition-colors leading-tight">
+                {item.title}
+              </h3>
+              <p className="text-slate-600 text-sm leading-relaxed mb-6 line-clamp-3">
+                {item.excerpt}
+              </p>
+
+              <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
+                <span className="text-sm font-bold text-teal-600 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform inline-flex items-center gap-2">
+                   {t('news.readMore')}
+                   <ArrowIcon className="w-4 h-4" />
+                </span>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};

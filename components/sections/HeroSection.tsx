@@ -1,92 +1,100 @@
+// components/sections/HeroSection.tsx
 "use client";
-import { useTranslation } from "../../hooks/useTranslation";
-import Link from "next/link";
+
+import React from 'react';
+import { useLang } from '../providers/LanguageProvider';
+import { Badge, Button } from '../ui';
+import { ArrowLeft, ArrowRight, ChevronDown, Sparkles } from 'lucide-react';
+import { cn } from '@/lib/utils/cn';
 
 export default function HeroSection() {
-  const { t } = useTranslation();
+  const { t, dir } = useLang();
+  const ArrowIcon = dir === 'rtl' ? ArrowLeft : ArrowRight;
 
   const stats = [
-    { value: t('hero.stats.curricula.value'), label: t('hero.stats.curricula.label') },
-    { value: t('hero.stats.audiences.value'), label: t('hero.stats.audiences.label') },
-    { value: t('hero.stats.years.value'),     label: t('hero.stats.years.label') },
+    { value: t('hero.stats.curricula.value'), label: t('hero.stats.curricula.label'), icon: <Sparkles className="w-5 h-5" /> },
+    { value: t('hero.stats.audiences.value'), label: t('hero.stats.audiences.label'), icon: <Sparkles className="w-5 h-5" /> },
+    { value: t('hero.stats.years.value'),     label: t('hero.stats.years.label'), icon: <Sparkles className="w-5 h-5" /> },
   ];
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section className="relative min-h-[90vh] lg:min-h-screen flex items-center overflow-hidden pt-20">
+      {/* Background layers */}
+      <div className="absolute inset-0 bg-gradient-to-br from-teal-50/50 via-white to-amber-50/30 -z-10" />
+      
+      {/* Animated Decorative Orbs */}
+      <div className="absolute top-1/4 start-[-10%] w-[40rem] h-[40rem] bg-teal-400/10 rounded-full blur-[120px] animate-pulse pointer-events-none -z-10" />
+      <div className="absolute bottom-1/4 end-[-10%] w-[35rem] h-[35rem] bg-amber-400/10 rounded-full blur-[100px] animate-pulse pointer-events-none -z-10" style={{ animationDelay: '2s' }} />
 
-      {/* Background layers — Flutter: Stack with positioned widgets */}
-      <div className="absolute inset-0 bg-hero" />
-
-      {/* Decorative circles — like Container with BoxDecoration */}
-      <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full
-                      bg-teal-600/10 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-32 w-80 h-80 rounded-full
-                      bg-amber-600/8 blur-3xl pointer-events-none" />
-
-      {/* Gold cross decoration */}
-      <div className="absolute top-20 left-8 opacity-5 text-8xl font-thin text-amber-400
-                      select-none pointer-events-none hidden lg:block">
-        ✛
-      </div>
-
-      <div className="container-max relative z-10 py-32 px-4 md:px-8">
+      <div className="container-max relative z-10 py-20">
         <div className="max-w-4xl">
-
-          {/* Badge/Pill */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full
-                          bg-teal-50 border border-teal-300 text-teal-700 text-sm mb-8
-                          animate-fade-in-up">
-            <span className="w-2 h-2 rounded-full bg-teal-600 animate-pulse" />
+          {/* Badge/Eyebrow */}
+          <Badge 
+            variant="primary" 
+            className="mb-8 py-2 px-5 text-sm uppercase tracking-widest font-black animate-fade-in-up"
+          >
             {t('hero.badge')}
-          </div>
+          </Badge>
 
-          {/* Main Heading */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight
-                         text-slate-900 mb-6 animate-fade-in-up-delay-1">
+          {/* Main Heading with Display Scale */}
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight text-slate-900 mb-8 animate-fade-in-up-delay-1">
             {t('hero.heading')}
             <br />
-            <span className="text-teal-600" style={{ color: "#0D9488" }}>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-teal-400">
               {t('hero.headingHighlight')}
             </span>
           </h1>
 
-          {/* Subtitle paragraph */}
-          <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-2xl
-                        mb-10 animate-fade-in-up-delay-2">
+          {/* Subtitle with refined typography */}
+          <p className="text-xl md:text-2xl text-slate-600 leading-relaxed max-w-2xl mb-12 animate-fade-in-up-delay-2 font-medium">
             {t('hero.subtitle')}
           </p>
 
-          {/* CTA Buttons — Flutter: Row of ElevatedButton */}
-          <div className="flex flex-wrap gap-4 animate-fade-in-up-delay-3">
-            <Link href="#curricula" className="btn-primary text-base px-8 py-4">
-              <span>{t('hero.cta.primary')}</span>
-              <span className="text-teal-300 rtl:rotate-180 transition-transform">←</span>
-            </Link>
-            <Link href="#app" className="btn-ghost text-base px-8 py-4">
+          {/* CTA Group */}
+          <div className="flex flex-wrap gap-5 animate-fade-in-up-delay-3">
+            <Button 
+              variant="primary" 
+              size="lg" 
+              href="#curricula"
+              icon={<ArrowIcon className="w-5 h-5" />}
+              iconPosition="end"
+              className="px-10 shadow-xl shadow-teal-900/10"
+            >
+              {t('hero.cta.primary')}
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              href="#app"
+              className="px-10"
+            >
               {t('hero.cta.secondary')}
-            </Link>
+            </Button>
           </div>
 
-          {/* Stats row */}
-          <div className="flex flex-wrap gap-8 mt-16 pt-8 border-t border-slate-300
-                          animate-fade-in-up-delay-3">
-            {stats.map((stat) => (
-              <div key={stat.label}>
-                <p className="text-3xl font-black text-teal-600">
+          {/* Stats Section */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-10 mt-20 pt-10 border-t border-slate-200/60 animate-fade-in-up-delay-3">
+            {stats.map((stat, idx) => (
+              <div key={idx} className="group">
+                <p className="text-4xl md:text-5xl font-black text-slate-900 mb-2 transition-transform duration-300 group-hover:scale-110 origin-start">
                   {stat.value}
                 </p>
-                <p className="text-sm text-slate-600 mt-1">{stat.label}</p>
+                <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
+                  {stat.label}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 inset-x-0 flex justify-center animate-bounce">
-        <div className="flex flex-col items-center gap-1 text-slate-500">
-          <span className="text-xs">{t('hero.scrollIndicator')}</span>
-          <span className="text-lg">↓</span>
+      {/* Modern Scroll Indicator */}
+      <div className="absolute bottom-10 inset-x-0 flex flex-col items-center gap-3 animate-bounce cursor-pointer group">
+        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 group-hover:text-teal-600 transition-colors">
+          {t('hero.scrollIndicator')}
+        </span>
+        <div className="w-6 h-10 rounded-full border-2 border-slate-200 flex justify-center p-1 group-hover:border-teal-400 transition-colors">
+           <div className="w-1 h-2 bg-teal-500 rounded-full animate-wheel" />
         </div>
       </div>
     </section>

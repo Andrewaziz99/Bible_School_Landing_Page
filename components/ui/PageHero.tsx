@@ -1,7 +1,7 @@
 // components/ui/PageHero.tsx
 import React from 'react';
 import { cn } from '@/lib/utils/cn';
-import { Breadcrumb } from './Breadcrumb';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 
 interface PageHeroProps {
   title: string;
@@ -29,8 +29,8 @@ export const PageHero = ({
       )}
     >
       {/* Decorative Orbs */}
-      <div className="absolute top-0 start-0 w-96 h-96 bg-teal-200/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 end-0 w-96 h-96 bg-amber-200/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+      <div className="absolute -top-48 start-[-12rem] w-96 h-96 bg-teal-200/20 rounded-full blur-3xl" />
+      <div className="absolute -bottom-48 end-[-12rem] w-96 h-96 bg-amber-200/20 rounded-full blur-3xl" />
 
       <div className="container-max relative z-10">
         <div className={cn(

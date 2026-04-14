@@ -5,8 +5,8 @@ import { cn } from '@/lib/utils/cn';
 interface SectionHeaderProps {
   eyebrow?: string;           // Small label above heading
   heading: string;
-  subheading?: string;
-  alignment?: 'center' | 'start';
+  description?: string;
+  centered?: boolean;
   showAccent?: boolean;       // Gold decorative line
   className?: string;
 }
@@ -14,8 +14,8 @@ interface SectionHeaderProps {
 export const SectionHeader = ({
   eyebrow,
   heading,
-  subheading,
-  alignment = 'center',
+  description,
+  centered = false,
   showAccent = true,
   className,
 }: SectionHeaderProps) => {
@@ -23,32 +23,35 @@ export const SectionHeader = ({
     <div
       className={cn(
         'mb-12 flex flex-col',
-        alignment === 'center' ? 'items-center text-center' : 'items-start text-start',
+        centered ? 'items-center text-center mx-auto' : 'items-start text-start',
         className
       )}
     >
       {eyebrow && (
-        <span className="text-teal-600 font-bold uppercase tracking-[0.2em] text-xs mb-3">
+        <span className="text-teal-600 font-extrabold uppercase tracking-[0.2em] text-xs mb-4">
           {eyebrow}
         </span>
       )}
       
-      <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight">
+      <h2 className="text-3xl md:text-5xl font-black text-slate-900 leading-[1.2]">
         {heading}
       </h2>
 
       {showAccent && (
         <div 
           className={cn(
-            "h-1.5 w-16 bg-gradient-to-r from-amber-400 to-amber-600 rounded-full my-6",
-            alignment === 'center' ? "mx-auto" : ""
+            "h-1.5 w-20 bg-gradient-to-r from-teal-500 to-amber-500 rounded-full my-6",
+            centered ? "mx-auto" : ""
           )} 
         />
       )}
 
-      {subheading && (
-        <p className="max-w-2xl text-lg text-slate-600 leading-relaxed">
-          {subheading}
+      {description && (
+        <p className={cn(
+          "max-w-3xl text-lg text-slate-600 leading-relaxed font-medium",
+          centered ? "mx-auto" : ""
+        )}>
+          {description}
         </p>
       )}
     </div>

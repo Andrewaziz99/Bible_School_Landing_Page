@@ -1,90 +1,90 @@
+// components/sections/AudienceSection.tsx
 "use client";
-import { useTranslation } from "../../hooks/useTranslation";
 
-// Color config — maps color name to Tailwind classes
-// Flutter analogy: like a switch/case for Theme colors
-const colorConfig: Record<string, { border: string; icon: string; badge: string }> = {
-  teal:   { border: "border-teal-200 hover:border-teal-300",   icon: "bg-teal-100 text-teal-700",   badge: "bg-teal-50 text-teal-700 border-teal-200" },
-  gold:   { border: "border-amber-200 hover:border-amber-300", icon: "bg-amber-100 text-amber-700", badge: "bg-amber-50 text-amber-700 border-amber-200" },
-  crimson:{ border: "border-red-200 hover:border-red-300",     icon: "bg-red-100 text-red-700",     badge: "bg-red-50 text-red-700 border-red-200" },
-};
+import React from 'react';
+import { useLang } from '../providers/LanguageProvider';
+import { SectionHeader, Card, Badge } from '../ui';
+import { Church, Users, GraduationCap, CheckCircle2 } from 'lucide-react';
+import { audiences } from '@/lib/data/audiences';
+import { cn } from '@/lib/utils/cn';
 
 export default function AudienceSection() {
-  const { t } = useTranslation();
+  const { t } = useLang();
 
-  const audiences = [
-    {
-      icon: "⛪",
-      title: t('audience.churches.title'),
-      color: "teal",
-      description: t('audience.churches.description'),
-      features: t('audience.churches.features', { returnObjects: true }) as unknown as string[],
-    },
-    {
-      icon: "👨‍🏫",
-      title: t('audience.servants.title'),
-      color: "gold",
-      description: t('audience.servants.description'),
-      features: t('audience.servants.features', { returnObjects: true }) as unknown as string[],
-    },
-    {
-      icon: "👧",
-      title: t('audience.children.title'),
-      color: "crimson",
-      description: t('audience.children.description'),
-      features: t('audience.children.features', { returnObjects: true }) as unknown as string[],
-    },
-  ];
+  const iconMap: Record<string, any> = {
+    Church: Church,
+    Users: Users,
+    GraduationCap: GraduationCap,
+  };
+
+  const colorConfig: Record<string, { bg: string; text: string; light: string }> = {
+    teal:   { bg: "bg-teal-600", text: "text-teal-600", light: "bg-teal-50" },
+    amber:  { bg: "bg-amber-600", text: "text-amber-600", light: "bg-amber-50" },
+    purple: { bg: "bg-purple-600", text: "text-purple-600", light: "bg-purple-50" },
+  };
 
   return (
-    <section className="section-padding">
+    <section id="audience" className="py-24 bg-slate-50 relative">
       <div className="container-max">
+        <SectionHeader 
+          eyebrow={t('audience.eyebrow')}
+          heading={t('audience.heading')}
+          description={t('audience.subheading')}
+          centered
+          className="mb-20"
+        />
 
-        <div className="text-center mb-16">
-          <span className="text-teal-600 text-sm font-semibold uppercase tracking-widest mb-3 block">
-            {t('audience.eyebrow')}
-          </span>
-          <h2 className="section-heading heading-accent">{t('audience.heading')}</h2>
-          <p className="section-subheading mt-6">
-            {t('audience.subheading')}
-          </p>
-        </div>
-
-        {/* 3 Cards Grid — Flutter: Row of 3 Cards */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-8">
           {audiences.map((audience) => {
-            const colors = colorConfig[audience.color];
+            const Icon = iconMap[audience.icon] || Church;
+            const colors = colorConfig[audience.color] || colorConfig.teal;
+            
+            // Get translated description from i18n since it's a long block
+            const description = t(`audience.${audience.id}.description`);
+            const translatedFeatures = t(`audience.${audience.id}.features`, { returnObjects: true }) as unknown as string[];
+
             return (
-              <div
-                key={audience.title}
-                className={`glass-card border ${colors.border} flex flex-col`}
+              <Card 
+                key={audience.id}
+                variant="elevated"
+                hoverEffect="lift"
+                className="p-8 flex flex-col h-full border-slate-200/60"
               >
-                {/* Icon */}
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center
-                                  text-2xl mb-5 ${colors.icon}`}>
-                  {audience.icon}
+                {/* Icon Header */}
+                <div className={cn(
+                  "w-16 h-16 rounded-2xl flex items-center justify-center mb-8 shadow-sm border-b-4",
+                  colors.light,
+                  colors.text,
+                  `border-${audience.color}-200`
+                )}>
+                  <Icon className="w-8 h-8" />
                 </div>
 
-                {/* Title */}
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{audience.title}</h3>
-
-                {/* Description */}
-                <p className="text-slate-600 text-sm leading-relaxed mb-5 flex-1">
-                  {audience.description}
+                {/* Content */}
+                <h3 className="text-2xl font-black text-slate-900 mb-4">
+                  {t(`audience.${audience.id}.title`)}
+                </h3>
+                <p className="text-slate-600 text-sm leading-relaxed mb-8 flex-1">
+                  {description}
                 </p>
 
-                {/* Feature chips — Flutter: Wrap with Chips */}
-                <div className="flex flex-wrap gap-2">
-                  {Array.isArray(audience.features) && audience.features.map((feature) => (
-                    <span
-                      key={feature}
-                      className={`text-xs px-3 py-1.5 rounded-full border ${colors.badge}`}
-                    >
-                      {feature}
-                    </span>
+                {/* Features List */}
+                <div className="space-y-3 mb-8">
+                  {Array.isArray(translatedFeatures) && translatedFeatures.map((feature, fIdx) => (
+                    <div key={fIdx} className="flex items-start gap-2 group/feat">
+                      <CheckCircle2 className={cn("w-4 h-4 mt-0.5 transition-transform group-hover/feat:scale-125", colors.text)} />
+                      <span className="text-sm font-bold text-slate-700">{feature}</span>
+                    </div>
                   ))}
                 </div>
-              </div>
+
+                <Badge 
+                  variant="outline" 
+                  className={cn("self-start border-none px-0 font-black tracking-widest text-[10px] uppercase opacity-40", colors.text)}
+                >
+                   Optimized for {audience.id}
+                </Badge>
+              </Card>
             );
           })}
         </div>

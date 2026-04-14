@@ -13,12 +13,15 @@
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import HeroSection from "@/components/home/HeroSection";
-import AboutSection from "@/components/home/AboutSection";
-import AudienceSection from "@/components/home/AudienceSection";
-import CurriculaSection from "@/components/home/CurriculaSection";
-import AppSection from "@/components/home/AppSection";
-import BottomSections from "@/components/home/BottomSections";
+import HeroSection from "@/components/sections/HeroSection";
+import AboutSection from "@/components/sections/AboutSection";
+import AudienceSection from "@/components/sections/AudienceSection";
+import CurriculaSection from "@/components/sections/CurriculaSection";
+import AppSection from "@/components/sections/AppSection";
+import { VideosSection } from "@/components/sections/VideosSection";
+import { NewsSection } from "@/components/sections/NewsSection";
+import { VisionSection } from "@/components/sections/VisionSection";
+import { CTASection } from "@/components/sections/CTASection";
 
 // 📖 Note: "@/" is an alias for the root of your project.
 // It's configured in tsconfig.json. In Flutter this is like your lib/ imports.
@@ -35,7 +38,10 @@ export default function HomePage() {
       <AudienceSection />       {/* Section 4: من نخدم */}
       <CurriculaSection />      {/* Section 5: المناهج */}
       <AppSection />            {/* Section 6: التطبيق */}
-      <BottomSections />        {/* Sections 7-10: Videos, News, Vision, CTA */}
+      <VideosSection />
+      <NewsSection />
+      <VisionSection />
+      <CTASection />
 
       <Footer />                {/* Section 12: الفوتر */}
     </main>
