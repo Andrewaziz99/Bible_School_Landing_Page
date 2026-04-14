@@ -7,6 +7,7 @@
 import { useState, useEffect } from "react";
 import { useLang } from "../components/LanguageProvider";
 import Link from "next/link"; // Flutter analogy: like Navigator.pushNamed()
+import Image from "next/image";
 
 const navItems = [
   { label: "الرئيسية",           href: "/" },
@@ -68,10 +69,13 @@ export default function Header() {
         <Link href="/" className="flex items-center gap-3 group min-w-0">
           {/* Smaller logo for better fit */}
           <div className="w-12 h-12 md:w-16 md:h-16 p-1 md:p-2 rounded-2xl bg-teal-50 backdrop-blur-md border-2 border-teal-300 flex items-center justify-center overflow-hidden shadow-md shadow-teal-200/50 group-hover:scale-105 transition-transform duration-300 relative">
-            <img
+            <Image
               src="/assets/logo.png"
-              alt="Logo"
-              className="w-10 h-10 md:w-14 md:h-14 object-contain drop-shadow-lg"
+              alt="أرثوذكسي Logo"
+              width={64}
+              height={64}
+              priority
+              className="object-contain drop-shadow-lg"
               style={{ filter: 'drop-shadow(0 2px 8px #0D9488AA)' }}
             />
           </div>

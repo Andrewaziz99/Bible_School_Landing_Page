@@ -2,6 +2,7 @@
 // Section 5: نظرة سريعة على المناهج
 
 import Link from "next/link";
+import Image from "next/image";
 
 const curricula = [
   {
@@ -68,18 +69,15 @@ export default function CurriculaSection() {
               }}
             >
               {/* Badge background image with overlay */}
-              <div
-                className="absolute inset-0 z-0 pointer-events-none select-none"
-                aria-hidden="true"
-                style={{
-                  backgroundImage: `url(${c.badge})`,
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'center 60%',
-                  backgroundSize: '70% auto',
-                  opacity: 0.13,
-                  filter: 'drop-shadow(0 2px 8px #0008)',
-                }}
-              />
+              <div className="absolute inset-0 z-0 pointer-events-none select-none opacity-10 filter drop-shadow(0 2px 8px #0008)" aria-hidden="true">
+                <Image
+                  src={c.badge}
+                  alt=""
+                  fill
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                  className="object-contain object-[center_60%]"
+                />
+              </div>
               {/* Top gradient line */}
               <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r
                               from-transparent via-amber-500 to-transparent opacity-60 z-10" />
