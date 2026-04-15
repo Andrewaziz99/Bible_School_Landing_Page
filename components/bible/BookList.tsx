@@ -37,7 +37,7 @@ export function BookList({ books, selectedBookNumber, onSelectBook, lang }: Book
   }, {} as Record<string, MetadataBook[]>);
 
   return (
-    <div className="flex-1 overflow-y-auto px-4 pb-4 custom-scrollbar">
+    <div className="flex-1 overflow-y-auto px-4 pb-4 custom-scrollbar" data-lenis-prevent>
       {Object.entries(groupedBooks).map(([category, catBooks]) => (
         <div key={category} className="mb-6">
           <div className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3 px-2 sticky top-0 bg-white/95 backdrop-blur-sm z-10 border-b border-slate-50 pb-1">

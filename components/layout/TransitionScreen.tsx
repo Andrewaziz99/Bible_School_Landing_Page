@@ -7,8 +7,10 @@ import { useGSAP } from "@gsap/react";
 import { gsap, MOTION_ENABLED } from "@/animations/gsap-config";
 
 import { BookOpen } from "lucide-react";
+import { useLang } from "../providers/LanguageProvider";
 
 export default function TransitionScreen() {
+  const { locale } = useLang();
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const pathname = usePathname();
@@ -163,7 +165,7 @@ export default function TransitionScreen() {
 
             {/* Glowing Loading Text */}
             <h3 className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-amber-400 tracking-widest uppercase animate-pulse">
-              جاري التحميل...
+              {locale === 'ar' ? 'جاري التحميل...' : 'Loading...'}
             </h3>
             
           </div>

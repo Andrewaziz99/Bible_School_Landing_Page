@@ -106,7 +106,7 @@ export default function HeroSection() {
             </div>
 
             {/* Stats Row */}
-            <div className="hero-stats grid grid-cols-3 gap-8 md:gap-12 w-full pt-8 border-t border-slate-200/60">
+            <div className="hero-stats grid grid-cols-3 gap-8 md:gap-12 w-full pt-8 mb-12 border-t border-slate-200/60">
               {stats.map((stat, idx) => (
                 <div key={idx} className="group">
                   <p className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-1 transition-transform duration-300 group-hover:scale-110 origin-start">
@@ -149,9 +149,9 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Modern Scroll Indicator */}
-      <div className="hero-scroll-indicator absolute bottom-8 inset-x-0 hidden md:flex flex-col items-center gap-2 animate-bounce cursor-pointer group z-20">
-        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 group-hover:text-teal-600 transition-colors">
+      {/* Modern Scroll Indicator - Static side label */}
+      <div className="hero-scroll-indicator absolute top-[60%] end-6 -translate-y-1/2 hidden md:flex flex-col items-center gap-4 cursor-pointer group z-20">
+        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 group-hover:text-teal-600 transition-colors [writing-mode:vertical-lr]">
           {t('hero.scrollIndicator')}
         </span>
         <div className="w-5 h-8 rounded-full border-2 border-slate-200 flex justify-center p-1 group-hover:border-teal-400 transition-colors">

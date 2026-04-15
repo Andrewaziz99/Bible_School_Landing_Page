@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { TestamentTabs } from './TestamentTabs';
 import { BookList } from './BookList';
 import { Input } from '@/components/ui';
-import { Search, X, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { Search, X, PanelLeftClose, PanelLeftOpen, PanelRightClose, PanelRightOpen } from 'lucide-react';
 import { MetadataBook } from '@/lib/bible-types';
 import { cn } from '@/lib/utils/cn';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -79,16 +79,17 @@ export function BibleSidebar({
         </div>
 
         {/* Desktop Controls */}
-        <div className={cn(
-          "hidden md:flex flex-col border-b border-slate-100 py-2 px-2",
-          lang === 'ar' ? "items-end" : "items-start"
-        )}>
+        <div className="hidden md:flex flex-col border-b border-slate-100 py-2 px-2 items-end">
            <button 
               onClick={() => setIsCollapsed(!isCollapsed)}
               className="p-2 hover:bg-slate-50 rounded-lg text-slate-400 hover:text-teal-600 transition-colors"
               title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
            >
-              {isCollapsed ? <PanelLeftOpen className="w-5 h-5" /> : <PanelLeftClose className="w-5 h-5" />}
+              {isCollapsed ? (
+                lang === 'ar' ? <PanelLeftOpen className="w-5 h-5" /> : <PanelRightOpen className="w-5 h-5" />
+              ) : (
+                lang === 'ar' ? <PanelRightClose className="w-5 h-5" /> : <PanelLeftClose className="w-5 h-5" />
+              )}
            </button>
            
            {isCollapsed && (

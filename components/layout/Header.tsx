@@ -76,30 +76,28 @@ export default function Header() {
 
       setActive();
 
+      const cleanupListeners: (() => void)[] = [];
+
       /* ─── HOVER EFFECT ─── */
       links.forEach((link: any) => {
         const el = link as HTMLElement;
-
-        el.addEventListener("mouseenter", () => {
+        const enterHandler = () => {
           const rect = el.getBoundingClientRect();
           const parentRect = nav.getBoundingClientRect();
-
           const x = rect.left - parentRect.left;
           const w = rect.width;
-
           xTo(x);
           scaleTo(w / 100);
+        };
+        const leaveHandler = setActive;
+
+        el.addEventListener("mouseenter", enterHandler);
+        el.addEventListener("mouseleave", leaveHandler);
+        cleanupListeners.push(() => {
+          el.removeEventListener("mouseenter", enterHandler);
+          el.removeEventListener("mouseleave", leaveHandler);
         });
-
-        el.addEventListener("mouseleave", setActive);
       });
-
-      /* ─── SCROLL MORPH HEADER ─── */
-      const onScroll = () => {
-        // Scroll morph removed for non-sticky header
-      };
-
-      window.addEventListener("scroll", onScroll);
 
       /* ─── INTRO ANIMATION ─── */
       gsap.from(headerRef.current, {
@@ -110,7 +108,7 @@ export default function Header() {
       });
 
       return () => {
-        window.removeEventListener("scroll", onScroll);
+        cleanupListeners.forEach(cleanup => cleanup());
       };
     });
 

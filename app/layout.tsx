@@ -10,6 +10,8 @@ import HtmlDirectionSetter from "../components/HtmlDirectionSetter";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import TransitionScreen from "../components/layout/TransitionScreen";
+import SmoothScrollProvider from "../components/providers/SmoothScrollProvider";
+import { ToastProvider } from "../components/ui/Toast";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -32,6 +34,16 @@ export const metadata: Metadata = {
   keywords: ["مدرسة الكتاب", "دراسة كتابية", "أطفال", "كنيسة قبطية", "مناهج تعليمية"],
   icons: {
     icon: "/assets/favicon.ico",
+    apple: "/assets/logo.png",
+  },
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "أرثوذكسي",
+  },
+  formatDetection: {
+    telephone: false,
   },
   openGraph: {
     title: "أرثوذكسي للدراسات الكتابية للأطفال",
@@ -57,13 +69,31 @@ export default function RootLayout({
         </a>
         <LanguageProvider>
           <HtmlDirectionSetter />
+          <ToastProvider />
           <TransitionScreen />
-          <Header />
-          <main id="main-content" className="flex-grow">
-            {children}
-          </main>
-          <Footer />
+          <SmoothScrollProvider>
+            <Header />
+            <main id="main-content" className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+          </SmoothScrollProvider>
         </LanguageProvider>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                    console.log('SW registered');
+                  }, function(err) {
+                    console.log('SW failed: ', err);
+                  });
+                });
+              }
+            `,
+          }}
+        />
         <Analytics />
         <SpeedInsights />
       </body>

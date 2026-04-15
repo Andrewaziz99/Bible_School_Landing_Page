@@ -6,7 +6,7 @@ import { SearchOverlay } from './SearchOverlay';
 import { ChapterGrid } from './ChapterGrid';
 import { SearchResult } from '@/lib/bible-types';
 import { getBookName } from '@/lib/book-names';
-import { Loader2 } from 'lucide-react';
+import { BibleSkeleton } from './BibleSkeleton';
 
 interface BibleContentProps {
   currentChapter: Chapter | null;
@@ -52,7 +52,7 @@ export function BibleContent({
         />
       )}
 
-      <div className="flex-1 overflow-y-auto overflow-x-hidden w-full relative" id="bible-scroll-container">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden w-full relative" id="bible-scroll-container" data-lenis-prevent>
         {isSearching ? (
           <div className="relative h-full">
             {isSearchingResults && (
@@ -69,19 +69,15 @@ export function BibleContent({
           </div>
         ) : (
           <div className="relative min-h-full">
-            {isLoadingChapter && (
-              <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center gap-4">
-                <Loader2 className="w-10 h-10 text-teal-600 animate-spin" />
-                <span className="text-sm font-bold text-slate-500 animate-pulse">
-                   {lang === 'ar' ? 'جاري التحميل...' : 'Loading Content...'}
-                </span>
-              </div>
+            {isLoadingChapter ? (
+              <BibleSkeleton />
+            ) : (
+              <ContinuousText 
+                chapter={currentChapter} 
+                bookName={bookName}
+                lang={lang}
+              />
             )}
-            <ContinuousText 
-              chapter={currentChapter} 
-              bookName={bookName}
-              lang={lang}
-            />
           </div>
         )}
       </div>
