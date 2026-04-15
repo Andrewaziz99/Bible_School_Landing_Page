@@ -4,13 +4,17 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Mail, Phone, MapPin, Share2, Globe, Heart } from "lucide-react";
 import { useLang } from "../providers/LanguageProvider";
 import { cn } from "@/lib/utils/cn";
 import { Button } from "../ui";
 
 export default function Footer() {
+  const pathname = usePathname();
   const { t, dir } = useLang();
+  
+  if (pathname === '/bible') return null;
   const currentYear = new Date().getFullYear();
 
   const footerLinks = [
@@ -54,6 +58,7 @@ export default function Footer() {
                   alt="Logo"
                   fill
                   className="object-contain p-1"
+                  sizes="56px"
                 />
               </div>
               <span className="text-xl font-black text-slate-900 leading-tight">

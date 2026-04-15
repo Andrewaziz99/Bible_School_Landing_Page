@@ -131,7 +131,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative w-14 h-14">
-              <Image src="/assets/logo.png" alt="Logo" fill className="object-contain" />
+              <Image src="/assets/logo.png" alt="Logo" fill sizes="56px" className="object-contain" />
             </div>
             <span className="font-bold text-slate-800 text-base">
               {t("common.brandName")}

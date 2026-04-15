@@ -1,4 +1,5 @@
-import BibleReaderClient from '@/components/BibleReaderClient';
+import BibleReader from '@/components/bible/BibleReader';
+import Header from '@/components/layout/Header';
 import { Bible } from '@/lib/bible-types';
 import { Metadata } from 'next';
 import { readFileSync } from 'fs';
@@ -39,10 +40,8 @@ export default function BiblePage() {
   const bibleData = getBibleData();
 
   return (
-    <>
-      <main className="min-h-screen bg-gradient-to-br from-slate-50/90 via-white/85 to-slate-100/90">
-        <BibleReaderClient bibleData={bibleData} />
-      </main>
-    </>
+    <div className="h-full bg-white overflow-hidden">
+      <BibleReader bibleDataByLanguage={bibleData} />
+    </div>
   );
 }
