@@ -23,12 +23,11 @@ const navItems = [
   { labelKey: "nav.contact",   href: "/contact-us" },
 ];
 
-// Split for symmetric layout
 const leftNavItems = navItems.slice(0, 4);
 const rightNavItems = navItems.slice(4);
 
 export default function Header() {
-  const { t } = useLang();
+  const { t, dir } = useLang();
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -71,30 +70,12 @@ export default function Header() {
       >
         <div className="container-max flex items-center justify-between">
           
-          {/* Mobile Menu Toggle (Start) */}
-          <div className="flex md:hidden items-center">
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              className="p-2 rounded-xl text-slate-600 hover:text-teal-600 hover:bg-slate-50 transition-colors"
-              aria-label={t('common.menu')}
-            >
-              <Menu className="w-6 h-6" />
-            </button>
-          </div>
-
-          {/* Desktop Left Nav */}
-          <nav className="hidden lg:flex items-center space-x-1 rtl:space-x-reverse flex-1 justify-end">
-            {leftNavItems.map((item) => (
-              <NavLink key={item.href} item={item} />
-            ))}
-          </nav>
-
-          {/* Logo (Center) */}
-          <div className="flex-shrink-0 mx-8">
-            <Link href="/" className="flex flex-col items-center group">
+          {/* Logo (Now Start on Mobile, Center on Desktop) */}
+          <div className="flex-shrink-0 lg:mx-8 order-1">
+            <Link href="/" className="flex items-center gap-3 group">
               <div className={cn(
                 "relative transition-all duration-500 rounded-2xl bg-white shadow-xl shadow-teal-900/5 border border-slate-100 flex items-center justify-center overflow-hidden",
-                isScrolled ? "w-12 h-12 md:w-14 md:h-14" : "w-16 h-16 md:w-20 md:h-20"
+                isScrolled ? "w-10 h-10 md:w-14 md:h-14" : "w-12 h-12 md:w-20 md:h-20"
               )}>
                 <Image
                   src="/assets/logo.png"
@@ -105,40 +86,53 @@ export default function Header() {
                 />
               </div>
               <div className={cn(
-                "mt-2 text-center transition-all duration-500 overflow-hidden",
-                isScrolled ? "h-0 opacity-0 -translate-y-2" : "h-auto opacity-100 translate-y-0"
+                "hidden sm:flex flex-col transition-all duration-500 overflow-hidden",
+                isScrolled ? "h-0 opacity-0 -translate-y-2 invisible" : "h-auto opacity-100 translate-y-0 visible"
               )}>
-                <span className="block text-slate-900 font-black text-xl leading-none">
+                <span className="block text-slate-900 font-black text-lg lg:text-xl leading-none">
                    {t('common.brandName')}
                 </span>
-                <span className="block text-teal-600 text-xs font-bold uppercase tracking-widest mt-1">
+                <span className="block text-teal-600 text-[10px] lg:text-xs font-bold uppercase tracking-widest mt-1">
                    {t('common.tagline')}
                 </span>
               </div>
             </Link>
           </div>
 
-          {/* Desktop Right Nav */}
-          <nav className="hidden lg:flex items-center space-x-1 rtl:space-x-reverse flex-1">
+          {/* Desktop Left Nav (Hides on Mobile) */}
+          <nav className="hidden lg:flex items-center space-x-1 rtl:space-x-reverse flex-1 justify-end order-2">
+            {leftNavItems.map((item) => (
+              <NavLink key={item.href} item={item} />
+            ))}
+          </nav>
+
+          {/* Desktop Right Nav (Hides on Mobile) */}
+          <nav className="hidden lg:flex items-center space-x-1 rtl:space-x-reverse flex-1 order-3">
             {rightNavItems.map((item) => (
               <NavLink key={item.href} item={item} />
             ))}
           </nav>
 
-          {/* Actions (End) */}
-          <div className="flex items-center gap-2 md:gap-4 flex-1 lg:flex-none justify-end">
-             <div className="hidden sm:block">
+          {/* Actions & Mobile Toggle (End) */}
+          <div className="flex items-center gap-4 order-4">
+             {/* Desktop Actions */}
+             <div className="hidden lg:flex items-center gap-4">
                 <LanguageSwitcher />
+                <Button variant="secondary" size="sm" href="/contact-us">
+                   {t('common.contactUs')}
+                </Button>
              </div>
-             <Button variant="secondary" size="sm" className="hidden sm:flex" href="/contact-us">
-                {t('common.contactUs')}
-             </Button>
              
-             {/* Mobile Globe (visible only on mobile) */}
-             <div className="sm:hidden">
-               <LanguageSwitcher />
-             </div>
+             {/* Mobile Menu Toggle */}
+             <button
+               onClick={() => setIsMobileMenuOpen(true)}
+               className="lg:hidden p-2 rounded-xl text-slate-700 hover:text-teal-600 hover:bg-slate-100 transition-all active:scale-90"
+               aria-label={t('common.menu')}
+             >
+               <Menu className="w-7 h-7" />
+             </button>
           </div>
+
         </div>
       </header>
 
