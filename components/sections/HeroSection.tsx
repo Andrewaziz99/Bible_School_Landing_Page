@@ -22,7 +22,7 @@ export default function HeroSection() {
 
   // GSAP Hero entrance timeline
   useGSAP(() => {
-    const tl = gsap.timeline({ delay: 0.3 });
+    const tl = gsap.timeline({ delay: 2.2 });
 
     tl.from('.hero-badge', {
       opacity: 0, y: 20, duration: 0.5, ease: 'power2.out',

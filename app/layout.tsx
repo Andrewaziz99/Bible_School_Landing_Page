@@ -9,7 +9,7 @@ import LanguageProvider from "../components/providers/LanguageProvider";
 import HtmlDirectionSetter from "../components/HtmlDirectionSetter";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
-import PageWrapper from "../components/layout/PageWrapper";
+import TransitionScreen from "../components/layout/TransitionScreen";
 
 // Load Cairo font — optimized to only the weights we actually use
 const cairo = Cairo({
@@ -45,11 +45,10 @@ export default function RootLayout({
       <body className="font-cairo antialiased min-h-screen flex flex-col" suppressHydrationWarning>
         <LanguageProvider>
           <HtmlDirectionSetter />
+          <TransitionScreen />
           <Header />
           <main className="flex-grow">
-            <PageWrapper>
-              {children}
-            </PageWrapper>
+            {children}
           </main>
           <Footer />
         </LanguageProvider>
