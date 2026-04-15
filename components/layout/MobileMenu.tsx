@@ -118,10 +118,10 @@ export const MobileMenu = ({ isOpen, onClose, navItems }: MobileMenuProps) => {
           </div>
           
           <Button 
-            variant="secondary" 
+            className="rounded-xl bg-gradient-to-r from-teal-500 to-teal-600 text-white shadow-md hover:shadow-lg hover:-translate-y-[1px] transition-all"
             fullWidth 
             size="lg"
-            href="/contact-us"
+            href="/contact"
             onClick={onClose}
           >
             {t('common.contactUs')}

@@ -48,7 +48,7 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="flex flex-col items-start">
             <Link href="/" className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 relative bg-white rounded-xl shadow-sm border border-slate-100 p-2">
+              <div className="w-14 h-14 relative">
                 <Image
                   src="/assets/logo.png"
                   alt="Logo"
