@@ -27,7 +27,7 @@ export default function HeroSection() {
       <div className="absolute top-1/4 start-[-5%] w-[30rem] h-[30rem] bg-teal-400/5 rounded-full blur-[100px] animate-pulse pointer-events-none -z-10" />
       <div className="absolute bottom-1/4 end-[-5%] w-[25rem] h-[25rem] bg-amber-400/5 rounded-full blur-[80px] animate-pulse pointer-events-none -z-10" style={{ animationDelay: '2s' }} />
 
-      <div className="container-max relative z-10 w-full px-4 lg:px-8">
+      <div className="container-max relative z-10 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           
           {/* Left Column: Content */}
