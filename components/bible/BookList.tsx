@@ -1,11 +1,11 @@
 'use client';
 
-import { Book } from '@/lib/bible-types';
+import { MetadataBook } from '@/lib/bible-types';
 import { cn } from '@/lib/utils/cn';
 import { getBookName } from '@/lib/book-names';
 
 interface BookListProps {
-  books: Book[];
+  books: MetadataBook[];
   selectedBookNumber: number;
   onSelectBook: (bookNumber: number) => void;
   lang: 'ar' | 'en';
@@ -34,7 +34,7 @@ export function BookList({ books, selectedBookNumber, onSelectBook, lang }: Book
     }
     acc[category].push(book);
     return acc;
-  }, {} as Record<string, Book[]>);
+  }, {} as Record<string, MetadataBook[]>);
 
   return (
     <div className="flex-1 overflow-y-auto px-4 pb-4 custom-scrollbar">

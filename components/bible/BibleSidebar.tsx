@@ -5,7 +5,7 @@ import { TestamentTabs } from './TestamentTabs';
 import { BookList } from './BookList';
 import { Input } from '@/components/ui';
 import { Search, X, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
-import { Book } from '@/lib/bible-types';
+import { MetadataBook } from '@/lib/bible-types';
 import { cn } from '@/lib/utils/cn';
 import { useTranslation } from '@/hooks/useTranslation';
 
@@ -14,7 +14,7 @@ interface BibleSidebarProps {
   selectedTestament: 'OT' | 'NT';
   selectedBookNumber: number;
   selectedChapter: number;
-  currentTestamentBooks: Book[];
+  currentTestamentBooks: MetadataBook[];
   availableChapters: number[];
   onSelectTestament: (t: 'OT' | 'NT') => void;
   onSelectBook: (b: number) => void;

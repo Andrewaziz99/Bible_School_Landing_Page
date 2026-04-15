@@ -24,6 +24,27 @@ export interface Bible {
   testaments: Testament[];
 }
 
+export interface MetadataBook {
+  number: number;
+  name: string;
+  chapterCount: number;
+}
+
+export interface MetadataTestament {
+  name: string;
+  books: MetadataBook[];
+}
+
+export interface BibleMetadata {
+  translation: string;
+  testaments: MetadataTestament[];
+}
+
+export interface CombinedBibleMetadata {
+  en?: BibleMetadata;
+  ar?: BibleMetadata;
+}
+
 export interface SearchMatch {
   start: number;
   end: number;

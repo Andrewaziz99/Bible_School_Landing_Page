@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Bible } from '@/lib/bible-types';
+import { CombinedBibleMetadata } from '@/lib/bible-types';
 import { useBibleNavigation } from '@/hooks/useBibleNavigation';
 import { useBibleSearch } from '@/hooks/useBibleSearch';
 import { BibleSidebar } from './BibleSidebar';
@@ -11,18 +11,16 @@ import { MobileSidebarToggle } from './MobileSidebarToggle';
 import { useLang } from '../providers/LanguageProvider';
 
 interface BibleReaderProps {
-  bibleDataByLanguage: {
-    en: Bible;
-    ar: Bible;
-  };
+  metadata: CombinedBibleMetadata;
 }
 
-export default function BibleReader({ bibleDataByLanguage }: BibleReaderProps) {
+export default function BibleReader({ metadata }: BibleReaderProps) {
   const { locale: lang } = useLang();
-  const currentBibleData = bibleDataByLanguage[lang];
+  // Assume either en or ar is present based on the metadata object
+  const currentMetadata = metadata[lang] || metadata['en'] || metadata['ar'];
 
-  const navigation = useBibleNavigation(currentBibleData);
-  const search = useBibleSearch({ bibleData: currentBibleData, language: lang });
+  const navigation = useBibleNavigation(currentMetadata!, lang);
+  const search = useBibleSearch({ language: lang });
   
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
@@ -72,6 +70,8 @@ export default function BibleReader({ bibleDataByLanguage }: BibleReaderProps) {
         lang={lang}
         searchTerm={search.searchTerm}
         searchResults={search.searchResults}
+        isSearchingResults={search.isSearching}
+        isLoadingChapter={navigation.isLoading}
         onSearchResultClick={handleSearchResultClick}
       />
 

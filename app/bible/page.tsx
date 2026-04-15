@@ -1,6 +1,5 @@
 import BibleReader from '@/components/bible/BibleReader';
-import Header from '@/components/layout/Header';
-import { Bible } from '@/lib/bible-types';
+import { CombinedBibleMetadata } from '@/lib/bible-types';
 import { Metadata } from 'next';
 import { readFileSync } from 'fs';
 import { join } from 'path';
@@ -12,36 +11,25 @@ export const metadata: Metadata = {
 
 export const revalidate = 86400; // ISR: revalidate every 24 hours
 
-function getBibleData() {
+function getBibleMetadata() {
   try {
-    // Read JSON files from public/data directory
     const dataDir = join(process.cwd(), 'public', 'data');
-    
-    const enPath = join(dataDir, 'bible-en.json');
-    const arPath = join(dataDir, 'bible-ar.json');
-
-    const enContent = readFileSync(enPath, 'utf-8');
-    const arContent = readFileSync(arPath, 'utf-8');
-
-    const enData = JSON.parse(enContent) as Bible;
-    const arData = JSON.parse(arContent) as Bible;
-
-    return {
-      en: enData,
-      ar: arData,
-    };
+    const metaPath = join(dataDir, 'bible-metadata.json');
+    const content = readFileSync(metaPath, 'utf-8');
+    return JSON.parse(content) as CombinedBibleMetadata;
   } catch (error) {
-    console.error('Error reading Bible data files:', error);
-    throw new Error('Failed to load Bible data. Ensure bible-en.json and bible-ar.json exist in public/data/');
+    console.error('Error reading Bible metadata file:', error);
+    // Return empty metadata to prevent hard crash if file is missing during build
+    return {};
   }
 }
 
 export default function BiblePage() {
-  const bibleData = getBibleData();
+  const metadata = getBibleMetadata();
 
   return (
     <div className="h-full bg-white overflow-hidden">
-      <BibleReader bibleDataByLanguage={bibleData} />
+      <BibleReader metadata={metadata} />
     </div>
   );
 }
