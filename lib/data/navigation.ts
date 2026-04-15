@@ -9,7 +9,7 @@ export const navItems: NavItem[] = [
   { labelKey: "nav.app", href: "/app-page" },
   { labelKey: "nav.news", href: "/news" },
   { labelKey: "nav.vision", href: "/vision" },
-  { labelKey: "nav.contact", href: "/contact-us" },
+  { labelKey: "nav.contact", href: "/contact" },
 ];
 
 export const footerSections: FooterSection[] = [
@@ -27,7 +27,7 @@ export const footerSections: FooterSection[] = [
     links: [
       { labelKey: "nav.news", href: "/news" },
       { labelKey: "nav.vision", href: "/vision" },
-      { labelKey: "nav.contact", href: "/contact-us" },
+      { labelKey: "nav.contact", href: "/contact" },
       { labelKey: "nav.app", href: "/app-page" },
     ],
   },

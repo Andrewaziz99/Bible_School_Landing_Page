@@ -55,3 +55,11 @@ export const curricula: Curriculum[] = [
     badge: "Mastery",
   },
 ];
+
+export function getCurriculumBySlug(slug: string) {
+  return curricula.find(c => c.slug === slug);
+}
+
+export function getAllCurriculaSlugs() {
+  return curricula.map(c => c.slug);
+}
