@@ -43,8 +43,8 @@ export const Breadcrumb = ({ items, variant = 'light', className }: BreadcrumbPr
           </Link>
         </li>
 
-        {items.map((item, index) => {
-          const isLast = index === items.length - 1;
+        {items.filter(item => item.href !== '/').map((item, index, filteredItems) => {
+          const isLast = index === filteredItems.length - 1;
 
           return (
             <li key={item.href} className="flex items-center">

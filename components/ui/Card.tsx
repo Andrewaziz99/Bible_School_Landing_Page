@@ -1,5 +1,5 @@
-// components/ui/Card.tsx
 import React from 'react';
+import Link from 'next/link';
 import { cn } from '@/lib/utils/cn';
 
 interface CardProps {
@@ -9,6 +9,7 @@ interface CardProps {
   hoverEffect?: 'none' | 'lift' | 'glow' | 'zoom';
   children: React.ReactNode;
   className?: string;
+  href?: string;
 }
 
 export const Card = ({
@@ -18,6 +19,7 @@ export const Card = ({
   hoverEffect = 'none',
   children,
   className,
+  href,
 }: CardProps) => {
   const variants = {
     default: 'bg-white border border-slate-200 shadow-sm',
@@ -47,17 +49,25 @@ export const Card = ({
     zoom: 'hover:scale-[1.02] hover:shadow-xl',
   };
 
+  const cardClasses = cn(
+    'rounded-3xl transition-all duration-500 ease-out',
+    variants[variant],
+    paddings[padding],
+    accents[accentColor],
+    hoverEffects[hoverEffect],
+    className
+  );
+
+  if (href) {
+    return (
+      <Link href={href} className={cn("block group/card outline-none", cardClasses)}>
+        {children}
+      </Link>
+    );
+  }
+
   return (
-    <div
-      className={cn(
-        'rounded-3xl transition-all duration-500 ease-out',
-        variants[variant],
-        paddings[padding],
-        accents[accentColor],
-        hoverEffects[hoverEffect],
-        className
-      )}
-    >
+    <div className={cardClasses}>
       {children}
     </div>
   );

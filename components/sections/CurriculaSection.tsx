@@ -43,6 +43,7 @@ export default function CurriculaSection() {
                 key={c.slug}
                 variant="elevated"
                 hoverEffect="lift"
+                href={`/curricula/${c.slug}`}
                 className="group relative overflow-hidden flex flex-col p-0 border-none bg-white shadow-lg h-full"
               >
                 {/* Visual Header with Badge Background */}
@@ -96,15 +97,14 @@ export default function CurriculaSection() {
                     {c.description[locale]}
                   </p>
 
-                  <Link
-                    href={`/curricula#${c.slug}`}
-                    className="inline-flex items-center gap-2 text-sm font-black text-slate-900 group/link"
+                  <div
+                    className="inline-flex items-center gap-2 text-sm font-black text-slate-900 group/link mt-auto"
                   >
-                    <span className="border-b-2 border-teal-500/30 group-hover/link:border-teal-500 transition-all">
+                    <span className="border-b-2 border-teal-500/30 group-hover:border-teal-500 transition-all">
                       {t('common.knowMore')}
                     </span>
-                    <ArrowIcon className="w-4 h-4 text-teal-500 group-hover/link:translate-x-1 rtl:group-hover/link:-translate-x-1 transition-transform" />
-                  </Link>
+                    <ArrowIcon className="w-4 h-4 text-teal-500 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
+                  </div>
                 </div>
               </Card>
             );
