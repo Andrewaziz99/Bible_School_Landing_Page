@@ -1,11 +1,12 @@
-// components/layout/Header.tsx
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
+import gsap from "gsap";
+
 import { useLang } from "../providers/LanguageProvider";
 import { cn } from "@/lib/utils/cn";
 import { Button } from "../ui";
@@ -13,159 +14,215 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 import { MobileMenu } from "./MobileMenu";
 
 const navItems = [
-  { labelKey: "nav.home",      href: "/" },
-  { labelKey: "nav.bible",     href: "/bible" },
-  { labelKey: "nav.about",     href: "/about" },
+  { labelKey: "nav.home", href: "/" },
+  { labelKey: "nav.bible", href: "/bible" },
+  { labelKey: "nav.about", href: "/about" },
   { labelKey: "nav.curricula", href: "/curricula" },
-  { labelKey: "nav.app",       href: "/app-page" },
-  { labelKey: "nav.news",      href: "/news" },
-  { labelKey: "nav.vision",    href: "/vision" },
-  { labelKey: "nav.contact",   href: "/contact-us" },
+  { labelKey: "nav.app", href: "/app-page" },
+  { labelKey: "nav.news", href: "/news" },
+  { labelKey: "nav.vision", href: "/vision" },
 ];
-
-const leftNavItems = navItems.slice(0, 4);
-// Exclude Contact (index 7) from desktop text links since it has a dedicated CTA button
-const rightNavItems = navItems.slice(4, 7);
 
 export default function Header() {
   const { t } = useLang();
   const pathname = usePathname();
-  const [isScrolled, setIsScrolled] = useState(false);
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
+  const indicatorRef = useRef<HTMLDivElement>(null);
 
-  const NavLink = ({ item }: { item: typeof navItems[0] }) => {
-    const isActive = pathname === item.href;
-    return (
-      <Link
-        href={item.href}
-        className={cn(
-          "relative px-2 xl:px-4 py-2 text-[13px] xl:text-sm font-bold tracking-wide transition-all duration-200 uppercase whitespace-nowrap rounded-lg",
-          isActive 
-            ? "text-teal-600 bg-teal-50/50" 
-            : "text-slate-600 hover:text-teal-600 hover:bg-slate-50/80"
-        )}
-      >
-        {t(item.labelKey)}
-        {isActive && (
-          <span className="absolute -bottom-1 left-3 right-3 h-[3px] bg-teal-600 rounded-full" />
-        )}
-      </Link>
-    );
-  };
+  /* ─────────────────────────────────────────────
+     ULTRA SMOOTH GSAP SYSTEM
+  ───────────────────────────────────────────── */
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const nav = navRef.current;
+      const indicator = indicatorRef.current;
+
+      if (!nav || !indicator) return;
+
+      const links = nav.querySelectorAll("[data-nav]");
+
+      /* ─── QUICK SETTERS (PERFORMANCE MAGIC) ─── */
+      const xTo = gsap.quickTo(indicator, "x", {
+        duration: 0.45,
+        ease: "power3.out",
+      });
+
+      const scaleTo = gsap.quickTo(indicator, "scaleX", {
+        duration: 0.45,
+        ease: "power3.out",
+      });
+
+      /* ─── SET INITIAL ACTIVE ─── */
+      const setActive = () => {
+        const active = nav.querySelector(
+          `[data-active="true"]`
+        ) as HTMLElement;
+
+        if (!active) return;
+
+        const rect = active.getBoundingClientRect();
+        const parentRect = nav.getBoundingClientRect();
+
+        const x = rect.left - parentRect.left;
+        const w = rect.width;
+
+        xTo(x);
+        scaleTo(w / 100); // base width = 100
+      };
+
+      setActive();
+
+      /* ─── HOVER EFFECT ─── */
+      links.forEach((link: any) => {
+        const el = link as HTMLElement;
+
+        el.addEventListener("mouseenter", () => {
+          const rect = el.getBoundingClientRect();
+          const parentRect = nav.getBoundingClientRect();
+
+          const x = rect.left - parentRect.left;
+          const w = rect.width;
+
+          xTo(x);
+          scaleTo(w / 100);
+        });
+
+        el.addEventListener("mouseleave", setActive);
+      });
+
+      /* ─── SCROLL MORPH HEADER ─── */
+      let lastY = 0;
+
+      const onScroll = () => {
+        const y = window.scrollY;
+        const header = headerRef.current;
+
+        if (!header) return;
+
+        if (y > 40) {
+          gsap.to(header, {
+            backdropFilter: "blur(20px)",
+            height: 80,
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        } else {
+          gsap.to(header, {
+            backdropFilter: "blur(10px)",
+            height: 96,
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        }
+
+        lastY = y;
+      };
+
+      window.addEventListener("scroll", onScroll);
+
+      /* ─── INTRO ANIMATION ─── */
+      gsap.from(headerRef.current, {
+        y: -40,
+        opacity: 0,
+        duration: 0.9,
+        ease: "power3.out",
+      });
+
+      return () => {
+        window.removeEventListener("scroll", onScroll);
+      };
+    });
+
+    return () => ctx.revert(); // 🔥 prevents bugs
+  }, [pathname]);
 
   return (
     <>
+      <div className="h-[2px] bg-gradient-to-r from-teal-400 via-teal-500 to-teal-400" />
+
       <header
-        className={cn(
-          "fixed top-0 inset-x-0 z-50 transition-all duration-500",
-          isScrolled
-            ? "bg-white/90 backdrop-blur-xl border-b border-slate-200/50 shadow-sm py-2"
-            : "bg-transparent py-4 md:py-6"
-        )}
+        ref={headerRef}
+        className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md border-b border-slate-200/50"
+        style={{ height: 96 }}
       >
-        <div className="container-max flex items-center justify-between relative">
-          
-          {/* Section 1: Mobile Logo & Desktop Left Nav */}
-          <div className="flex flex-1 items-center justify-start">
-             {/* Logo visible ONLY on Mobile, positioned at the start */}
-             <div className="lg:hidden flex-shrink-0">
-               <Link href="/" className="flex items-center gap-3">
-                  <div className={cn(
-                    "relative transition-all duration-500 rounded-xl bg-white shadow-md shadow-teal-900/5 border border-slate-100 flex items-center justify-center overflow-hidden",
-                    isScrolled ? "w-10 h-10" : "w-12 h-12"
-                  )}>
-                    <Image src="/assets/logo.png" alt="Logo" fill className="object-contain p-1.5" priority />
-                  </div>
-                  {/* Brand text for mobile */}
-                  <div className={cn(
-                    "flex flex-col transition-all duration-300", 
-                    isScrolled ? "opacity-0 w-0 hidden" : "opacity-100 w-auto"
-                  )}>
-                    <span className="block text-slate-900 font-extrabold text-sm leading-none">
-                       {t('common.brandName')}
-                    </span>
-                  </div>
-               </Link>
-             </div>
+        <div className="max-w-[1400px] mx-auto px-6 h-full flex items-center justify-between">
 
-             {/* Desktop Left Nav */}
-             <nav className="hidden lg:flex items-center gap-1 rtl:space-x-reverse">
-                {leftNavItems.map((item) => (
-                  <NavLink key={item.href} item={item} />
-                ))}
-             </nav>
-          </div>
-
-          {/* Section 2: Relative Center Logo for Desktop */}
-          <div className="hidden lg:flex items-center justify-center flex-shrink-0 px-8 z-10">
-             <Link href="/" className="flex flex-col items-center group relative pb-1">
-                {/* Logo Image */}
-                <div className={cn(
-                  "relative transition-all duration-500 rounded-2xl bg-white shadow-xl shadow-teal-900/5 border border-slate-100 flex items-center justify-center overflow-hidden z-10",
-                  isScrolled ? "w-12 h-12 md:w-14 md:h-14" : "w-16 h-16 md:w-18 md:h-18"
-                )}>
-                  <Image
-                    src="/assets/logo.png"
-                    alt="Logo"
-                    fill
-                    className="object-contain p-2 group-hover:scale-105 transition-transform duration-300"
-                    priority
-                  />
-                </div>
-                {/* Absolute Logo Text (Drops perfectly below the centerline) */}
-                <div className={cn(
-                  "absolute top-[calc(100%+0.5rem)] w-max text-center transition-all duration-500",
-                  isScrolled ? "opacity-0 -translate-y-2 pointer-events-none" : "opacity-100 translate-y-0"
-                )}>
-                  <span className="block text-slate-900 font-black text-base leading-[1.2]">
-                     {t('common.brandName')}
-                  </span>
-                  <span className="block text-teal-600 text-[9px] font-bold uppercase tracking-widest mt-0.5">
-                     {t('common.tagline')}
-                  </span>
-                </div>
-              </Link>
-          </div>
-
-          {/* Section 3: Desktop Right Nav & Actions */}
-          <div className="flex flex-1 items-center justify-end gap-3 lg:gap-5">
-            {/* Desktop Right Nav (excluding Contact text link) */}
-            <nav className="hidden lg:flex items-center gap-1 rtl:space-x-reverse">
-              {rightNavItems.map((item) => (
-                <NavLink key={item.href} item={item} />
-              ))}
-            </nav>
-            
-            {/* Desktop Actions */}
-            <div className="hidden lg:flex items-center gap-3 border-s border-slate-200/60 ps-4 lg:ps-6">
-               <LanguageSwitcher />
-               <Button variant="primary" size="sm" href="/contact-us" className="whitespace-nowrap text-[13px] px-5 py-2 shadow-teal-500/20">
-                  {t('common.contactUs')}
-               </Button>
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="relative w-14 h-14">
+              <Image src="/assets/logo.png" alt="Logo" fill className="object-contain" />
             </div>
+            <span className="font-bold text-slate-800 text-base">
+              {t("common.brandName")}
+            </span>
+          </Link>
 
-            {/* Mobile Menu Toggle */}
+          {/* Nav */}
+          <div className="relative hidden lg:block">
+            <div ref={navRef} className="flex items-center relative">
+
+              {/* ULTRA SMOOTH INDICATOR */}
+              <div
+                ref={indicatorRef}
+                className="absolute top-0 left-0 h-full w-[100px] bg-teal-50 rounded-xl origin-left will-change-transform"
+                style={{ transform: "translateX(0px) scaleX(0)" }}
+              />
+
+              {navItems.map((item) => {
+                const isActive = pathname === item.href;
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    data-nav
+                    data-active={isActive}
+                    className="relative px-4 py-2 text-[15px] font-semibold uppercase z-10"
+                  >
+                    <span
+                      className={cn(
+                        isActive
+                          ? "text-teal-600"
+                          : "text-slate-500 hover:text-teal-600"
+                      )}
+                    >
+                      {t(item.labelKey)}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Right */}
+          <div className="flex items-center gap-3">
+            <LanguageSwitcher />
+
+            <Button
+              href="/contact-us"
+              className="px-5 py-2 text-sm rounded-xl bg-gradient-to-r from-teal-500 to-teal-600 text-white shadow-md hover:shadow-lg hover:-translate-y-[1px] transition-all"
+            >
+              {t("common.contactUs")}
+            </Button>
+
             <button
-               onClick={() => setIsMobileMenuOpen(true)}
-               className="lg:hidden p-2 rounded-xl text-slate-700 hover:text-teal-600 hover:bg-slate-100 transition-all active:scale-90"
-               aria-label={t('common.menu')}
-             >
-               <Menu className="w-7 h-7" />
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="lg:hidden p-2"
+            >
+              <Menu />
             </button>
           </div>
 
         </div>
       </header>
 
-      <MobileMenu 
-        isOpen={isMobileMenuOpen} 
-        onClose={() => setIsMobileMenuOpen(false)} 
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
         navItems={navItems}
       />
     </>
