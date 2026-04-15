@@ -109,6 +109,9 @@
     "heading": "Our Educational Curricula",
     "subheading": "A progressive path of biblical curricula carefully designed to suit different age groups",
     "viewAll": "View All Curricula",
+    "content": "Course Content",
+    "audience": "Target Audience",
+    "duration": "Duration",
     "items": {
       "bibleCharacters": {
         "title": "Bible Characters",

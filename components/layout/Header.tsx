@@ -95,31 +95,8 @@ export default function Header() {
       });
 
       /* ─── SCROLL MORPH HEADER ─── */
-      let lastY = 0;
-
       const onScroll = () => {
-        const y = window.scrollY;
-        const header = headerRef.current;
-
-        if (!header) return;
-
-        if (y > 40) {
-          gsap.to(header, {
-            backdropFilter: "blur(20px)",
-            height: 80,
-            duration: 0.3,
-            ease: "power2.out",
-          });
-        } else {
-          gsap.to(header, {
-            backdropFilter: "blur(10px)",
-            height: 96,
-            duration: 0.3,
-            ease: "power2.out",
-          });
-        }
-
-        lastY = y;
+        // Scroll morph removed for non-sticky header
       };
 
       window.addEventListener("scroll", onScroll);
@@ -146,7 +123,7 @@ export default function Header() {
 
       <header
         ref={headerRef}
-        className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md border-b border-slate-200/50"
+        className="relative w-full z-50 bg-white border-b border-slate-200/50"
         style={{ height: 96 }}
       >
         <div className="max-w-[1400px] mx-auto px-6 h-full flex items-center justify-between">

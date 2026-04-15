@@ -45,7 +45,7 @@ export default function RootLayout({
         <LanguageProvider>
           <HtmlDirectionSetter />
           <Header />
-          <main className="flex-grow pt-24 md:pt-32">
+          <main className="flex-grow">
             {children}
           </main>
           <Footer />

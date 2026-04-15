@@ -3,97 +3,142 @@
 import React from 'react';
 import { PageHero } from "@/components/ui/PageHero";
 import { useLang } from "@/components/providers/LanguageProvider";
-import { Button, Input, Card } from "@/components/ui";
-import { CTASection } from "@/components/sections/CTASection";
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Button, Input } from "@/components/ui";
+import { Mail, Phone, MapPin, Send, Clock } from 'lucide-react';
 
 export default function ContactPage() {
-  const { t } = useLang();
+  const { t, locale } = useLang();
 
   const breadcrumbs = [
     { label: t('nav.home'), href: '/' },
     { label: t('nav.contact'), href: '/contact' }
   ];
 
+  const contactInfo = [
+    {
+      icon: MapPin,
+      title: locale === 'ar' ? 'العنوان' : 'Address',
+      detail: locale === 'ar' ? '١٢٣ شارع، القاهرة، مصر' : '123 Street, Cairo, Egypt',
+      color: 'teal',
+    },
+    {
+      icon: Phone,
+      title: locale === 'ar' ? 'الهاتف' : 'Phone',
+      detail: '+20 123 456 7890',
+      color: 'amber',
+    },
+    {
+      icon: Mail,
+      title: locale === 'ar' ? 'البريد الإلكتروني' : 'Email',
+      detail: 'contact@example.com',
+      color: 'teal',
+    },
+    {
+      icon: Clock,
+      title: locale === 'ar' ? 'أوقات العمل' : 'Working Hours',
+      detail: locale === 'ar' ? 'الأحد - الخميس: ٩ ص - ٥ م' : 'Sun - Thu: 9 AM - 5 PM',
+      color: 'amber',
+    },
+  ];
+
   return (
     <>
       <PageHero 
         title={t('nav.contact')} 
+        subtitle={locale === 'ar' ? 'يسعدنا تواصلكم معنا' : 'We would love to hear from you'}
         breadcrumbs={breadcrumbs} 
       />
-      <section className="py-24 bg-slate-50 relative">
-        <div className="container-max">
-          <div className="grid lg:grid-cols-3 gap-12">
+
+      <section className="py-20 md:py-28 bg-white relative overflow-hidden">
+        {/* Decorative blurs */}
+        <div className="absolute top-0 end-0 w-[35rem] h-[35rem] bg-teal-50/40 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 start-0 w-[25rem] h-[25rem] bg-amber-50/30 rounded-full blur-[100px]" />
+
+        <div className="container-max relative z-10">
+          <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
             
-            <div className="lg:col-span-1 space-y-6">
-               <Card variant="elevated" className="p-8 border-none shadow-sm flex flex-col gap-6 h-full">
-                  <div>
-                    <h3 className="text-2xl font-black text-slate-800 mb-6">Contact Information</h3>
-                    <p className="text-slate-600 mb-8">We would love to hear from you. Please reach out with any questions about our curricula or platform.</p>
-                  </div>
-                  
-                  <div className="space-y-6">
-                    <div className="flex items-start gap-4">
-                       <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center text-teal-600 shrink-0">
-                          <MapPin className="w-5 h-5" />
-                       </div>
-                       <div>
-                         <h4 className="font-bold text-slate-900">Address</h4>
-                         <p className="text-slate-600 text-sm mt-1">123 Street, Cairo, Egypt</p>
-                       </div>
+            {/* Contact Info - Left side */}
+            <div className="lg:col-span-2 space-y-6">
+              <div className="mb-10">
+                <span className="inline-block text-xs font-black text-teal-600 uppercase tracking-[0.3em] mb-4">
+                  {locale === 'ar' ? 'معلومات التواصل' : 'Contact Info'}
+                </span>
+                <h2 className="text-3xl font-black text-slate-900 mb-4 leading-tight">
+                  {locale === 'ar' ? 'تواصل معنا' : 'Get In Touch'}
+                </h2>
+                <p className="text-slate-600 leading-relaxed">
+                  {locale === 'ar' 
+                    ? 'لا تتردد في التواصل معنا بخصوص أي استفسار عن مناهجنا أو منصتنا الرقمية.'
+                    : 'Do not hesitate to contact us about any inquiries regarding our curricula or digital platform.'}
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                {contactInfo.map((info, idx) => {
+                  const Icon = info.icon;
+                  const isTeal = info.color === 'teal';
+                  return (
+                    <div 
+                      key={idx}
+                      className="group flex items-start gap-4 p-5 rounded-2xl bg-slate-50/60 border border-slate-100 hover:bg-white hover:shadow-md hover:border-slate-200 transition-all duration-300"
+                    >
+                      <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${isTeal ? 'bg-teal-50 text-teal-600 border border-teal-100' : 'bg-amber-50 text-amber-600 border border-amber-100'}`}>
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-900 text-sm mb-1">{info.title}</h4>
+                        <p className="text-slate-600 text-sm">{info.detail}</p>
+                      </div>
                     </div>
-                    <div className="flex items-start gap-4">
-                       <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center text-teal-600 shrink-0">
-                          <Phone className="w-5 h-5" />
-                       </div>
-                       <div>
-                         <h4 className="font-bold text-slate-900">Phone</h4>
-                         <p className="text-slate-600 text-sm mt-1">+20 123 456 7890</p>
-                       </div>
-                    </div>
-                    <div className="flex items-start gap-4">
-                       <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center text-teal-600 shrink-0">
-                          <Mail className="w-5 h-5" />
-                       </div>
-                       <div>
-                         <h4 className="font-bold text-slate-900">Email</h4>
-                         <p className="text-slate-600 text-sm mt-1">contact@example.com</p>
-                       </div>
-                    </div>
-                  </div>
-               </Card>
+                  );
+                })}
+              </div>
             </div>
             
-            <div className="lg:col-span-2">
-               <Card variant="elevated" className="p-8 md:p-12 border-none shadow-md">
-                 <h3 className="text-2xl font-black text-slate-800 mb-8">Send a Message</h3>
-                 <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); alert("Message sent!"); }}>
-                   <div className="grid md:grid-cols-2 gap-6">
-                     <Input label="Full Name" placeholder="John Doe" required />
-                     <Input label="Email Address" type="email" placeholder="john@example.com" required />
-                   </div>
-                   <Input label="Church Name" placeholder="St. Mark Coptic Orthodox Church" />
-                   
-                   <div className="flex flex-col gap-2">
-                     <label className="text-sm font-bold text-slate-700">Message</label>
-                     <textarea 
-                       className="w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-4 py-3 min-h-[150px] focus:outline-none focus:border-teal-500 transition-colors resize-y" 
-                       placeholder="How can we help you?"
-                       required
-                     />
-                   </div>
-                   
-                   <Button type="submit" variant="primary" size="lg" className="w-full md:w-auto">
-                      Send Message
-                   </Button>
-                 </form>
-               </Card>
+            {/* Contact Form - Right side */}
+            <div className="lg:col-span-3">
+              <div className="bg-white rounded-3xl p-8 md:p-12 border border-slate-100 shadow-xl shadow-slate-200/50">
+                {/* Form header */}
+                <div className="flex items-center gap-3 mb-10">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center shadow-md shadow-teal-500/20">
+                    <Send className="w-5 h-5 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-black text-slate-900">
+                    {locale === 'ar' ? 'أرسل رسالة' : 'Send a Message'}
+                  </h3>
+                </div>
+
+                <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); alert("Message sent!"); }}>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <Input label={locale === 'ar' ? 'الاسم الكامل' : 'Full Name'} placeholder={locale === 'ar' ? 'يوحنا مرقص' : 'John Mark'} required />
+                    <Input label={locale === 'ar' ? 'البريد الإلكتروني' : 'Email Address'} type="email" placeholder="john@example.com" required />
+                  </div>
+                  <Input label={locale === 'ar' ? 'اسم الكنيسة' : 'Church Name'} placeholder={locale === 'ar' ? 'كنيسة مارمرقس القبطية الأرثوذكسية' : 'St. Mark Coptic Orthodox Church'} />
+                  
+                  <div className="flex flex-col gap-2.5">
+                    <label className="text-sm font-bold text-slate-700">
+                      {locale === 'ar' ? 'الرسالة' : 'Message'}
+                    </label>
+                    <textarea 
+                      className="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl px-5 py-4 min-h-[160px] text-slate-800 focus:outline-none focus:border-teal-500 focus:bg-white transition-all duration-300 resize-y placeholder:text-slate-400" 
+                      placeholder={locale === 'ar' ? 'كيف يمكننا مساعدتك؟' : 'How can we help you?'}
+                      required
+                    />
+                  </div>
+                  
+                  <Button type="submit" variant="primary" size="lg" className="w-full md:w-auto px-12 py-4 rounded-xl bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 shadow-lg shadow-teal-500/20 hover:shadow-teal-500/30 transition-all duration-300">
+                    <span className="flex items-center gap-2">
+                      <Send className="w-4 h-4" />
+                      {locale === 'ar' ? 'إرسال الرسالة' : 'Send Message'}
+                    </span>
+                  </Button>
+                </form>
+              </div>
             </div>
             
           </div>
         </div>
       </section>
-      <CTASection />
     </>
   );
 }
