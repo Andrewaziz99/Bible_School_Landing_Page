@@ -24,10 +24,11 @@ const navItems = [
 ];
 
 const leftNavItems = navItems.slice(0, 4);
-const rightNavItems = navItems.slice(4);
+// Exclude Contact (index 7) from desktop text links since it has a dedicated CTA button
+const rightNavItems = navItems.slice(4, 7);
 
 export default function Header() {
-  const { t, dir } = useLang();
+  const { t } = useLang();
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -44,15 +45,15 @@ export default function Header() {
       <Link
         href={item.href}
         className={cn(
-          "relative px-4 py-2 text-sm font-bold tracking-wide transition-colors duration-200 uppercase",
+          "relative px-2 xl:px-4 py-2 text-[13px] xl:text-sm font-bold tracking-wide transition-all duration-200 uppercase whitespace-nowrap rounded-lg",
           isActive 
-            ? "text-teal-600" 
-            : "text-slate-600 hover:text-teal-600"
+            ? "text-teal-600 bg-teal-50/50" 
+            : "text-slate-600 hover:text-teal-600 hover:bg-slate-50/80"
         )}
       >
         {t(item.labelKey)}
         {isActive && (
-          <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-teal-600 rounded-full" />
+          <span className="absolute -bottom-1 left-3 right-3 h-[3px] bg-teal-600 rounded-full" />
         )}
       </Link>
     );
@@ -64,73 +65,97 @@ export default function Header() {
         className={cn(
           "fixed top-0 inset-x-0 z-50 transition-all duration-500",
           isScrolled
-            ? "bg-white/80 backdrop-blur-xl border-b border-slate-200/50 shadow-sm py-2"
+            ? "bg-white/90 backdrop-blur-xl border-b border-slate-200/50 shadow-sm py-2"
             : "bg-transparent py-4 md:py-6"
         )}
       >
-        <div className="container-max flex items-center justify-between">
+        <div className="container-max flex items-center justify-between relative">
           
-          {/* Logo (Now Start on Mobile, Center on Desktop) */}
-          <div className="flex-shrink-0 lg:mx-8 order-1">
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className={cn(
-                "relative transition-all duration-500 rounded-2xl bg-white shadow-xl shadow-teal-900/5 border border-slate-100 flex items-center justify-center overflow-hidden",
-                isScrolled ? "w-10 h-10 md:w-14 md:h-14" : "w-12 h-12 md:w-20 md:h-20"
-              )}>
-                <Image
-                  src="/assets/logo.png"
-                  alt="Logo"
-                  fill
-                  className="object-contain p-2"
-                  priority
-                />
-              </div>
-              <div className={cn(
-                "hidden sm:flex flex-col transition-all duration-500 overflow-hidden",
-                isScrolled ? "h-0 opacity-0 -translate-y-2 invisible" : "h-auto opacity-100 translate-y-0 visible"
-              )}>
-                <span className="block text-slate-900 font-black text-lg lg:text-xl leading-none">
-                   {t('common.brandName')}
-                </span>
-                <span className="block text-teal-600 text-[10px] lg:text-xs font-bold uppercase tracking-widest mt-1">
-                   {t('common.tagline')}
-                </span>
-              </div>
-            </Link>
+          {/* Section 1: Mobile Logo & Desktop Left Nav */}
+          <div className="flex flex-1 items-center justify-start">
+             {/* Logo visible ONLY on Mobile, positioned at the start */}
+             <div className="lg:hidden flex-shrink-0">
+               <Link href="/" className="flex items-center gap-3">
+                  <div className={cn(
+                    "relative transition-all duration-500 rounded-xl bg-white shadow-md shadow-teal-900/5 border border-slate-100 flex items-center justify-center overflow-hidden",
+                    isScrolled ? "w-10 h-10" : "w-12 h-12"
+                  )}>
+                    <Image src="/assets/logo.png" alt="Logo" fill className="object-contain p-1.5" priority />
+                  </div>
+                  {/* Brand text for mobile */}
+                  <div className={cn(
+                    "flex flex-col transition-all duration-300", 
+                    isScrolled ? "opacity-0 w-0 hidden" : "opacity-100 w-auto"
+                  )}>
+                    <span className="block text-slate-900 font-extrabold text-sm leading-none">
+                       {t('common.brandName')}
+                    </span>
+                  </div>
+               </Link>
+             </div>
+
+             {/* Desktop Left Nav */}
+             <nav className="hidden lg:flex items-center gap-1 rtl:space-x-reverse">
+                {leftNavItems.map((item) => (
+                  <NavLink key={item.href} item={item} />
+                ))}
+             </nav>
           </div>
 
-          {/* Desktop Left Nav (Hides on Mobile) */}
-          <nav className="hidden lg:flex items-center space-x-1 rtl:space-x-reverse flex-1 justify-end order-2">
-            {leftNavItems.map((item) => (
-              <NavLink key={item.href} item={item} />
-            ))}
-          </nav>
+          {/* Section 2: Absolute Center Logo for Desktop */}
+          <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex-col items-center">
+             <Link href="/" className="flex flex-col items-center group">
+                <div className={cn(
+                  "relative transition-all duration-500 rounded-2xl bg-white shadow-xl shadow-teal-900/5 border border-slate-100 flex items-center justify-center overflow-hidden",
+                  isScrolled ? "w-12 h-12 md:w-14 md:h-14" : "w-16 h-16 md:w-20 md:h-20"
+                )}>
+                  <Image
+                    src="/assets/logo.png"
+                    alt="Logo"
+                    fill
+                    className="object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+                    priority
+                  />
+                </div>
+                <div className={cn(
+                  "mt-2 text-center transition-all duration-500 overflow-hidden",
+                  isScrolled ? "h-0 opacity-0 -translate-y-2 invisible" : "h-auto opacity-100 translate-y-0 visible"
+                )}>
+                  <span className="block text-slate-900 font-black text-lg lg:text-xl leading-none">
+                     {t('common.brandName')}
+                  </span>
+                  <span className="block text-teal-600 text-[10px] lg:text-xs font-bold uppercase tracking-widest mt-1">
+                     {t('common.tagline')}
+                  </span>
+                </div>
+              </Link>
+          </div>
 
-          {/* Desktop Right Nav (Hides on Mobile) */}
-          <nav className="hidden lg:flex items-center space-x-1 rtl:space-x-reverse flex-1 order-3">
-            {rightNavItems.map((item) => (
-              <NavLink key={item.href} item={item} />
-            ))}
-          </nav>
+          {/* Section 3: Desktop Right Nav & Actions */}
+          <div className="flex flex-1 items-center justify-end gap-3 lg:gap-5">
+            {/* Desktop Right Nav (excluding Contact text link) */}
+            <nav className="hidden lg:flex items-center gap-1 rtl:space-x-reverse">
+              {rightNavItems.map((item) => (
+                <NavLink key={item.href} item={item} />
+              ))}
+            </nav>
+            
+            {/* Desktop Actions */}
+            <div className="hidden lg:flex items-center gap-3 border-s border-slate-200/60 ps-4 lg:ps-6">
+               <LanguageSwitcher />
+               <Button variant="primary" size="sm" href="/contact-us" className="whitespace-nowrap text-sm px-5 py-2 shadow-teal-500/20">
+                  {t('common.contactUs')}
+               </Button>
+            </div>
 
-          {/* Actions & Mobile Toggle (End) */}
-          <div className="flex items-center gap-4 order-4">
-             {/* Desktop Actions */}
-             <div className="hidden lg:flex items-center gap-4">
-                <LanguageSwitcher />
-                <Button variant="secondary" size="sm" href="/contact-us">
-                   {t('common.contactUs')}
-                </Button>
-             </div>
-             
-             {/* Mobile Menu Toggle */}
-             <button
+            {/* Mobile Menu Toggle */}
+            <button
                onClick={() => setIsMobileMenuOpen(true)}
                className="lg:hidden p-2 rounded-xl text-slate-700 hover:text-teal-600 hover:bg-slate-100 transition-all active:scale-90"
                aria-label={t('common.menu')}
              >
                <Menu className="w-7 h-7" />
-             </button>
+            </button>
           </div>
 
         </div>
