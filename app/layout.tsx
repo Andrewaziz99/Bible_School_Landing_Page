@@ -7,6 +7,8 @@ import { Cairo } from "next/font/google";
 import "./globals.css";
 import LanguageProvider from "../components/providers/LanguageProvider";
 import HtmlDirectionSetter from "../components/HtmlDirectionSetter";
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
 
 // Load Cairo font — optimized to only the weights we actually use
 const cairo = Cairo({
@@ -39,10 +41,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ar" dir="rtl" className={cairo.variable}>
-      <body className="font-cairo antialiased">
+      <body className="font-cairo antialiased min-h-screen flex flex-col">
         <LanguageProvider>
           <HtmlDirectionSetter />
-          {children}
+          <Header />
+          <main className="flex-grow pt-24 md:pt-32">
+            {children}
+          </main>
+          <Footer />
         </LanguageProvider>
       </body>
     </html>

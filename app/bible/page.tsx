@@ -1,4 +1,3 @@
-import Header from '@/components/layout/Header';
 import BibleReaderClient from '@/components/BibleReaderClient';
 import { Bible } from '@/lib/bible-types';
 import { Metadata } from 'next';
@@ -41,7 +40,6 @@ export default function BiblePage() {
 
   return (
     <>
-      <Header />
       <main className="min-h-screen bg-gradient-to-br from-slate-50/90 via-white/85 to-slate-100/90">
         <BibleReaderClient bibleData={bibleData} />
       </main>

@@ -19,7 +19,7 @@ export const Badge = ({
 }: BadgeProps) => {
   const variants = {
     default: 'bg-slate-100 text-slate-700 border-slate-200',
-    primary: 'bg-teal-600 text-white border-teal-700 shadow-md shadow-teal-900/10',
+    primary: 'bg-teal-600 text-white border-teal-500 shadow-[0_0_15px_rgba(13,148,136,0.3)]',
     secondary: 'bg-amber-100 text-amber-800 border-amber-200',
     teal: 'bg-teal-50 text-teal-700 border-teal-200',
     gold: 'bg-amber-50 text-amber-700 border-amber-200',

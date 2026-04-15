@@ -1,14 +1,9 @@
-
-import Header from "@/components/layout/Header";
 import { CTASection } from "@/components/sections/CTASection";
 
-export default function ContactUsPage() {
+export default function ContactPage() {
   return (
     <>
-      <Header />
-      <main>
-        <CTASection />
-      </main>
+      <CTASection />
     </>
   );
 }
