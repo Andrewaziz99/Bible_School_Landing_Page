@@ -102,12 +102,13 @@ export default function Header() {
              </nav>
           </div>
 
-          {/* Section 2: Absolute Center Logo for Desktop */}
-          <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex-col items-center">
-             <Link href="/" className="flex flex-col items-center group">
+          {/* Section 2: Relative Center Logo for Desktop */}
+          <div className="hidden lg:flex items-center justify-center flex-shrink-0 px-8 z-10">
+             <Link href="/" className="flex flex-col items-center group relative pb-1">
+                {/* Logo Image */}
                 <div className={cn(
-                  "relative transition-all duration-500 rounded-2xl bg-white shadow-xl shadow-teal-900/5 border border-slate-100 flex items-center justify-center overflow-hidden",
-                  isScrolled ? "w-12 h-12 md:w-14 md:h-14" : "w-16 h-16 md:w-20 md:h-20"
+                  "relative transition-all duration-500 rounded-2xl bg-white shadow-xl shadow-teal-900/5 border border-slate-100 flex items-center justify-center overflow-hidden z-10",
+                  isScrolled ? "w-12 h-12 md:w-14 md:h-14" : "w-16 h-16 md:w-18 md:h-18"
                 )}>
                   <Image
                     src="/assets/logo.png"
@@ -117,14 +118,15 @@ export default function Header() {
                     priority
                   />
                 </div>
+                {/* Absolute Logo Text (Drops perfectly below the centerline) */}
                 <div className={cn(
-                  "mt-2 text-center transition-all duration-500 overflow-hidden",
-                  isScrolled ? "h-0 opacity-0 -translate-y-2 invisible" : "h-auto opacity-100 translate-y-0 visible"
+                  "absolute top-[calc(100%+0.5rem)] w-max text-center transition-all duration-500",
+                  isScrolled ? "opacity-0 -translate-y-2 pointer-events-none" : "opacity-100 translate-y-0"
                 )}>
-                  <span className="block text-slate-900 font-black text-lg lg:text-xl leading-none">
+                  <span className="block text-slate-900 font-black text-base leading-[1.2]">
                      {t('common.brandName')}
                   </span>
-                  <span className="block text-teal-600 text-[10px] lg:text-xs font-bold uppercase tracking-widest mt-1">
+                  <span className="block text-teal-600 text-[9px] font-bold uppercase tracking-widest mt-0.5">
                      {t('common.tagline')}
                   </span>
                 </div>
@@ -143,7 +145,7 @@ export default function Header() {
             {/* Desktop Actions */}
             <div className="hidden lg:flex items-center gap-3 border-s border-slate-200/60 ps-4 lg:ps-6">
                <LanguageSwitcher />
-               <Button variant="primary" size="sm" href="/contact-us" className="whitespace-nowrap text-sm px-5 py-2 shadow-teal-500/20">
+               <Button variant="primary" size="sm" href="/contact-us" className="whitespace-nowrap text-[13px] px-5 py-2 shadow-teal-500/20">
                   {t('common.contactUs')}
                </Button>
             </div>
