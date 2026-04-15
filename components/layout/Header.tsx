@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
-import gsap from "gsap";
+import { gsap } from '@/animations/gsap-config';
 
 import { useLang } from "../providers/LanguageProvider";
 import { cn } from "@/lib/utils/cn";

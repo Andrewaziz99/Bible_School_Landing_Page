@@ -9,6 +9,7 @@ import LanguageProvider from "../components/providers/LanguageProvider";
 import HtmlDirectionSetter from "../components/HtmlDirectionSetter";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import PageWrapper from "../components/layout/PageWrapper";
 
 // Load Cairo font — optimized to only the weights we actually use
 const cairo = Cairo({
@@ -46,7 +47,9 @@ export default function RootLayout({
           <HtmlDirectionSetter />
           <Header />
           <main className="flex-grow">
-            {children}
+            <PageWrapper>
+              {children}
+            </PageWrapper>
           </main>
           <Footer />
         </LanguageProvider>

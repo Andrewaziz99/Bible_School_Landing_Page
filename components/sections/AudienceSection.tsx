@@ -1,7 +1,9 @@
 // components/sections/AudienceSection.tsx
 "use client";
 
-import React from 'react';
+import React, { useRef } from 'react';
+import { useGSAP } from '@gsap/react';
+import { gsap } from '@/animations/gsap-config';
 import { useLang } from '../providers/LanguageProvider';
 import { SectionHeader, Card, Badge } from '../ui';
 import { Church, Users, GraduationCap, CheckCircle2 } from 'lucide-react';
@@ -10,6 +12,7 @@ import { cn } from '@/lib/utils/cn';
 
 export default function AudienceSection() {
   const { t } = useLang();
+  const sectionRef = useRef<HTMLElement>(null);
 
   const iconMap: Record<string, any> = {
     Church: Church,
@@ -23,18 +26,38 @@ export default function AudienceSection() {
     purple: { bg: "bg-purple-600", text: "text-purple-600", light: "bg-purple-50" },
   };
 
-  return (
-    <section id="audience" className="py-24 bg-slate-50 relative">
-      <div className="container-max">
-        <SectionHeader 
-          eyebrow={t('audience.eyebrow')}
-          heading={t('audience.heading')}
-          description={t('audience.subheading')}
-          centered
-          className="mb-20"
-        />
+  useGSAP(() => {
+    const ctx = gsap.context(() => {
+      // Section header
+      gsap.from('.audience-header', {
+        opacity: 0, y: 30, duration: 0.8, ease: 'power2.out',
+        scrollTrigger: { trigger: '.audience-header', start: 'top 85%' },
+      });
 
-        <div className="grid md:grid-cols-3 gap-8">
+      // Cards stagger
+      gsap.from('.audience-card', {
+        opacity: 0, y: 40, duration: 0.7, stagger: 0.15, ease: 'power2.out',
+        scrollTrigger: { trigger: '.audience-grid', start: 'top 80%' },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, { scope: sectionRef });
+
+  return (
+    <section ref={sectionRef} id="audience" className="py-24 bg-slate-50 relative">
+      <div className="container-max">
+        <div className="audience-header">
+          <SectionHeader 
+            eyebrow={t('audience.eyebrow')}
+            heading={t('audience.heading')}
+            description={t('audience.subheading')}
+            centered
+            className="mb-20"
+          />
+        </div>
+
+        <div className="audience-grid grid md:grid-cols-3 gap-8">
           {audiences.map((audience) => {
             const Icon = iconMap[audience.icon] || Church;
             const colors = colorConfig[audience.color] || colorConfig.teal;
@@ -48,7 +71,7 @@ export default function AudienceSection() {
                 key={audience.id}
                 variant="elevated"
                 hoverEffect="lift"
-                className="p-8 flex flex-col h-full border-slate-200/60"
+                className="audience-card p-8 flex flex-col h-full border-slate-200/60 card-hoverable"
               >
                 {/* Icon Header */}
                 <div className={cn(

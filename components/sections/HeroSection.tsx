@@ -1,16 +1,18 @@
 // components/sections/HeroSection.tsx
 "use client";
 
-import React from 'react';
+import React, { useRef } from 'react';
 import Image from 'next/image';
+import { useGSAP } from '@gsap/react';
+import { gsap } from '@/animations/gsap-config';
 import { useLang } from '../providers/LanguageProvider';
 import { Badge, Button } from '../ui';
 import { ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
-import { cn } from '@/lib/utils/cn';
 
 export default function HeroSection() {
   const { t, dir, locale } = useLang();
   const ArrowIcon = dir === 'rtl' ? ArrowLeft : ArrowRight;
+  const containerRef = useRef<HTMLElement>(null);
 
   const stats = [
     { value: t('hero.stats.curricula.value'), label: t('hero.stats.curricula.label') },
@@ -18,8 +20,39 @@ export default function HeroSection() {
     { value: t('hero.stats.years.value'),     label: t('hero.stats.years.label') },
   ];
 
+  // GSAP Hero entrance timeline
+  useGSAP(() => {
+    const tl = gsap.timeline({ delay: 0.3 });
+
+    tl.from('.hero-badge', {
+      opacity: 0, y: 20, duration: 0.5, ease: 'power2.out',
+    })
+    .from('.hero-heading', {
+      opacity: 0, y: 30, duration: 0.7, ease: 'power3.out',
+    }, '-=0.2')
+    .from('.hero-subtitle', {
+      opacity: 0, y: 20, duration: 0.6, ease: 'power2.out',
+    }, '-=0.3')
+    .from('.hero-cta > *', {
+      opacity: 0, y: 20, duration: 0.5, stagger: 0.1, ease: 'power2.out',
+    }, '-=0.2')
+    .from('.hero-stats > div', {
+      opacity: 0, y: 15, duration: 0.5, stagger: 0.08, ease: 'power2.out',
+    }, '-=0.2')
+    .from('.hero-visual', {
+      opacity: 0, scale: 0.92, duration: 1, ease: 'power2.out',
+    }, '-=0.8')
+    .from('.hero-float', {
+      opacity: 0, scale: 0, duration: 0.5, ease: 'back.out(1.7)',
+    }, '-=0.3')
+    .from('.hero-scroll-indicator', {
+      opacity: 0, y: -10, duration: 0.5, ease: 'power2.out',
+    }, '-=0.2');
+
+  }, { scope: containerRef });
+
   return (
-    <section className="relative min-h-[90vh] lg:min-h-screen flex items-center overflow-hidden pb-16">
+    <section ref={containerRef} className="relative min-h-[90vh] lg:min-h-screen flex items-center overflow-hidden pb-16">
       {/* Background layers */}
       <div className="absolute inset-0 bg-gradient-to-br from-teal-50/40 via-white to-amber-50/20 -z-10" />
       
@@ -34,31 +67,31 @@ export default function HeroSection() {
           <div className="flex flex-col items-start text-start max-w-2xl mx-auto lg:mx-0 order-2 lg:order-1">
             <Badge 
               variant="primary" 
-              className="mb-6 py-2 px-5 text-sm uppercase tracking-[0.2em] font-black animate-fade-in-up"
+              className="hero-badge mb-6 py-2 px-5 text-sm uppercase tracking-[0.2em] font-black"
             >
               {t('hero.badge')}
             </Badge>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.15] tracking-tight text-slate-900 mb-6 animate-fade-in-up-delay-1">
+            <h1 className="hero-heading text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.15] tracking-tight text-slate-900 mb-6">
               {t('hero.heading')}
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 via-teal-500 to-amber-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 via-teal-500 to-amber-600 text-shimmer">
                 {t('hero.headingHighlight')}
               </span>
             </h1>
 
-            <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-xl mb-10 animate-fade-in-up-delay-2 font-medium">
+            <p className="hero-subtitle text-lg md:text-xl text-slate-600 leading-relaxed max-w-xl mb-10 font-medium">
               {t('hero.subtitle')}
             </p>
 
-            <div className="flex flex-wrap gap-4 mb-14 animate-fade-in-up-delay-3">
+            <div className="hero-cta flex flex-wrap gap-4 mb-14">
               <Button 
                 variant="primary" 
                 size="lg" 
                 href="#curricula"
                 icon={<ArrowIcon className="w-5 h-5" />}
                 iconPosition="end"
-                className="px-10 shadow-lg shadow-teal-900/10"
+                className="px-10 shadow-lg shadow-teal-900/10 btn-interactive"
               >
                 {t('hero.cta.primary')}
               </Button>
@@ -66,14 +99,14 @@ export default function HeroSection() {
                 variant="outline" 
                 size="lg" 
                 href="#app"
-                className="px-10 border-slate-200 text-slate-700 hover:bg-slate-50"
+                className="px-10 border-slate-200 text-slate-700 hover:bg-slate-50 btn-interactive"
               >
                 {t('hero.cta.secondary')}
               </Button>
             </div>
 
             {/* Stats Row */}
-            <div className="grid grid-cols-3 gap-8 md:gap-12 w-full pt-8 border-t border-slate-200/60 animate-fade-in-up-delay-3">
+            <div className="hero-stats grid grid-cols-3 gap-8 md:gap-12 w-full pt-8 border-t border-slate-200/60">
               {stats.map((stat, idx) => (
                 <div key={idx} className="group">
                   <p className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-1 transition-transform duration-300 group-hover:scale-110 origin-start">
@@ -88,7 +121,7 @@ export default function HeroSection() {
           </div>
 
           {/* Right Column: Visual Mockup */}
-          <div className="relative order-1 lg:order-2 flex justify-center animate-fade-in-up-delay-2">
+          <div className="hero-visual relative order-1 lg:order-2 flex justify-center">
             <div className="relative w-full aspect-square max-w-[500px] lg:max-w-none">
                {/* Decorative background shapes for the image */}
                <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 to-transparent rounded-[3rem] rotate-6 scale-95" />
@@ -107,7 +140,7 @@ export default function HeroSection() {
                </div>
 
                {/* Floating elements */}
-               <div className="absolute -top-6 -end-6 w-20 h-20 bg-white rounded-2xl shadow-xl flex items-center justify-center animate-bounce duration-[3s] hidden md:flex">
+               <div className="hero-float absolute -top-6 -end-6 w-20 h-20 bg-white rounded-2xl shadow-xl flex items-center justify-center hidden md:flex">
                   <Sparkles className="w-10 h-10 text-amber-500" />
                </div>
             </div>
@@ -117,7 +150,7 @@ export default function HeroSection() {
       </div>
 
       {/* Modern Scroll Indicator */}
-      <div className="absolute bottom-8 inset-x-0 hidden md:flex flex-col items-center gap-2 animate-bounce cursor-pointer group z-20">
+      <div className="hero-scroll-indicator absolute bottom-8 inset-x-0 hidden md:flex flex-col items-center gap-2 animate-bounce cursor-pointer group z-20">
         <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 group-hover:text-teal-600 transition-colors">
           {t('hero.scrollIndicator')}
         </span>

@@ -1,38 +1,58 @@
 "use client";
 
-import React from 'react';
+import React, { useRef } from 'react';
 import Image from 'next/image';
+import { useGSAP } from '@gsap/react';
+import { gsap } from '@/animations/gsap-config';
 import { useLang } from '../providers/LanguageProvider';
 import { SectionHeader, Card, Badge, Button } from '../ui';
 import { ArrowLeft, ArrowRight, Calendar } from 'lucide-react';
-import { cn } from '@/lib/utils/cn';
 import { news } from '@/lib/data/news';
 
 export const NewsSection = () => {
   const { t, locale, dir } = useLang();
   const ArrowIcon = dir === 'rtl' ? ArrowLeft : ArrowRight;
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    const ctx = gsap.context(() => {
+      // Header row
+      gsap.from('.news-header-row', {
+        opacity: 0, y: 30, duration: 0.8, ease: 'power2.out',
+        scrollTrigger: { trigger: '.news-header-row', start: 'top 85%' },
+      });
+
+      // News cards stagger
+      gsap.from('.news-card', {
+        opacity: 0, y: 40, duration: 0.7, stagger: 0.15, ease: 'power2.out',
+        scrollTrigger: { trigger: '.news-grid', start: 'top 80%' },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, { scope: sectionRef });
 
   return (
-    <section id="news" className="py-24 bg-white relative">
+    <section ref={sectionRef} id="news" className="py-24 bg-white relative">
       <div className="container-max">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+        <div className="news-header-row flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
           <SectionHeader 
             eyebrow={t('news.eyebrow')}
             heading={t('news.heading')}
             className="mb-0"
           />
-          <Button variant="ghost" size="sm" href="/news" icon={<ArrowIcon className="w-4 h-4" />} iconPosition="end">
+          <Button variant="ghost" size="sm" href="/news" icon={<ArrowIcon className="w-4 h-4" />} iconPosition="end" className="btn-interactive">
             {t('news.viewAll')}
           </Button>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="news-grid grid md:grid-cols-3 gap-8">
           {news.slice(0, 3).map((item, index) => (
             <Card 
               key={item.slug} 
               variant="elevated" 
               href={`/news/${item.slug}`}
-              className="group flex flex-col p-4 h-full"
+              className="news-card group flex flex-col p-4 h-full card-hoverable"
             >
               <div className="aspect-[16/10] bg-slate-100 rounded-2xl mb-6 overflow-hidden relative">
                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent z-10" />

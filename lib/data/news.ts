@@ -12,7 +12,7 @@ export const news: NewsArticle[] = [
     category: { ar: 'تطبيق', en: 'App' },
     date: '2025-03-15',
     author: 'Admin',
-    image: '/assets/images/app-feature-3.jpg',
+    image: '/assets/news/app-update.png',
     relatedSlugs: ['bible-curriculum-launch']
   },
   {
@@ -25,7 +25,7 @@ export const news: NewsArticle[] = [
     },
     category: { ar: 'مناهج', en: 'Curriculum' },
     date: '2025-02-20',
-    image: '/assets/images/header-logo.png',
+    image: '/assets/news/curricula-launch.png',
     relatedSlugs: ['app-update-march-2025', 'new-vision-2025']
   },
   {
@@ -38,7 +38,7 @@ export const news: NewsArticle[] = [
     },
     category: { ar: 'رؤية', en: 'Vision' },
     date: '2025-01-10',
-    image: '/assets/images/device-mockup.png',
+    image: '/assets/news/vision-2025.png',
     relatedSlugs: []
   }
 ];

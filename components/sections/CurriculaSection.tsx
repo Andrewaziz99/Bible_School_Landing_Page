@@ -1,39 +1,58 @@
 // components/sections/CurriculaSection.tsx
 "use client";
 
-import React from 'react';
-import Link from 'next/link';
+import React, { useRef } from 'react';
 import Image from 'next/image';
+import { useGSAP } from '@gsap/react';
+import { gsap } from '@/animations/gsap-config';
 import { useLang } from '../providers/LanguageProvider';
 import { SectionHeader, Card, Badge, Button } from '../ui';
 import { Clock, Users, ArrowRight, ArrowLeft } from 'lucide-react';
 import { curricula } from '@/lib/data/curricula';
-import { cn } from '@/lib/utils/cn';
 
 export default function CurriculaSection() {
   const { t, dir, locale } = useLang();
   const ArrowIcon = dir === 'rtl' ? ArrowLeft : ArrowRight;
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    const ctx = gsap.context(() => {
+      // Header row
+      gsap.from('.curricula-header-row', {
+        opacity: 0, y: 30, duration: 0.8, ease: 'power2.out',
+        scrollTrigger: { trigger: '.curricula-header-row', start: 'top 85%' },
+      });
+
+      // Cards stagger
+      gsap.from('.curricula-card', {
+        opacity: 0, y: 40, scale: 0.95, duration: 0.7, stagger: 0.12, ease: 'power2.out',
+        scrollTrigger: { trigger: '.curricula-grid', start: 'top 80%' },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, { scope: sectionRef });
 
   return (
-    <section id="curricula" className="py-24 bg-white relative overflow-hidden">
+    <section ref={sectionRef} id="curricula" className="py-24 bg-white relative overflow-hidden">
       {/* Decorative background element */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-50/50 -skew-x-12 translate-x-1/4 pointer-events-none" />
 
       <div className="container-max relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+        <div className="curricula-header-row flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
           <SectionHeader 
             eyebrow={t('curricula.eyebrow')}
             heading={t('curricula.heading')}
             description={t('curricula.subheading')}
             className="mb-0 max-w-2xl"
           />
-          <Button variant="outline" href="/curricula" icon={<ArrowIcon className="w-4 h-4" />} iconPosition="end">
+          <Button variant="outline" href="/curricula" icon={<ArrowIcon className="w-4 h-4" />} iconPosition="end" className="btn-interactive">
             {t('curricula.viewAll')}
           </Button>
         </div>
 
         {/* Cards Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="curricula-grid grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {curricula.map((c, index) => {
             // Determine badge image based on slug
             const badgeSrc = `/assets/badges/${c.slug === 'bible-characters' ? '4ahed' : c.slug === 'biblical-concepts' ? 'amin' : c.slug === 'extended-study' ? 'kof2' : 'mo3lm'}.png`;
@@ -44,7 +63,7 @@ export default function CurriculaSection() {
                 variant="elevated"
                 hoverEffect="lift"
                 href={`/curricula/${c.slug}`}
-                className="group relative overflow-hidden flex flex-col p-0 border-none bg-white shadow-lg h-full"
+                className="curricula-card group relative overflow-hidden flex flex-col p-0 border-none bg-white shadow-lg h-full card-hoverable"
               >
                 {/* Visual Header with Badge Background */}
                 <div className="relative h-48 bg-slate-900 overflow-hidden">
