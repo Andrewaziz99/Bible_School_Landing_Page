@@ -127,11 +127,23 @@ export default function Header() {
         <div className="max-w-[1400px] mx-auto px-6 h-full flex items-center justify-between">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-14 h-14">
+          <Link href="/" className="relative h-full flex items-center z-50 shrink-0 group gap-3 lg:gap-0">
+            {/* Mobile Logo: normal inline size */}
+            <div className="relative w-14 h-14 lg:hidden">
               <Image src="/assets/logo.png" alt="Logo" fill sizes="56px" className="object-contain" />
             </div>
-            <span className="font-bold text-slate-800 text-base">
+
+            {/* Desktop Logo: absolute protruding badge */}
+            <div className="hidden lg:flex absolute start-0 top-3 w-[130px] h-[130px] bg-white rounded-full shadow-lg items-center justify-center transition-transform hover:-translate-y-1 duration-300 z-[60]">
+              <div className="relative w-full h-full rounded-full overflow-hidden">
+                <Image src="/assets/logo.png" alt="Logo" fill sizes="130px" className="object-cover" />
+              </div>
+            </div>
+            
+            {/* Invisible spacer so the absolute logo doesn't overlap nav items on desktop */}
+            <div className="hidden lg:block w-[130px] shrink-0" />
+            
+            <span className="font-bold text-slate-800 text-base hidden sm:block lg:ms-4 group-hover:text-teal-600 transition-colors lg:pt-1">
               {t("common.brandName")}
             </span>
           </Link>

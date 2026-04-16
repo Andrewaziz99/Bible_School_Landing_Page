@@ -106,13 +106,13 @@ export default function HeroSection() {
             </div>
 
             {/* Stats Row */}
-            <div className="hero-stats grid grid-cols-3 gap-8 md:gap-12 w-full pt-8 mb-12 border-t border-slate-200/60">
+            <div className="hero-stats grid grid-cols-3 gap-2 sm:gap-4 md:gap-12 w-full pt-8 mb-12 border-t border-slate-200/60">
               {stats.map((stat, idx) => (
                 <div key={idx} className="group">
-                  <p className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-1 transition-transform duration-300 group-hover:scale-110 origin-start">
+                  <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 mb-1 transition-transform duration-300 group-hover:scale-110 origin-start">
                     {stat.value}
                   </p>
-                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest whitespace-nowrap">
+                  <p className="text-[9px] sm:text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-wider md:tracking-widest text-wrap">
                     {stat.label}
                   </p>
                 </div>
@@ -150,7 +150,7 @@ export default function HeroSection() {
       </div>
 
       {/* Modern Scroll Indicator - Static side label */}
-      <div className="hero-scroll-indicator absolute top-[60%] end-6 -translate-y-1/2 hidden md:flex flex-col items-center gap-4 cursor-pointer group z-20">
+      <div className="hero-scroll-indicator absolute top-[70%] end-6 hidden md:flex flex-col items-center gap-4 cursor-pointer group z-20">
         <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 group-hover:text-teal-600 transition-colors [writing-mode:vertical-lr]">
           {t('hero.scrollIndicator')}
         </span>
