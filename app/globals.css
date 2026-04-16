@@ -1,35 +1,11 @@
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: transparent;
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* Utility for readable section backgrounds */
-.section-readable-bg {
-  background: transparent;
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 32px 0 rgba(0,0,0,0.18);
-  padding: 2rem 1rem;
-}
-html {
-  scroll-behavior: smooth;
-}
 /* app/globals.css */
-/* Flutter analogy: This is like your ThemeData — global design tokens */
+/* Global design tokens and base styles */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── Custom Fonts ── */
-
-/* ── Design Tokens (same palette as your Flutter app) ── */
+/* ── Design Tokens ── */
 :root {
   /* Primary: Teal */
   --color-primary:     #0D9488;
@@ -65,6 +41,10 @@ html {
 }
 
 /* ── Base Styles ── */
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -74,12 +54,6 @@ body {
   background-color: var(--color-bg-1);
   color: var(--color-text-primary);
   overflow-x: hidden;
-  background-image: url('/assets/Banner.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  background-blend-mode: lighten;
 }
 
 /* ── Arabic Typography Scale ── */
@@ -173,11 +147,28 @@ body {
 }
 
 @keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position: 200% center; }
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
 }
 
-/* ── Bible Reader Animations ── */
+/* ── Gradient Text Shimmer ── */
+.text-shimmer {
+  background: linear-gradient(
+    120deg,
+    #0F766E 0%,
+    #0D9488 25%,
+    #D4A017 50%,
+    #0D9488 75%,
+    #0F766E 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* ── Bible Reader Highlight ── */
 @keyframes highlightPulse {
   0% {
     color: #fbbf24;
@@ -200,23 +191,62 @@ body {
   animation: highlightPulse 2s ease-in-out infinite;
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
+/* ── Hover & Interaction Effects ── */
+
+/* Card lift on hover */
+.card-hoverable {
+  transition: transform 300ms ease, box-shadow 300ms ease;
+}
+.card-hoverable:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(13, 148, 136, 0.1);
 }
 
-.animate-fade-in-up-delay-1 {
-  animation: fadeInUp 0.6s ease-out 0.15s forwards;
-  opacity: 0;
+/* Button press effect */
+.btn-interactive {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.btn-interactive:hover {
+  transform: translateY(-2px);
+}
+.btn-interactive:active {
+  transform: translateY(0px);
 }
 
-.animate-fade-in-up-delay-2 {
-  animation: fadeInUp 0.6s ease-out 0.3s forwards;
-  opacity: 0;
+/* Icon scale on parent hover */
+.icon-scale-wrapper {
+  transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.group:hover .icon-scale-wrapper {
+  transform: scale(1.15);
 }
 
-.animate-fade-in-up-delay-3 {
-  animation: fadeInUp 0.6s ease-out 0.45s forwards;
-  opacity: 0;
+/* Link underline reveal */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  inset-inline-start: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-primary);
+  transition: width 300ms ease;
+}
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* ── Accessibility: Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ── Scrollbar Styling ── */
@@ -227,9 +257,19 @@ body {
 
 /* ── Section Spacing ── */
 .section-padding {
-  @apply py-20 px-4 md:px-8 lg:px-16;
+  @apply py-16 md:py-24;
 }
 
 .container-max {
-  @apply max-w-7xl mx-auto;
+  @apply max-w-7xl mx-auto px-6 md:px-8 lg:px-12;
 }
+
+/* ── Custom Utilities ── */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+

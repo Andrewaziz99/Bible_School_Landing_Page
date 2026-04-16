@@ -96,26 +96,50 @@ const BOOK_NAMES: { [key: string]: string } = {
   '65': 'Revelation',
 };
 
+interface BibleMetadata {
+  translation: string;
+  testaments: {
+    name: string;
+    books: {
+      number: number;
+      name: string;
+      chapterCount: number;
+    }[];
+  }[];
+}
+
 async function parseBible(
   filePath: string,
-  language: 'en' | 'ar'
-): Promise<BibleData> {
+  language: 'en' | 'ar',
+  dataDir: string
+): Promise<{ bibleData: BibleData; metadata: BibleMetadata }> {
   const xmlContent = fs.readFileSync(filePath, 'utf-8');
-  const parser = require('xml2js');
-  const parsed = await parser.parseStringPromise(xmlContent);
+  const parsed = await parseStringPromise(xmlContent);
 
   const bible = parsed.bible;
   const translation = bible.$?.translation || 'Unknown';
   const testaments: TestamentData[] = [];
+  const metadataTestaments: BibleMetadata['testaments'] = [];
+
+  const langDir = path.join(dataDir, 'bible', language);
+  if (!fs.existsSync(langDir)) {
+    fs.mkdirSync(langDir, { recursive: true });
+  }
 
   for (const testamentXml of bible.testament) {
     const testamentName = testamentXml.$?.name || 'Unknown';
     const books: BookData[] = [];
+    const metadataBooks: BibleMetadata['testaments'][0]['books'] = [];
 
     for (const bookXml of testamentXml.book) {
       const bookNumber = parseInt(bookXml.$?.number || '0', 10);
       const bookName = BOOK_NAMES[bookNumber.toString()] || `Book ${bookNumber}`;
       const chapters: ChapterData[] = [];
+
+      const bookDir = path.join(langDir, bookNumber.toString());
+      if (!fs.existsSync(bookDir)) {
+        fs.mkdirSync(bookDir, { recursive: true });
+      }
 
       for (const chapterXml of bookXml.chapter) {
         const chapterNumber = parseInt(chapterXml.$?.number || '0', 10);
@@ -131,10 +155,16 @@ async function parseBible(
           });
         }
 
-        chapters.push({
+        const chapterData = {
           number: chapterNumber,
           verses,
-        });
+        };
+
+        // Write individual chapter file
+        const chapterPath = path.join(bookDir, `${chapterNumber}.json`);
+        fs.writeFileSync(chapterPath, JSON.stringify(chapterData, null, 2), 'utf-8');
+
+        chapters.push(chapterData);
       }
 
       books.push({
@@ -142,17 +172,28 @@ async function parseBible(
         name: bookName,
         chapters,
       });
+
+      metadataBooks.push({
+        number: bookNumber,
+        name: bookName,
+        chapterCount: chapters.length,
+      });
     }
 
     testaments.push({
       name: testamentName,
       books,
     });
+
+    metadataTestaments.push({
+      name: testamentName,
+      books: metadataBooks,
+    });
   }
 
   return {
-    translation,
-    testaments,
+    bibleData: { translation, testaments },
+    metadata: { translation, testaments: metadataTestaments }
   };
 }
 
@@ -168,28 +209,39 @@ async function main() {
 
     console.log('📖 Parsing Bible XML files...');
 
+    let bibleMetadata: { en?: BibleMetadata; ar?: BibleMetadata } = {};
+
     // Parse English Bible
     const enFilePath = path.join(pdfDir, 'EnglishNIVBible.xml');
     if (fs.existsSync(enFilePath)) {
       console.log('  Parsing English Bible...');
-      const enBible = await parseBible(enFilePath, 'en');
+      const { bibleData, metadata } = await parseBible(enFilePath, 'en', dataDir);
+      bibleMetadata.en = metadata;
+      
+      // Still write the full JSON for server-side use
       const enOutputPath = path.join(dataDir, 'bible-en.json');
-      fs.writeFileSync(enOutputPath, JSON.stringify(enBible, null, 2), 'utf-8');
-      console.log(`  ✓ English Bible saved to ${enOutputPath}`);
-    } else {
-      console.warn(`  ⚠ English Bible file not found at ${enFilePath}`);
+      fs.writeFileSync(enOutputPath, JSON.stringify(bibleData, null, 2), 'utf-8');
+      console.log(`  ✓ English Bible saved (split files + ${enOutputPath})`);
     }
 
     // Parse Arabic Bible
     const arFilePath = path.join(pdfDir, 'ArabicAVDBible.xml');
     if (fs.existsSync(arFilePath)) {
       console.log('  Parsing Arabic Bible...');
-      const arBible = await parseBible(arFilePath, 'ar');
+      const { bibleData, metadata } = await parseBible(arFilePath, 'ar', dataDir);
+      bibleMetadata.ar = metadata;
+      
+      // Still write the full JSON for server-side use
       const arOutputPath = path.join(dataDir, 'bible-ar.json');
-      fs.writeFileSync(arOutputPath, JSON.stringify(arBible, null, 2), 'utf-8');
-      console.log(`  ✓ Arabic Bible saved to ${arOutputPath}`);
-    } else {
-      console.warn(`  ⚠ Arabic Bible file not found at ${arFilePath}`);
+      fs.writeFileSync(arOutputPath, JSON.stringify(bibleData, null, 2), 'utf-8');
+      console.log(`  ✓ Arabic Bible saved (split files + ${arOutputPath})`);
+    }
+
+    // Write combined metadata
+    if (bibleMetadata.en || bibleMetadata.ar) {
+      const metaOutputPath = path.join(dataDir, 'bible-metadata.json');
+      fs.writeFileSync(metaOutputPath, JSON.stringify(bibleMetadata, null, 2), 'utf-8');
+      console.log(`  ✓ Bible metadata saved to ${metaOutputPath}`);
     }
 
     console.log('✅ Bible parsing complete!');
